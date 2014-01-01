@@ -9,7 +9,7 @@
     "express": "~3.3.4",
     "socket.io": "*",
     "ejs": "*",
-    "whispers": "*"
+    "whispers": "~0.0.2"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

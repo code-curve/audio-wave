@@ -78,7 +78,7 @@ module.exports = function(userProxy) {
     }
     
     // otherwise, all arguments must be defined
-    if(_.undef(metric, comparator, threshold) {
+    if(_.undef(metric, comparator, threshold)) {
       throw new Error('One or more select arguments were undefined');
     }
 
@@ -88,8 +88,8 @@ module.exports = function(userProxy) {
     }
 
     // comparator must be a function or a sign
-    if(!_.type(comparator, 'function') {
-      if(!_.type(comparator, 'string') {
+    if(!_.type(comparator, 'function')) {
+      if(!_.type(comparator, 'string')) {
         
         // switch hack to make sure it's
         // one of the following symbols
@@ -115,14 +115,14 @@ module.exports = function(userProxy) {
     }
   
     // threshold must be a number
-    if(!_.type(threshold, 'number') {
+    if(!_.type(threshold, 'number')) {
       throw new Error('Threshold must be a number');
     }
 
    
     // return a function that will give the results
     // of the query when called.
-    var result = users.filter.bind(users, (function(user) {
+    var result = users.filter.bind(users, function(user) {
       // filter out users based on some metric, 
       // comparing it against the threshold with 
       // our comparator funtion.
@@ -157,7 +157,7 @@ module.exports = function(userProxy) {
   return {
     connect: connect,
     select: select,
-    all: select
+    all: select,
     on: events.on
   };
 };
