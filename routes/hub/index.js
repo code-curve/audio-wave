@@ -89,17 +89,17 @@ module.exports = function(userProxy) {
 
     // comparator must be a function or a sign
     if(!_.type(comparator, 'function')) {
-      if(!_.type(comparator, 'string')) {
+      if(_.type(comparator, 'string')) {
         
         // switch hack to make sure it's
         // one of the following symbols
         switch(comparator) {
-          case '=':
-          case '==':
-          case '>':
-          case '>=':
-          case '<':
-          case '<=':
+          case '=':break;
+          case '==':break;
+          case '>':break;
+          case '>=':break;
+          case '<':break;
+          case '<=':break;
           default:
             throw new Error('When passed as a string, comparator must be ' 
               + ' one of the following  =, >, >=, <, <=');
@@ -110,6 +110,7 @@ module.exports = function(userProxy) {
         comparator = comparisons[comparator];
  
       } else {
+        console.log(comparator, typeof comparator);
         throw new Error('Comparator must be a comparison function, or a string');
       }
     }
@@ -150,7 +151,7 @@ module.exports = function(userProxy) {
         user[property] = value;
       });
     }
-
+    
     return result;
   };
 
