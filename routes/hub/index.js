@@ -57,8 +57,8 @@ module.exports = function(userProxy) {
   };  
 
   /**
-   * Returns a query function based on a metric, comparator
-   * and threshold. Example use:
+   * Returns a query function based on a metric, comparator,
+   * threshold and an optional user set. Example use:
    * 
    * var session = Hub.select('session', '==', 3);
    * 
@@ -68,13 +68,21 @@ module.exports = function(userProxy) {
    * For flexibility and advanced querying you can pass
    * a function as the comparator value. The function must
    * accept two inputs and return a boolean value.
+   *
+   * Calling select without the user set parameter will
+   * default to using users. Otherwise, queries will be
+   * performed on this subset.
    */
-  var select = function(metric, comparator, threshold) {
+  var select = function(metric, comparator, threshold, set) {
+    
+    if(_.undef(set)) {
+      set = users;
+    }
     
     // if no arguments are passed
     // return every user
     if(arguments.length === 0) {
-      return users;
+      return set;
     }
     
     // otherwise, all arguments must be defined
@@ -123,7 +131,7 @@ module.exports = function(userProxy) {
    
     // return a function that will give the results
     // of the query when called.
-    var result = users.filter.bind(users, function(user) {
+    var result = set.filter.bind(users, function(user) {
       // filter out users based on some metric, 
       // comparing it against the threshold with 
       // our comparator funtion.
@@ -151,6 +159,12 @@ module.exports = function(userProxy) {
         user[property] = value;
       });
     }
+
+    // chainable selections
+    result.and = function(metric, comparator, threshold) {
+      arguments[arguments.length] = result();
+      return select.bind(this, arguments);
+    };
     
     return result;
   };
