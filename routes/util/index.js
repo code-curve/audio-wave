@@ -1,4 +1,4 @@
-var util = _ = {
+module.exports = _ = {
 
   args: function(_args) {
     return Array.prototype.slice.call(_args)
@@ -15,8 +15,19 @@ var util = _ = {
       return state && _.type(variable, 'undefined');
     }, true);
   }
+  
+  union: function() {
+    var results = [];
+    
+    for(var i = 0; i < arguments.length; i++) {
+      for(var j = 0; j < arguments[i].length) {
+        if(results.indexOf(arguments[i][j] === -1) {
+          results.push(arguments[i][j]);
+        }
+      }
+    }
+
+    return results;
+  }
 
 };
-
-
-module.exports = util;
