@@ -21,12 +21,12 @@ module.exports = function scan(directory, done, results) {
           results.push({
             name: file.match(/\/(\w+\.w+)$/i)[1],
             path: file
-          );
+          });
           // finish
           if(!--pending) done(null, results);
         }
       });
     });
 
-  }
+  });
 };

@@ -1,0 +1,12 @@
+html, body {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  background-color: #0c3128;
+  color: white;
+  font-family: 'Ubuntu', 'Helvetica', 'Arial', 'Sans-serif'; }
+
+.content {
+  background-color: #E2E2E2; }

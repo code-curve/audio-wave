@@ -1,7 +1,9 @@
 var response = function(status) {
   return function(data) {
-    status: status,
-    data: data
+    return {
+      status: status,
+      data: data
+    }
   };
 };
 

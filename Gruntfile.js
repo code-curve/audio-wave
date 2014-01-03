@@ -17,6 +17,13 @@ module.exports = function (grunt) {
         file: 'app.js'
       }
     },
+    sass: {
+      dist: {
+        files: {
+          'public/scss/*.scss': 'public/css/*.css'
+        }
+      }
+    },
     watch: {
       options: {
         nospawn: true,
@@ -41,6 +48,10 @@ module.exports = function (grunt) {
           livereload: reloadPort
         }
       },
+      scss: {
+        files: ['public/scss/*.scss'],
+        tasks: ['scss']
+      },
       ejs: {
         files: ['views/*.ejs'],
         options: {
@@ -49,6 +60,8 @@ module.exports = function (grunt) {
       }
     }
   });
+  
+  grunt.loadNpmTasks('grunt-contrib-sass');
 
   grunt.config.requires('watch.server.files');
   files = grunt.config('watch.server.files');

@@ -6,6 +6,10 @@ module.exports = {
   auth: function(req, res) {
     return !!res.session.email;
   },
+
+  index: function(req, res) {
+    res.render('admin');
+  },
   
   login: function(req, res) {
     admin.authenticate(req.body.email, req.body.password, 
@@ -18,7 +22,7 @@ module.exports = {
         res.redirectTo('/admin/login');
       }
     });
-  }),
+  },
 
   api: {
     create: function(req, res) {

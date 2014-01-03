@@ -9,6 +9,7 @@
     "express": "~3.3.4",
     "socket.io": "*",
     "ejs": "*",
+    "mongojs": "*",
     "whispers": "~0.0.2"
   },
   "devDependencies": {
@@ -17,6 +18,7 @@
     "grunt-contrib-watch": "~0.5.3",
     "request": "~2.27.0",
     "time-grunt": "~0.1.1",
-    "load-grunt-tasks": "~0.2.0"
+    "load-grunt-tasks": "~0.2.0",
+    "grunt-contrib-sass": "~0.6.0"
   }
 }

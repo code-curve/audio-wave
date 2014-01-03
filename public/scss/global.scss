@@ -1,0 +1,20 @@
+@import 'mixins';
+@import 'theme';
+
+html, body {
+  @include max;
+  @include reset;
+  
+  background-color:$bg-color;
+  color:$fg-color;
+  font-family:'Ubuntu', 'Helvetica', 'Arial', 'Sans-serif';
+}
+
+
+header {
+  
+}
+
+.content {
+  background-color:#E2E2E2;
+}
