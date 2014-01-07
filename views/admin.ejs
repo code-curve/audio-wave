@@ -3,14 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <title>Audiodrop - Admin</title>
-  <link rel='stylesheet' href='css/admin.scss'></link>
+  <link href='/css/fonts.css' rel='stylesheet' type='text/css'> 
+  <link rel='stylesheet' href='/css/admin.css'></link>
 </head>
 <body>
   
   <aside class='admin menu'>
+    
+    <div class='logo-box'>
+      <h1 class='logo'>
+        <span class='special'>A</span>udio<br/>drop
+      </h1>
+    </div>
 
+    
+    <ul class='items'>
+      <li><a href="#sessions"></a>Sessions</li>
+      <li><a href="#audio"></a>Audio</li>
+      <li><a href="#users"></a>Users</li>
+      <li><a href="#compose"></a>Compose</li>
+      <li><a href="#signout"></a>Sign Out</li>
+    </ul>
   </aside>
-  <div ng-view></div>
+
+  <div class='view' ng-view></div>
  
 </body>
 </html>

@@ -2,23 +2,26 @@ var adminDb = require('../mongo')('admins');
 
 module.exports = {
 
-  create: function(email, password) {
+  create: function(name, password) {
     adminDb.insert({
-      email: email,
+      name: name,
       password: password
     });
   },
   
-  authenticate: function(email, password, callback) {
-    adminDb.find({ email: email, password: password }, 
+  authenticate: function(name, password, callback) {
+    console.log('checking for user', name, password);
+    adminDb.find({ name: name, password: password }, 
     function(err, docs) {
+      if(err) throw err;
+      console.log(docs);
       callback(docs.length > 0);      
     });
   },
   
-  delete: function(email) {
+  delete: function(name) {
     adminDb.delete({
-      email: email
+      name: name
     });
   }
 

@@ -13,7 +13,6 @@ var express = require('express')
 
 var app = express();
 
-app.configure(function() {
   app.set('port', process.env.PORT || 3000);
   app.set('views', __dirname + '/views');
   app.set('view engine', 'ejs');
@@ -21,11 +20,10 @@ app.configure(function() {
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
   app.use(express.methodOverride());
-  app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));
   app.use(express.cookieParser());
   app.use(express.session({secret: 'audioallovertheworld'}));
-});
+  app.use(app.router);
 
 app.configure('development', function() {
   app.use(express.errorHandler());
@@ -41,10 +39,12 @@ app.get('/s/:id');
 
 // get admin app
 app.get('/admin', admin.auth, admin.index);
-// authenticate admin
+// get login screen
 app.get('/admin/login', admin.login);
+// authenticate admin
 
 // http api
+app.post('/admin/api/authenticate', admin.api.authenticate);
 app.get('/admin/api/create', admin.auth, admin.api.create);
 app.get('/admin/api/delete', admin.auth, admin.api.delete);
 

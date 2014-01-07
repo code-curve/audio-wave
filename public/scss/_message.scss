@@ -1,0 +1,25 @@
+.message {
+  text-align:left;
+  border-radius:4px;
+  padding:8px;
+
+  h3, p {
+    margin:0;
+    padding:0;
+  }
+}
+
+.error {
+  background-color:#FFAAAA;
+  color:#BE0E0E;
+}
+
+.success {
+  background-color:#AAFFAA;
+  color:#E0BEE0;
+}
+
+.info {
+  background-color:#AAAAFF;
+  color:#E0E0BE;
+}

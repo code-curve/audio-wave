@@ -7,13 +7,14 @@ var locate = function(devices, done) {
   // when they are ready, start
   devices.when('ready', function() {
     if(devices.length > 0) {
-      listen(0, devices, done);
+      listen(devices, done);
     }
   });
 };
 
-var listen = function(to, devices, done) {
+var listen = function(devices, done, to) {
   
+  if(!to) to = 0;
   // prepare this row of distance table
   distances[to] = [];
   
@@ -39,7 +40,7 @@ var listen = function(to, devices, done) {
   // start a new ping or callback
   devices.when('heard', function() {
     if(to < users.length) {
-      listen(to + 1, users, done);
+      listen(users, done, to);
     } else {
       done(distances);
     }

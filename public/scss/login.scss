@@ -1,0 +1,26 @@
+@import 'theme';
+@import 'mixins';
+@import 'reset';
+@import 'message';
+
+body {
+  text-align:center;
+  background-color:#F5F5F5;  
+}
+
+form {
+  width:368px;
+  margin:0 auto;
+}
+
+input {
+  border:none;
+  border-radius:4px;
+  font-size:24pt;
+  padding:4px;
+  outline:none;
+}
+
+.message {
+  margin-top:4px;
+}

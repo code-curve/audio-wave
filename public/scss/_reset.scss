@@ -1,0 +1,11 @@
+@import 'mixins';
+
+html, body {
+  @include max;
+  @include reset;
+  font-family: 'Open Sans', sans-serif;  
+}
+
+input, pre, code {
+  font-family: 'Open Sans', sans-serif;
+}

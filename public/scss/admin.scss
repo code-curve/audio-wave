@@ -1,0 +1,57 @@
+@import 'reset';
+@import 'mixins';
+@import 'theme';
+@import 'logo';
+
+$sidebar-width: 200px;
+
+body {
+  background-color:#EEE;
+}
+
+/* Flexible width sidebar */
+aside.admin.menu {
+  position:absolute;
+  top:0;
+  left:0;
+  background-color:#fff;
+  height:100%;
+  width:$sidebar-width;
+}
+
+/* Flexible width content area */
+.view {
+  @include max;
+  width:auto;
+  padding-left:$sidebar-width; 
+}
+
+/* Menu Items */
+ul.items {
+  @include reset;
+  list-style-type:none;  
+  text-align:right;
+  font-size:18pt;
+  font-weight:300;
+  
+  li {
+    -webkit-user-select:none;
+    padding:4px 6px;
+    border-right:solid 4px #ddd;
+    transition-property:border;
+    transition-duration:0.3s;    
+    
+    &:hover {
+      border-color: $theme-primary;
+      cursor:pointer;
+      background-color:#E0FFEA;
+    }
+
+    &:active {
+      border:none;
+    }
+  }
+
+}
+
+

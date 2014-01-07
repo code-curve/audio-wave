@@ -8,6 +8,7 @@
   ],
   "dependencies": {
     "foundation": "~5.0.2",
-    "font-awesome": "~4.0.3"
+    "font-awesome": "~4.0.3",
+    "angular": "~1.2.7"
   }
 }

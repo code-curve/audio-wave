@@ -1,0 +1,42 @@
+@import 'theme';
+
+.logo-box {
+  position:relative;
+  left:10px;
+}
+
+.logo {
+  text-align:center;
+  font-weight:300;
+  font-size:24pt;
+  
+  .special {
+    color:$theme-primary;
+  }
+
+  &:before {
+    content: ' ';
+    position:absolute;
+    top:35px; left:20px;
+    display:block;
+    width:30px;
+    height:30px;
+    border-radius:100%;
+    background-color:$theme-primary;
+  }
+
+  &:after {
+    content: ' ';
+    position:absolute;
+    top:20px; left:20px;
+    width: 0px;
+    height: 0px;
+    border: {
+      style: solid;
+      width: 0 15px 30px 15px;
+      color: transparent transparent $theme-primary transparent;
+    }
+  }
+}
+
+

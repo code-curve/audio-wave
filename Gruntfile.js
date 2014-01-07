@@ -17,17 +17,26 @@ module.exports = function (grunt) {
         file: 'app.js'
       }
     },
-    sass: {
+    browserify: {
       dist: {
         files: {
-          'public/scss/*.scss': 'public/css/*.css'
+          'public/build/js/admin.js': ['public/js/admin.js'],
+          'public/build/js/app.js': ['public/js/app.js'],
+          'public/build/js/login.js': ['public/js/login.js']
         }
+      },
+      options: {
+        debug: true
       }
     },
     watch: {
       options: {
         nospawn: true,
         livereload: reloadPort
+      },
+      browserify: {
+        files: ['public/js/**'],
+        tasks: ['browserify']
       },
       server: {
         files: [
@@ -48,10 +57,6 @@ module.exports = function (grunt) {
           livereload: reloadPort
         }
       },
-      scss: {
-        files: ['public/scss/*.scss'],
-        tasks: ['scss']
-      },
       ejs: {
         files: ['views/*.ejs'],
         options: {
@@ -62,6 +67,7 @@ module.exports = function (grunt) {
   });
   
   grunt.loadNpmTasks('grunt-contrib-sass');
+  grunt.loadNpmTasks('grunt-browserify');
 
   grunt.config.requires('watch.server.files');
   files = grunt.config('watch.server.files');
