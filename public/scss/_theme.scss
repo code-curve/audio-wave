@@ -1,2 +1,15 @@
 $theme-primary: #2AC260;
 $theme-dark: #20A34F;
+
+
+input {
+  border:none;
+  outline:none;
+  padding:4px;
+}
+
+button {
+  border:none;
+  background-color:$theme-primary;
+  color:#fff;
+}

@@ -18,8 +18,13 @@ module.exports = {
   login: function(req, res) {
     res.render('login');
   },
+
+  logout: function(req, res) {
+    delete req.session.name;
+    res.render('login');
+  },
   
-   api: {
+  api: {
     
     // AUTHENTICATE 
     authenticate: function(req, res) {

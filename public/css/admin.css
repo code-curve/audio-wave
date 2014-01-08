@@ -9,6 +9,26 @@ html, body {
 input, pre, code {
   font-family: 'Open Sans', sans-serif; }
 
+input {
+  border: none;
+  outline: none;
+  padding: 4px; }
+
+button {
+  border: none;
+  background-color: #2ac260;
+  color: #fff; }
+
+input {
+  border: none;
+  outline: none;
+  padding: 4px; }
+
+button {
+  border: none;
+  background-color: #2ac260;
+  color: #fff; }
+
 .logo-box {
   position: relative;
   left: 10px; }

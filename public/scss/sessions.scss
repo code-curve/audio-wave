@@ -43,7 +43,7 @@
   padding:8px;
   color:#FFF;
   overflow-y:scroll;
-  display:block;
+  display:none;
 }
 
 .console .input {
@@ -62,5 +62,8 @@
 .console .messages {
   @include reset;
   list-style-type:none;
+}
 
+.visible {
+  display:block;
 }

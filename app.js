@@ -41,7 +41,8 @@ app.get('/s/:id');
 app.get('/admin', admin.auth, admin.index);
 // get login screen
 app.get('/admin/login', admin.login);
-// authenticate admin
+// sign out
+app.get('/admin/logout', admin.logout);
 
 // http api
 app.post('/admin/api/authenticate', admin.api.authenticate);
