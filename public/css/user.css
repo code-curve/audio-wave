@@ -1,0 +1,51 @@
+html, body {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  font-family: 'Open Sans', sans-serif; }
+
+input, pre, code {
+  font-family: 'Open Sans', sans-serif; }
+
+p, h1, h2, h3, h4, h5, h6, ul, ol {
+  padding: 0;
+  margin: 0;
+  list-style-type: none; }
+
+input {
+  border: none;
+  outline: none;
+  padding: 4px;
+  background-color: #fbfbfb;
+  transition-duration: 0.3s; }
+
+input:focus {
+  background-color: #fff;
+  transition-duration: 0.3s; }
+
+button {
+  border: none;
+  background-color: #2ac260;
+  color: #fff; }
+
+.message {
+  text-align: left;
+  border-radius: 4px;
+  padding: 8px; }
+  .message h3, .message p {
+    margin: 0;
+    padding: 0; }
+
+.error {
+  background-color: #FFAAAA;
+  color: #BE0E0E; }
+
+.success {
+  background-color: #AAFFAA;
+  color: #0EBE0E; }
+
+.info {
+  background-color: #E5E5F3;
+  color: #BABAD6; }

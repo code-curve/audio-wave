@@ -1,12 +1,3 @@
-module.exports = function($scope, socket) {
-  var socket = socket('admin');
-  
-  socket.on('ready', function() {
-    socket.emit('admins/get');
-    window.socket = socket;
-  });
+module.exports = function($scope) {
 
-  socket.on('admins/get', function(admins) {
-    console.table(admins.data);
-  });
 };

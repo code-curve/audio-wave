@@ -34,7 +34,7 @@ var app = express()
 var sessionStore = new MongoStore({ db: 'audio-drop' })
   , cookieParser = express.cookieParser('waytoblue')
   , SessionSockets = require('session.socket.io')
-  , sessionSockets = new SessionSockets(io, sessionStore, cookieParser);
+  , sockets = new SessionSockets(io, sessionStore, cookieParser);
 
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
@@ -81,26 +81,28 @@ app.get('/auth/logout', auth.logout);
 /**
  * Sockets
  */
-console.log('Create Sockets');
 
-// single entry for socket connections
-sessionSockets.of('/admin').on('connection', function(err, socket, session) {
+sockets.of('/admin').on('connection', function(err, socket, session) {
   if(err) throw err;
-  // sockets that connect to /admin must authenticate
-
-  console.log('Socket connection to /admin');
-
+  
+  // sockets that connect to /admin must authenticate  
   if(!session.name) {
+    // log no auth
+    // TODO  
     socket.emit('Not authenticated. Closing connection');
     delete socket;
   } else {
+    // log success
+    // TODO
     // pass to collection apis
     collections(socket);     
   }
 });
 
-sessionSockets.of('/users').on('connection', function(err, socket, session) {
+sockets.of('/users').on('connection', function(err, socket, session) {
   if(err) throw err;
   console.log('Socket connected');
+  
+  // pass socket straight through to Hub
 });
 

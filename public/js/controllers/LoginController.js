@@ -1,11 +1,25 @@
+/** 
+ * Login controller
+ * 
+ * Responsible for authenticating a user from
+ * a form. Two stage validation and 
+ * authentication. Displays errors and uses
+ * $http to make auth request then redirects
+ * on success.
+ */
+
 module.exports = function($scope, $http) {
-  // user credentials
+  // two-way bindings
   $scope.username = '';
   $scope.password = '';
-  
   // error object (name, message)
   $scope.error = null;
-
+  
+  /**
+   * Validates both username and password, returns
+   * boolean based on whether they passed or failed
+   * and sets $scope.error to reflect why
+   */
   $scope.validate = function() {
     if($scope.username.length < 3 || $scope.username.length > 12) {
       $scope.error = {
@@ -31,11 +45,20 @@ module.exports = function($scope, $http) {
     return true;
   };
 
+  /**
+   * Called every time the user types in
+   * either input, then resets any errors.
+   */
   $scope.change = function() {
     $scope.error = null;
   };
 
-  // method to call for authentication
+  /**
+   * Validates the form, and if the validation
+   * succeeds, makes a HTTP request to the 
+   * auth REST api. Redirects if the request
+   * succeeds, show appropriate error if not. 
+   */
   $scope.login = function() {
     
     if($scope.validate()) {
@@ -47,6 +70,7 @@ module.exports = function($scope, $http) {
 
       success(function(res, status) {
         if(status === 200) {
+          // res.data.auth holds boolean of success
           if(res.data.auth) {
             window.location = '/admin';
           } else {
@@ -66,9 +90,6 @@ module.exports = function($scope, $http) {
           message: 'Oh dear, something went very wrong.'
         };
       });
-
-    };
-    
+    }; 
   }
-  
 };

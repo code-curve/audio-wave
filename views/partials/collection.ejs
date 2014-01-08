@@ -15,7 +15,9 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat='model in models | filter:search'>
+      <tr ng-repeat='model in models | filter:search'
+        ng-click='focus($index)'>
+        
         <td ng-repeat='(key, value) in model' ng-hide='key[0] == "_"'>
           {{value}}
         </td>

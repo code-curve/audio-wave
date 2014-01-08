@@ -160,6 +160,7 @@ ul.items {
     top: 6px;
     right: 6px; }
 
+/* Panel for collections editor */
 .actions {
   margin-left: 300px;
   background-color: #fbfbfb;
@@ -176,6 +177,7 @@ ul.items {
   box-sizing: border-box;
   height: 100%; }
 
+/* Table within collection view */
 .collection table {
   width: 100%;
   font-size: 16pt;
