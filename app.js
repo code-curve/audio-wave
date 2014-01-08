@@ -16,7 +16,8 @@ var express = require('express')
  */
 
 var Hub = require('./routes/hub')
-  , auth = require('./routes/auth');
+  , auth = require('./routes/auth')
+  , collections = require('./routes/collections');
 
 /**
  * Server setup
@@ -32,11 +33,6 @@ var app = express()
 
 var sessionStore = new MongoStore({ db: 'audio-drop' })
   , cookieParser = express.cookieParser('waytoblue')
-  
-  // test examples
-  , cookieParser = express.cookieParser('your secret sauce')
-  , sessionStore = new connect.middleware.session.MemoryStore()
-
   , SessionSockets = require('session.socket.io')
   , sessionSockets = new SessionSockets(io, sessionStore, cookieParser);
 
@@ -99,7 +95,7 @@ sessionSockets.of('/admin').on('connection', function(err, socket, session) {
     delete socket;
   } else {
     // pass to collection apis
-     
+    collections(socket);     
   }
 });
 

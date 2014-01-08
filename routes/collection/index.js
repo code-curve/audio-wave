@@ -12,6 +12,7 @@ module.exports = function(name) {
     },
   
     get: function(done) {
+      console.log('callback', done);
       db.find(done);
     }, 
   
