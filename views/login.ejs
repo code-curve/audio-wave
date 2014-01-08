@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Audiodrop - Log In</title>
-  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'> 
+  <link rel='stylesheet' href='/components/font-awesome/css/font-awesome.css'>
+  <link rel='stylesheet' href='/css/fonts.css'>
   <link rel='stylesheet' href='/css/admin.css'>
   <link rel='stylesheet' href='/css/login.css'>
 </head>
@@ -16,17 +17,16 @@
     </h1>
     
     
-    <form>
+    <form ng-class='{ invalid: error }'>
       <input type='text' placeholder='name' 
         ng-model='username' ng-change='change()'></input>
       <input type='password' placeholder='password'
         typing-duration='1000' after-typing='login()' 
         ng-model='password' ng-change='change()'></input>
-    
-       <div class='message error' ng-show='error'>
-         <h3>{{error.name}}</h3>
-         <p>{{error.message}}</p>
-       </div>
+     <div class='message error' ng-show='error'>
+        <h3>{{error.name}}</h3>
+        <p>{{error.message}}</p>
+      </div>
     </form>
   </div>
   

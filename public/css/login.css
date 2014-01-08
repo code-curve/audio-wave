@@ -52,18 +52,30 @@ p, h1, h2, h3, h4, h5, h6, ul, ol {
 
 body {
   text-align: center;
-  background-color: #F5F5F5; }
+  background-color: #2ac260; }
 
 form {
-  width: 368px;
+  width: 312px;
   margin: 0 auto; }
 
 input {
+  color: #777;
   border: none;
   border-radius: 4px;
-  font-size: 24pt;
-  padding: 4px;
+  font-weight: 300;
+  font-size: 20pt;
+  padding: 8px;
+  margin: 2px 0;
   outline: none; }
+
+.invalid input {
+  color: #BE0E0E; }
 
 .message {
   margin-top: 4px; }
+
+.logo {
+  color: #fff;
+  font-size: 32pt; }
+  .logo .special {
+    color: #84f0a3; }
