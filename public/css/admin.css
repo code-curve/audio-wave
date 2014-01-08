@@ -41,7 +41,8 @@ input, pre, code {
     border-color: transparent transparent #2ac260 transparent; }
 
 body {
-  background-color: #EEE; }
+  background-color: #EEE;
+  overflow: hidden; }
 
 /* Flexible width sidebar */
 aside.admin.menu {
@@ -74,6 +75,9 @@ ul.items {
     border-right: solid 4px #ddd;
     transition-property: border;
     transition-duration: 0.3s; }
+    ul.items li a {
+      color: #444;
+      text-decoration: none; }
     ul.items li:hover {
       border-color: #2ac260;
       cursor: pointer;

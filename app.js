@@ -32,7 +32,7 @@ app.configure('development', function() {
 // audio wave home page
 app.get('/', routes.index);
 //partials
-app.get('/partial/:name', routes.partial);
+app.get('/partials/:name', routes.partial);
 
 // join session at id
 app.get('/s/:id');

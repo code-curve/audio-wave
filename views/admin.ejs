@@ -1,10 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app='admin'>
 <head>
   <meta charset="UTF-8">
   <title>Audiodrop - Admin</title>
   <link href='/css/fonts.css' rel='stylesheet' type='text/css'> 
+  <link href='/components/font-awesome/css/font-awesome.min.css' 
+    rel='stylesheet' type='text/css'> 
   <link rel='stylesheet' href='/css/admin.css'></link>
+  <link rel='stylesheet' href='/css/sessions.css'></link>
+  
+  <script src='/components/angular/angular.js'></script>
+  <script src='/components/angular-route/angular-route.js'></script>
+  <script src='/build/js/admin.js'></script>
 </head>
 <body>
   
@@ -18,11 +25,11 @@
 
     
     <ul class='items'>
-      <li><a href="#sessions"></a>Sessions</li>
-      <li><a href="#audio"></a>Audio</li>
-      <li><a href="#users"></a>Users</li>
-      <li><a href="#compose"></a>Compose</li>
-      <li><a href="#signout"></a>Sign Out</li>
+      <li><a href="#sessions">Sessions</a></li>
+      <li><a href="#audio">Audio</a></li>
+      <li><a href="#users">Users</a></li>
+      <li><a href="#compose">Compose</a></li>
+      <li><a href="#signout">Sign Out</a></li>
     </ul>
   </aside>
 

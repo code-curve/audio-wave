@@ -1,0 +1,22 @@
+.track {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: #fff; }
+
+.progress {
+  background-color: #20a34f;
+  height: 6px;
+  width: 100%; }
+
+.current {
+  width: 40%;
+  height: 100%;
+  background-color: #2ac260; }
+
+.track button {
+  border: none;
+  margin: 0;
+  font-size: 18pt;
+  background-color: inherit;
+  color: #777; }

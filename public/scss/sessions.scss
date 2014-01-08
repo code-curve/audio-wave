@@ -1,0 +1,28 @@
+@import 'theme';
+
+.track {
+  position:absolute;
+  bottom:0;
+  width:100%;
+  background-color:#fff;
+}
+
+.progress {
+  background-color:$theme-dark;
+  height:6px;
+  width:100%;
+}
+
+.current {
+  width:40%;
+  height:100%;
+  background-color:$theme-primary;
+}
+
+.track button {
+  border:none;
+  margin:0;
+  font-size:18pt;
+  background-color:inherit;
+  color:#777;
+}
