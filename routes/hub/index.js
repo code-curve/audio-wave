@@ -1,8 +1,3 @@
-var Whispers = require('whispers');
-
-var _ = require('../util');
-var comparisons = require('./comparisons');
-
 /**
  * Hub is designed to act as a mediator and doorway
  * between users and the main application. Users
@@ -24,6 +19,10 @@ var comparisons = require('./comparisons');
  * on:      Listen to user events. See Whispers.
  */
 
+var Whispers = require('whispers')
+  , _ = require('../util')
+  , comparisons = require('./comparisons');
+
 module.exports = function(userProxy) {
   
   var users = [];
@@ -35,7 +34,7 @@ module.exports = function(userProxy) {
    * upon registration, builds a proxy from our user proxy
    * and adds it to users.
    */
-  var connect = function(socket) {
+  function connect(socket) {
     
     socket.on('register', function(settings) {
       var proxy, index;
@@ -73,7 +72,7 @@ module.exports = function(userProxy) {
    * default to using users. Otherwise, queries will be
    * performed on this subset.
    */
-  var select = function(metric, comparator, threshold, set) {
+  function select(metric, comparator, threshold, set) {
     
     if(_.undef(set)) {
       set = users;

@@ -17,7 +17,7 @@
     </h1>
     
     
-    <form ng-class='{ invalid: error }'>
+    <form ng-submit='login()' ng-class='{ invalid: error }'>
       <input type='text' placeholder='name' 
         ng-model='username' ng-change='change()'></input>
       <input type='password' placeholder='password'

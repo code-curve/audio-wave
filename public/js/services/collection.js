@@ -25,7 +25,13 @@ module.exports = function(adminSocket) {
    * Store all available collections
    * in here.
    */
-  var collections = {};  
+  var collections = {};
+
+  /**
+   * Has this socket recieved ready
+   * signal?
+   */
+  var ready = false;
 
   /**
    * Find and return a model from a collection
@@ -63,7 +69,8 @@ module.exports = function(adminSocket) {
    */ 
   function model(name) {
     var collection, socket, event;
-    
+
+    console.log(name, 'service'); 
     // if we have already loaded this collection
     if(collections[name]) {
       //return it straight away
@@ -75,9 +82,14 @@ module.exports = function(adminSocket) {
     collection = collections[name] = [];
     event = events(name);
 
-    socket.on('ready', function() {
+    if(!ready) {
+      socket.on('ready', function() {
+        socket.emit(event.get);
+        ready = true;
+      });
+    } else {
       socket.emit(event.get);
-    });
+    }
     
     /**
      * Socket Events
