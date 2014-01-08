@@ -33,19 +33,21 @@ button {
 .message {
   text-align: left;
   border-radius: 4px;
-  padding: 8px; }
+  padding: 8px;
+  background-color: #EEE;
+  color: #BBB; }
   .message h3, .message p {
     margin: 0;
     padding: 0; }
 
-.error {
+.error.message {
   background-color: #FFAAAA;
   color: #BE0E0E; }
 
-.success {
+.success.message {
   background-color: #AAFFAA;
   color: #0EBE0E; }
 
-.info {
+.info.message {
   background-color: #E5E5F3;
   color: #BABAD6; }

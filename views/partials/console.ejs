@@ -1,6 +1,9 @@
 <ul class='messages'>
   <li ng-repeat='message in messages'>
-    {{message.body}}
+    <div class='{{message.type}}'>
+      <strong>{{message.name}}</strong>
+      {{message.body}}
+    </div>
   </li>
 </ul>
 

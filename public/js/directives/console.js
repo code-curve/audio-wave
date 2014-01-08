@@ -23,15 +23,31 @@ module.exports = function() {
         }
       });
     },
-    controller: function($scope) {
+    controller: function($scope, adminSocket) {
+      var socket;
+
       $scope.messages = [];
       $scope.input = '';
-      
+
+      adminSocket.on('message', function(message) {
+        $scope.addMessage(message);
+      });
+
+      $scope.clear = function() {
+        $scope.input = '';
+      };
+
+      $scope.addMessage = function(message) {
+        console.log(message);
+        $scope.messages.push(message);
+      };
+       
       $scope.send = function() {
-        $scope.messages.push({
+        $scope.addMessage({
           body: $scope.input
         });
-        $scope.input = '';
+        adminSocket.emit('message', $scope.input);
+        $scope.clear();
       };
     }
   };

@@ -82,27 +82,42 @@ app.get('/auth/logout', auth.logout);
  * Sockets
  */
 
-sockets.of('/admin').on('connection', function(err, socket, session) {
+var admins = sockets.of('/admin');
+admins.on('connection', function(err, socket, session) {
   if(err) throw err;
   
   // sockets that connect to /admin must authenticate  
   if(!session.name) {
     // log no auth
     // TODO  
+    
     socket.emit('Not authenticated. Closing connection');
     delete socket;
   } else {
     // log success
     // TODO
+    
     // pass to collection apis
-    collections(socket);     
+    collections(socket);
+
+    socket.on('message', function() {
+      
+    });
+
+    socket.broadcast.emit('message', {
+      name: session.name,
+      body: 'has connected',
+      type: 'connection' 
+    });
+
   }
 });
 
-sockets.of('/users').on('connection', function(err, socket, session) {
+var users = sockets.of('/users');
+users.on('connection', function(err, socket, session) {
   if(err) throw err;
   console.log('Socket connected');
-  
+    
   // pass socket straight through to Hub
 });
 

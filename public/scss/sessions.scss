@@ -52,15 +52,32 @@
   background-color:inherit;
   color:inherit;
   font:inherit;
- 
+  padding:0;
+  margin:0;  
+
   &:before {
-    content: '> '
+    content: '> ';
+    color:#fff;
   }
 }
 
 .console .messages {
   @include reset;
   list-style-type:none;
+}
+
+.messages {
+  .danger .name{
+    color:red;
+  }
+
+  .warning .name {
+    color:yellow;
+  }
+
+  .info .name {
+    color:blue;
+  }
 }
 
 .visible {

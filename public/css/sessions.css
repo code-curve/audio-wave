@@ -74,15 +74,25 @@ button {
   border: none;
   background-color: inherit;
   color: inherit;
-  font: inherit; }
+  font: inherit;
+  padding: 0;
+  margin: 0; }
   .console .input:before {
-    content: "> "; }
+    content: '> ';
+    color: #fff; }
 
 .console .messages {
   padding: 0;
   margin: 0;
   list-style-type: none;
   list-style-type: none; }
+
+.messages .danger .name {
+  color: red; }
+.messages .warning .name {
+  color: yellow; }
+.messages .info .name {
+  color: blue; }
 
 .visible {
   display: block; }

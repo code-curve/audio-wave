@@ -81,20 +81,22 @@ button {
 .message {
   text-align: left;
   border-radius: 4px;
-  padding: 8px; }
+  padding: 8px;
+  background-color: #EEE;
+  color: #BBB; }
   .message h3, .message p {
     margin: 0;
     padding: 0; }
 
-.error {
+.error.message {
   background-color: #FFAAAA;
   color: #BE0E0E; }
 
-.success {
+.success.message {
   background-color: #AAFFAA;
   color: #0EBE0E; }
 
-.info {
+.info.message {
   background-color: #E5E5F3;
   color: #BABAD6; }
 
@@ -163,8 +165,14 @@ ul.items {
 /* Panel for collections editor */
 .actions {
   margin-left: 300px;
-  background-color: #fbfbfb;
-  height: 100%; }
+  height: 100%;
+  padding: 8px;
+  padding-top: 24px; }
+
+.panel {
+  margin-top: -16px;
+  height: 100%;
+  background-color: #fff; }
 
 /* Collection Panels */
 .collection {
@@ -194,4 +202,4 @@ ul.items {
     background-color: #fdfdfd; }
 
 .depth-1 {
-  background-color: #F7F7F7; }
+  background-color: #F5F5F5; }

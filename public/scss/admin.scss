@@ -87,8 +87,15 @@ ul.items {
 /* Panel for collections editor */
 .actions {
   margin-left:$collection-width;
-  background-color:#fbfbfb; 
   height:100%;
+  padding:8px;
+  padding-top:24px; 
+}
+
+.panel {
+  margin-top:-16px;
+  height:100%;
+  background-color:#fff;
 }
 
 /* Collection Panels */
@@ -126,5 +133,5 @@ ul.items {
 }
 
 .depth-1 {
-  background-color:#F7F7F7;
+  background-color:#F5F5F5;
 }
