@@ -12,7 +12,6 @@ module.exports = function() {
 
       // call to $scope.models.create()
       // will reflect in database
-      
     }
   }  
 };

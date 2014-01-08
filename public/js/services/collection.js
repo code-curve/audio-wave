@@ -24,7 +24,12 @@ module.exports = function(adminSocket) {
    */
   function model(name) {
     var collection, socket, event;
-      
+    
+    // if it exists, return it
+    if(collections[name]) {
+      return collections[name];
+    }
+     
     socket = adminSocket;
     collection = collections[name] = [];
     event = events(name);

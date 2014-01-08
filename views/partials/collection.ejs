@@ -9,21 +9,21 @@
   <table ng-show='models && models.length > 0'>
     <thead>
       <tr>
-        <td ng-repeat='(key, value) in models[0]'>
+        <td ng-repeat='(key, value) in models[0]' ng-hide='key[0] == "_"'>
           {{key}}
         </td>
       </tr>
     </thead>
     <tbody>
       <tr ng-repeat='model in models | filter:search'>
-        <td ng-repeat='key in model'>
-          {{key}}
+        <td ng-repeat='(key, value) in model' ng-hide='key[0] == "_"'>
+          {{value}}
         </td>
       </tr>
     </tbody>
   </table>
 
-  <div class='message info' ng-hide='models || models.length > 0'>
+  <div class='message info' ng-hide='models.length > 0'>
     <p>No {{name}} avaiable</p>
   </div>
 
