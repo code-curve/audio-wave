@@ -8,7 +8,11 @@ module.exports = function(name) {
   var actions = {
   
     create: function(item, done) {
-      db.insert(item, done);
+      db.insert(item, function() {
+        // callback with item so
+        // clients know what to add
+        done(item);
+      });
     },
   
     get: function(done) {
@@ -17,11 +21,18 @@ module.exports = function(name) {
     }, 
   
     update: function(where, values, done) {
-      db.update(where, { $set: values }, done);
+      db.update(where, { $set: values }, function() {
+        // callback with ...
+        done(where, values);
+      });
     },
   
     remove: function(item, done) {
-      db.remove(item, done);
+      db.remove(item, function() {
+        // callback with item so
+        // clients know what to remove
+        done(item);
+      });
     }
   
   };

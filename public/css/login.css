@@ -44,11 +44,11 @@ p, h1, h2, h3, h4, h5, h6, ul, ol {
 
 .success {
   background-color: #AAFFAA;
-  color: #E0BEE0; }
+  color: #0EBE0E; }
 
 .info {
-  background-color: #AAAAFF;
-  color: #E0E0BE; }
+  background-color: #E5E5F3;
+  color: #BABAD6; }
 
 body {
   text-align: center;

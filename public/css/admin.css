@@ -78,6 +78,26 @@ button {
     border-width: 0 15px 30px 15px;
     border-color: transparent transparent #2ac260 transparent; }
 
+.message {
+  text-align: left;
+  border-radius: 4px;
+  padding: 8px; }
+  .message h3, .message p {
+    margin: 0;
+    padding: 0; }
+
+.error {
+  background-color: #FFAAAA;
+  color: #BE0E0E; }
+
+.success {
+  background-color: #AAFFAA;
+  color: #0EBE0E; }
+
+.info {
+  background-color: #E5E5F3;
+  color: #BABAD6; }
+
 body {
   background-color: #EEE;
   overflow: hidden; }

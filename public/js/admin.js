@@ -23,5 +23,11 @@ config(function($routeProvider) {
   });
 }).
 
+// directives
 directive('console', require('./directives/console')).
-factory('socket', require('./services/socket'));
+directive('collection', require('./directives/collection')).
+// services
+factory('socket', require('./services/socket')).
+factory('userSocket', require('./services/userSocket')).
+factory('collection', require('./services/collection')).
+factory('adminSocket', require('./services/adminSocket'));
