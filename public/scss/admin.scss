@@ -24,7 +24,7 @@ aside.admin.menu {
 .view {
   @include max;
   width:auto;
-  padding-left:$sidebar-width; 
+  margin-left:$sidebar-width; 
 }
 
 /* Menu Items */

@@ -21,6 +21,7 @@ config(function($routeProvider) {
   otherwise({
     redirectTo: '/sessions'
   });
-});
+}).
 
+directive('console', require('./directives/console'));
 

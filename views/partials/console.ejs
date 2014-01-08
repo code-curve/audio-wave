@@ -1,0 +1,9 @@
+<ul class='messages'>
+  <li ng-repeat='message in messages'>
+    {{message.body}}
+  </li>
+</ul>
+
+<form ng-submit='send()'>
+  <input type='text' class='input' length='30' ng-model='input'></input>
+</form>

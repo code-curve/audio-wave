@@ -1,9 +1,17 @@
+@import 'reset';
 @import 'theme';
 
-.track {
+.bottom {
   position:absolute;
+  display:block;
   bottom:0;
+  left:0;
+  padding-left:200px;
   width:100%;
+  box-sizing: border-box;
+}
+
+.track {
   background-color:#fff;
 }
 
@@ -25,4 +33,34 @@
   font-size:18pt;
   background-color:inherit;
   color:#777;
+}
+
+.console {
+  height:200px;
+  width:100%;
+  font-family:'monospace';
+  background-color:$theme-dark;
+  padding:8px;
+  color:#FFF;
+  overflow-y:scroll;
+  display:block;
+}
+
+.console .input {
+  width:100%;
+  outline:none;
+  border:none;
+  background-color:inherit;
+  color:inherit;
+  font:inherit;
+ 
+  &:before {
+    content: '> '
+  }
+}
+
+.console .messages {
+  @include reset;
+  list-style-type:none;
+
 }
