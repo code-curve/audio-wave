@@ -1,3 +1,3 @@
 var collection = require('../collection');
 
-module.exports = collection('audio');
+module.exports = collection('admins');

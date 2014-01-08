@@ -6,7 +6,15 @@ input {
   border:none;
   outline:none;
   padding:4px;
+  background-color:#fbfbfb;
+  transition-duration:0.3s;
 }
+
+input:focus {
+  background-color:#fff;
+  transition-duration:0.3s;
+}
+
 
 button {
   border:none;

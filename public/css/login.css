@@ -1,7 +1,13 @@
 input {
   border: none;
   outline: none;
-  padding: 4px; }
+  padding: 4px;
+  background-color: #fbfbfb;
+  transition-duration: 0.3s; }
+
+input:focus {
+  background-color: #fff;
+  transition-duration: 0.3s; }
 
 button {
   border: none;
@@ -18,6 +24,11 @@ html, body {
 
 input, pre, code {
   font-family: 'Open Sans', sans-serif; }
+
+p, h1, h2, h3, h4, h5, h6, ul, ol {
+  padding: 0;
+  margin: 0;
+  list-style-type: none; }
 
 .message {
   text-align: left;

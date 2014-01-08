@@ -10,7 +10,9 @@
     "socket.io": "*",
     "ejs": "*",
     "mongojs": "*",
-    "whispers": "~0.0.2"
+    "whispers": "~0.0.2",
+    "session.socket.io": "~0.1.6",
+    "connect-mongo": "~0.4.0"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

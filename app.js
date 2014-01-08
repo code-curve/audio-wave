@@ -1,33 +1,64 @@
 
 /**
- * Module dependencies.
+ * Module dependencies
  */
-
-var admin = require('./routes/admin')
-  , audio = require('./routes/audio');
 
 var express = require('express')
   , routes = require('./routes')
   , http = require('http')
-  , path = require('path');
+  , path = require('path')
+  , MongoStore = require('connect-mongo')(express)
+  , io = require('socket.io');
 
-var app = express();
+/**
+ * Route dependencies
+ */
 
-  app.set('port', process.env.PORT || 3000);
-  app.set('views', __dirname + '/views');
-  app.set('view engine', 'ejs');
-  app.use(express.favicon());
-  app.use(express.logger('dev'));
-  app.use(express.bodyParser());
-  app.use(express.methodOverride());
-  app.use(express.static(path.join(__dirname, 'public')));
-  app.use(express.cookieParser());
-  app.use(express.session({secret: 'audioallovertheworld'}));
-  app.use(app.router);
+var Hub = require('./routes/hub'),
+  , auth = require('./routes/auth')
+  , audio = require('./routes/audio')
+  , tracks = require('./routes/tracks')
+  , admins = require('./routes/admins');
+
+/**
+ * Server setup
+ */
+
+var app = express()
+  , server = http.createServer(app)
+  , io = io.listen(server);
+
+/**
+ * Session setup
+ */
+
+var sessionStore = new MongoStore({ db: 'audio-drop' })
+  , cookieParser = express.cookieParser();
+  , SessionSockets = require('session.socket.io')
+  , sessionSockets = new SessionSockets(io, sessionStore, cookieParser);
+
+app.set('port', process.env.PORT || 3000);
+app.set('views', __dirname + '/views');
+app.set('view engine', 'ejs');
+app.use(express.favicon());
+app.use(express.logger('dev'));
+app.use(express.bodyParser());
+app.use(express.methodOverride());
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(cookieParser);
+app.use(express.session({
+  secret: 'audioallovertheworld'
+  store: sessionStore
+}));
+app.use(app.router);
 
 app.configure('development', function() {
   app.use(express.errorHandler());
 });
+
+/**
+ * Routes
+ */
 
 // audio wave home page
 app.get('/', routes.index);
@@ -38,17 +69,15 @@ app.get('/partials/:name', routes.partial);
 app.get('/s/:id');
 
 // get admin app
-app.get('/admin', admin.auth, admin.index);
+app.get('/admin', auth.check, routes.admin);
 // get login screen
-app.get('/admin/login', admin.login);
+app.get('/admin/login', routes.login);
+
+// sign in
+app.post('/auth/login', auth.login);
 // sign out
-app.get('/admin/logout', admin.logout);
+app.get('/auth/logout', auth.logout);
 
-// http api
-app.post('/admin/api/authenticate', admin.api.authenticate);
-app.get('/admin/api/create', admin.auth, admin.api.create);
-app.get('/admin/api/delete', admin.auth, admin.api.delete);
+// single entry for socket connections
+io.sockets.on('connection', Hub.connect);
 
-http.createServer(app).listen(app.get('port'), function() {
-  console.log("Express server listening on port " + app.get('port'));
-});

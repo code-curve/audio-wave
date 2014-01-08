@@ -9,10 +9,21 @@ html, body {
 input, pre, code {
   font-family: 'Open Sans', sans-serif; }
 
+p, h1, h2, h3, h4, h5, h6, ul, ol {
+  padding: 0;
+  margin: 0;
+  list-style-type: none; }
+
 input {
   border: none;
   outline: none;
-  padding: 4px; }
+  padding: 4px;
+  background-color: #fbfbfb;
+  transition-duration: 0.3s; }
+
+input:focus {
+  background-color: #fff;
+  transition-duration: 0.3s; }
 
 button {
   border: none;
@@ -22,7 +33,13 @@ button {
 input {
   border: none;
   outline: none;
-  padding: 4px; }
+  padding: 4px;
+  background-color: #fbfbfb;
+  transition-duration: 0.3s; }
+
+input:focus {
+  background-color: #fff;
+  transition-duration: 0.3s; }
 
 button {
   border: none;
@@ -36,7 +53,8 @@ button {
 .logo {
   text-align: center;
   font-weight: 300;
-  font-size: 24pt; }
+  font-size: 24pt;
+  margin: 40px 0; }
   .logo .special {
     color: #2ac260; }
   .logo:before {
@@ -77,6 +95,7 @@ aside.admin.menu {
 .view {
   width: 100%;
   height: 100%;
+  position: relative;
   width: auto;
   margin-left: 200px; }
 
@@ -104,3 +123,53 @@ ul.items {
       background-color: #E0FFEA; }
     ul.items li:active {
       border: none; }
+
+/* Search Controls */
+.search {
+  position: absolute;
+  width: 100%;
+  top: 0; }
+  .search input {
+    box-sizing: border-box;
+    width: 100%;
+    padding-right: 20px;
+    color: #555; }
+  .search i {
+    color: #eee;
+    position: absolute;
+    top: 6px;
+    right: 6px; }
+
+.actions {
+  margin-left: 300px;
+  background-color: #fbfbfb;
+  height: 100%; }
+
+/* Collection Panels */
+.collection {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 300px;
+  padding-top: 26px;
+  /* Account for search */
+  box-sizing: border-box;
+  height: 100%; }
+
+.collection table {
+  width: 100%;
+  font-size: 16pt;
+  color: #666;
+  border-spacing: 0;
+  font-weight: 300; }
+  .collection table thead {
+    text-align: left;
+    color: #2ac260; }
+  .collection table td {
+    padding: 4px; }
+  .collection table tbody tr:hover {
+    cursor: pointer;
+    background-color: #fdfdfd; }
+
+.depth-1 {
+  background-color: #F7F7F7; }

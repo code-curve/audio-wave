@@ -40,7 +40,7 @@ module.exports = function($scope, $http) {
     
     if($scope.validate()) {
       
-      $http.post('/admin/api/authenticate', {
+      $http.post('/auth/login', {
         name: $scope.username,
         password: $scope.password
       }).

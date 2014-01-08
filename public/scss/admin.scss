@@ -4,6 +4,7 @@
 @import 'logo';
 
 $sidebar-width: 200px;
+$collection-width: 300px;
 
 body {
   background-color:#EEE;
@@ -23,6 +24,7 @@ aside.admin.menu {
 /* Flexible width content area */
 .view {
   @include max;
+  position:relative;
   width:auto;
   margin-left:$sidebar-width; 
 }
@@ -60,3 +62,66 @@ ul.items {
 
 }
 
+/* Search Controls */
+.search {
+  position:absolute;
+  width:100%;
+  top:0;
+  input {
+    box-sizing:border-box;
+    width:100%;
+    padding-right:20px;
+    color:#555;
+  }
+
+  i {
+    color:#eee;
+    position:absolute;
+    top:6px;
+    right:6px;
+  }
+
+}
+
+.actions {
+  margin-left:$collection-width;
+  background-color:#fbfbfb; 
+  height:100%;
+}
+
+/* Collection Panels */
+.collection {
+  position:absolute;
+  top:0;
+  left:0;
+  width:$collection-width;
+  padding-top:26px; /* Account for search */
+  box-sizing:border-box;
+  height:100%;
+}
+
+.collection table {
+  width:100%;
+  font-size:16pt;
+  color:#666;
+  border-spacing:0;
+  font-weight:300; 
+
+  thead {
+    text-align:left; 
+    color:$theme-primary;
+  }
+
+  td {
+    padding:4px;
+  }
+  
+  tbody tr:hover {
+    cursor:pointer;
+    background-color:#fdfdfd;
+  }
+}
+
+.depth-1 {
+  background-color:#F7F7F7;
+}
