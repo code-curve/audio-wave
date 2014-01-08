@@ -11,6 +11,8 @@
     "font-awesome": "~4.0.3",
     "angular": "~1.2.7",
     "angular-route": "~1.2.7",
-    "angular-file-upload": "~0.2.7"
+    "angular-file-upload": "~0.2.7",
+    "angular-socket-io": "~0.3.0",
+    "socket.io-client": "~0.9.16"
   }
 }

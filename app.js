@@ -7,6 +7,7 @@ var express = require('express')
   , routes = require('./routes')
   , http = require('http')
   , path = require('path')
+  , connect = require('connect')
   , MongoStore = require('connect-mongo')(express)
   , io = require('socket.io');
 
@@ -31,6 +32,11 @@ var app = express()
 
 var sessionStore = new MongoStore({ db: 'audio-drop' })
   , cookieParser = express.cookieParser('waytoblue')
+  
+  // test examples
+  , cookieParser = express.cookieParser('your secret sauce')
+  , sessionStore = new connect.middleware.session.MemoryStore()
+
   , SessionSockets = require('session.socket.io')
   , sessionSockets = new SessionSockets(io, sessionStore, cookieParser);
 
@@ -44,7 +50,6 @@ app.use(express.methodOverride());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser);
 app.use(express.session({
-  secret: 'cellosong',
   store: sessionStore
 }));
 app.use(app.router);
@@ -86,17 +91,20 @@ console.log('Create Sockets');
 sessionSockets.of('/admin').on('connection', function(err, socket, session) {
   if(err) throw err;
   // sockets that connect to /admin must authenticate
+
+  console.log('Socket connection to /admin');
+
   if(!session.name) {
     socket.emit('Not authenticated. Closing connection');
     delete socket;
   } else {
     // pass to collection apis
-      
+     
   }
 });
 
-sessionSockets.on('connection', function(err, socket, session) {
+sessionSockets.of('/users').on('connection', function(err, socket, session) {
   if(err) throw err;
-  Hub.connect(socket);
+  console.log('Socket connected');
 });
 

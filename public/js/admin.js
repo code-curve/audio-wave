@@ -1,4 +1,4 @@
-angular.module('admin', ['ngRoute']).
+angular.module('admin', ['ngRoute', 'btford.socket-io']).
 
 config(function($routeProvider) {
   $routeProvider.
@@ -23,5 +23,5 @@ config(function($routeProvider) {
   });
 }).
 
-directive('console', require('./directives/console'));
-
+directive('console', require('./directives/console')).
+factory('socket', require('./services/socket'));
