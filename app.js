@@ -14,11 +14,8 @@ var express = require('express')
  * Route dependencies
  */
 
-var Hub = require('./routes/hub'),
-  , auth = require('./routes/auth')
-  , audio = require('./routes/audio')
-  , tracks = require('./routes/tracks')
-  , admins = require('./routes/admins');
+var Hub = require('./routes/hub')
+  , auth = require('./routes/auth');
 
 /**
  * Server setup
@@ -33,7 +30,7 @@ var app = express()
  */
 
 var sessionStore = new MongoStore({ db: 'audio-drop' })
-  , cookieParser = express.cookieParser();
+  , cookieParser = express.cookieParser('waytoblue')
   , SessionSockets = require('session.socket.io')
   , sessionSockets = new SessionSockets(io, sessionStore, cookieParser);
 
@@ -47,18 +44,21 @@ app.use(express.methodOverride());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser);
 app.use(express.session({
-  secret: 'audioallovertheworld'
+  secret: 'cellosong',
   store: sessionStore
 }));
 app.use(app.router);
+server.listen(app.get('port'));
 
 app.configure('development', function() {
   app.use(express.errorHandler());
 });
 
+
 /**
  * Routes
  */
+console.log('Create Routes');
 
 // audio wave home page
 app.get('/', routes.index);
@@ -72,12 +72,31 @@ app.get('/s/:id');
 app.get('/admin', auth.check, routes.admin);
 // get login screen
 app.get('/admin/login', routes.login);
-
 // sign in
 app.post('/auth/login', auth.login);
 // sign out
 app.get('/auth/logout', auth.logout);
 
+/**
+ * Sockets
+ */
+console.log('Create Sockets');
+
 // single entry for socket connections
-io.sockets.on('connection', Hub.connect);
+sessionSockets.of('/admin').on('connection', function(err, socket, session) {
+  if(err) throw err;
+  // sockets that connect to /admin must authenticate
+  if(!session.name) {
+    socket.emit('Not authenticated. Closing connection');
+    delete socket;
+  } else {
+    // pass to collection apis
+      
+  }
+});
+
+sessionSockets.on('connection', function(err, socket, session) {
+  if(err) throw err;
+  Hub.connect(socket);
+});
 

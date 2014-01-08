@@ -32,8 +32,10 @@ module.exports = {
       } else {
         error = api.error({
           auth: false,
-          title: 'Nope',
-          message: 'Invalid credentials.'
+          error: {
+            name: 'Nope',
+            message: 'Invalid credentials.'
+          }
         });
         res.json(error);
       }   
