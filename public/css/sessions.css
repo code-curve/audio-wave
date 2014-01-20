@@ -85,14 +85,15 @@ button {
   padding: 0;
   margin: 0;
   list-style-type: none;
-  list-style-type: none; }
+  list-style-type: none;
+  padding-bottom: 4px; }
 
-.messages .danger .name {
+.messages .danger strong {
   color: red; }
-.messages .warning .name {
-  color: yellow; }
-.messages .info .name {
-  color: blue; }
+.messages .warning strong {
+  color: #E0A21C; }
+.messages .info strong {
+  color: #00CE84; }
 
 .visible {
   display: block; }

@@ -1,21 +1,31 @@
-module.exports = function() {
+module.exports = function(uiState) {
   return {
     restrict: 'A',
     templateUrl: 'partials/console',
     link: function(scope, element, attrs) { 
-      var showing = false;
-      
-      document.addEventListener('keydown', function(e) {
+      var showing, uiKey;
+
+      uiKey = 'console-state'
+      showing = (uiState.load(uiKey) || false);
+     
+      checkVisibility();
+ 
+      function checkVisibility() {
+        if(showing) {
+          element.addClass('visible');
+          element.find('input')[0].focus();
+        } else {
+          element.removeClass('visible');
+        } 
+      }
+        
+      document.addEventListener('keydown', function(e)   {
         // toggle on ` key
         if(e.keyCode === 192) {
           showing = !showing;
+          uiState.save(uiKey, showing);
         
-          if(showing) {
-            element.addClass('visible');
-          } else {
-            element.removeClass('visible');
-          }
-          
+          checkVisibility();
           // give focus to input 
           element.find('input')[0].focus();
           // stop ` being inserted
@@ -23,7 +33,7 @@ module.exports = function() {
         }
       });
     },
-    controller: function($scope, adminSocket) {
+    controller: function($scope, $element, adminSocket) {
       var socket;
 
       $scope.messages = [];
@@ -38,7 +48,7 @@ module.exports = function() {
       };
 
       $scope.addMessage = function(message) {
-        console.log(message);
+        $element[0].scrollTop = $element[0].scrollHeight
         $scope.messages.push(message);
       };
        

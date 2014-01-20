@@ -1,14 +1,14 @@
-/**
- * Admin
- *
- * The admin application is responsible for keeping
- * track of all sessions, devices, audio files and
- * composed songs.
- * 
- * It also provides a console for talking to the
- * server and the compose interface for creating
- * song files from the available audio files.
- */
+// Admin
+// -----
+
+// The admin application is responsible for keeping
+// track of all sessions, devices, audio files and
+// composed songs.
+// 
+// It also provides a console for talking to the
+// server and the compose interface for creating
+// song files from the available audio files.
+//
 
 angular.module('admin', ['ngRoute', 'btford.socket-io']).
 
@@ -16,43 +16,64 @@ config(function($routeProvider) {
   $routeProvider.
   when('/sessions', {
     templateUrl: '/partials/sessions',
-    controller: require('./controllers/SessionsController.js')
+    controller: 'SessionController'
   }).
   when('/audio', {
     templateUrl: '/partials/audio',
-    controller: require('./controllers/AudioController.js')
+    controller: 'AudioController'
   }).
   when('/users', {
     templateUrl: '/partials/users',
-    controller: require('./controllers/UsersController.js')
+    controller: 'UsersController'
   }).
   when('/compose', {
     templateUrl: '/partials/compose',
-    controller: require('./controllers/ComposeController.js')
+    controller: 'ComposeController'
   }).
   otherwise({
     redirectTo: '/sessions'
   });
 }).
 
-/**
- * Directives
- */
+// Controllers
+// -----------
 
-// interface for editing collections
-directive('editor', require('./directives/editor')).
-// console for server communication
-directive('console', require('./directives/console')).
-// searchable collection interface 
-directive('collection', require('./directives/collection')).
+controller({
+  // Manage devices in sessions
+  'SessisionsController': require('./controllers/SessionsController'),
+  // Composition of song files
+  'ComposeController': require('./controllers/ComposeController'),
+  // Manage administrators and registered users
+  'UsersController': require('./controllers/UsersController'),
+  // Manage uploaded audio tracks
+  'AudioController': require('./controllers/AudioController')
+}).
 
-/**
- * Services
- */
+// Directives
+// ----------
 
-// web socket wrapper
-factory('socket', require('./services/socket')).
-// socket connect to admin channel
-factory('adminSocket', require('./services/adminSocket')).
-// collection maintainer
-factory('collection', require('./services/collection'));
+directive({
+  // Interface for editing collections
+  'editor': require('./directives/editor'),
+  // Console for server communication
+  'console': require('./directives/console'),
+  // Searchable collection interface 
+  'collection': require('./directives/collection')
+}).
+
+
+// Services
+// --------
+
+factory({
+  // Localstorage + cookie shim
+  'storage': require('./services/storage'),
+  // Maintain state of ui
+  'uiState': require('./services/uiState'),
+  // Web socket wrapper
+  'socket': require('./services/socket'),
+  // Socket connect to admin channel
+  'adminSocket': require('./services/adminSocket'),
+  // Collection maintainer
+  'collection': require('./services/collection')
+});

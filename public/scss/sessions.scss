@@ -64,19 +64,20 @@
 .console .messages {
   @include reset;
   list-style-type:none;
+  padding-bottom:4px;
 }
 
 .messages {
-  .danger .name{
+  .danger strong{
     color:red;
   }
 
-  .warning .name {
-    color:yellow;
+  .warning strong {
+    color:#E0A21C;
   }
 
-  .info .name {
-    color:blue;
+  .info strong {
+    color:#00CE84;
   }
 }
 

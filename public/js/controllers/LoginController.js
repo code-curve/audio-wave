@@ -1,12 +1,12 @@
-/** 
- * Login controller
- * 
- * Responsible for authenticating a user from
- * a form. Two stage validation and 
- * authentication. Displays errors and uses
- * $http to make auth request then redirects
- * on success.
- */
+ 
+// Login controller
+// ----------------
+ 
+// Responsible for authenticating a user from
+// a form. Two stage validation and 
+// authentication. Displays errors and uses
+// $http to make auth request then redirects
+// on success.
 
 module.exports = function($scope, $http) {
   // two-way bindings
@@ -15,11 +15,10 @@ module.exports = function($scope, $http) {
   // error object (name, message)
   $scope.error = null;
   
-  /**
-   * Validates both username and password, returns
-   * boolean based on whether they passed or failed
-   * and sets $scope.error to reflect why
-   */
+  // ## validate
+  // Validates both username and password, returns
+  // boolean based on whether they passed or failed
+  // and sets $scope.error to reflect why
   $scope.validate = function() {
     if($scope.username.length < 3 || $scope.username.length > 12) {
       $scope.error = {
@@ -45,20 +44,18 @@ module.exports = function($scope, $http) {
     return true;
   };
 
-  /**
-   * Called every time the user types in
-   * either input, then resets any errors.
-   */
+  // ## change
+  // Called every time the user types in
+  // either input, then resets any errors.
   $scope.change = function() {
     $scope.error = null;
   };
 
-  /**
-   * Validates the form, and if the validation
-   * succeeds, makes a HTTP request to the 
-   * auth REST api. Redirects if the request
-   * succeeds, show appropriate error if not. 
-   */
+  // ## login
+  // Validates the form, and if the validation
+  // succeeds, makes a HTTP request to the 
+  // auth REST api. Redirects if the request
+  // succeeds, show appropriate error if not. 
   $scope.login = function() {
     
     if($scope.validate()) {

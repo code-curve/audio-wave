@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>console.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page">
+            
+              
+              <a class="source" href="admin.html">
+                admin.js
+              </a>
+            
+              
+              <a class="source" href="app.html">
+                app.js
+              </a>
+            
+              
+              <a class="source" href="AudioController.html">
+                AudioController.js
+              </a>
+            
+              
+              <a class="source" href="ComposeController.html">
+                ComposeController.js
+              </a>
+            
+              
+              <a class="source" href="ConsoleController.html">
+                ConsoleController.js
+              </a>
+            
+              
+              <a class="source" href="LoginController.html">
+                LoginController.js
+              </a>
+            
+              
+              <a class="source" href="SessionsController.html">
+                SessionsController.js
+              </a>
+            
+              
+              <a class="source" href="UsersController.html">
+                UsersController.js
+              </a>
+            
+              
+              <a class="source" href="afterTyping.html">
+                afterTyping.js
+              </a>
+            
+              
+              <a class="source" href="collection.html">
+                collection.js
+              </a>
+            
+              
+              <a class="source" href="console.html">
+                console.js
+              </a>
+            
+              
+              <a class="source" href="editor.html">
+                editor.js
+              </a>
+            
+              
+              <a class="source" href="login.html">
+                login.js
+              </a>
+            
+              
+              <a class="source" href="adminSocket.html">
+                adminSocket.js
+              </a>
+            
+              
+              <a class="source" href="collection.html">
+                collection.js
+              </a>
+            
+              
+              <a class="source" href="controls.html">
+                controls.js
+              </a>
+            
+              
+              <a class="source" href="socket.html">
+                socket.js
+              </a>
+            
+              
+              <a class="source" href="storage.html">
+                storage.js
+              </a>
+            
+              
+              <a class="source" href="uiState.html">
+                uiState.js
+              </a>
+            
+              
+              <a class="source" href="userSocket.html">
+                userSocket.js
+              </a>
+            
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>console.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>module.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(uiState)</span> {</span>
+  <span class="hljs-keyword">return</span> {
+    restrict: <span class="hljs-string">'A'</span>,
+    templateUrl: <span class="hljs-string">'partials/console'</span>,
+    link: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(scope, element, attrs)</span> {</span> 
+      <span class="hljs-keyword">var</span> showing, uiKey;
+
+      uiKey = <span class="hljs-string">'console-state'</span>
+      showing = (uiState.load(uiKey) || <span class="hljs-literal">false</span>);
+     
+      checkVisibility();
+ 
+      <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">checkVisibility</span><span class="hljs-params">()</span> {</span>
+        <span class="hljs-keyword">if</span>(showing) {
+          element.addClass(<span class="hljs-string">'visible'</span>);
+          element.find(<span class="hljs-string">'input'</span>)[<span class="hljs-number">0</span>].focus();
+        } <span class="hljs-keyword">else</span> {
+          element.removeClass(<span class="hljs-string">'visible'</span>);
+        } 
+      }
+        
+      document.addEventListener(<span class="hljs-string">'keydown'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(e)</span>   {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>toggle on ` key</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span>(e.keyCode === <span class="hljs-number">192</span>) {
+          showing = !showing;
+          uiState.save(uiKey, showing);
+        
+          checkVisibility();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>give focus to input </p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>          element.find(<span class="hljs-string">'input'</span>)[<span class="hljs-number">0</span>].focus();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>stop ` being inserted</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>          e.preventDefault();
+        }
+      });
+    },
+    controller: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">($scope, $element, adminSocket)</span> {</span>
+      <span class="hljs-keyword">var</span> socket;
+
+      $scope.messages = [];
+      $scope.input = <span class="hljs-string">''</span>;
+
+      adminSocket.on(<span class="hljs-string">'message'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(message)</span> {</span>
+        $scope.addMessage(message);
+      });
+
+      $scope.clear = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+        $scope.input = <span class="hljs-string">''</span>;
+      };
+
+      $scope.addMessage = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(message)</span> {</span>
+        $element[<span class="hljs-number">0</span>].scrollTop = $element[<span class="hljs-number">0</span>].scrollHeight
+        $scope.messages.push(message);
+      };
+       
+      $scope.send = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+        $scope.addMessage({
+          body: $scope.input
+        });
+        adminSocket.emit(<span class="hljs-string">'message'</span>, $scope.input);
+        $scope.clear();
+      };
+    }
+  };
+};</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

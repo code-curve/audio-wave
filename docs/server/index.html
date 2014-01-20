@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>index.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page">
+            
+              
+              <a class="source" href="app.html">
+                app.js
+              </a>
+            
+              
+              <a class="source" href="index.html">
+                index.js
+              </a>
+            
+              
+              <a class="source" href="index.html">
+                index.js
+              </a>
+            
+              
+              <a class="source" href="api.html">
+                api.js
+              </a>
+            
+              
+              <a class="source" href="index.html">
+                index.js
+              </a>
+            
+              
+              <a class="source" href="collections.html">
+                collections.js
+              </a>
+            
+              
+              <a class="source" href="index.html">
+                index.js
+              </a>
+            
+              
+              <a class="source" href="comparisons.html">
+                comparisons.js
+              </a>
+            
+              
+              <a class="source" href="index.html">
+                index.js
+              </a>
+            
+              
+              <a class="source" href="index.html">
+                index.js
+              </a>
+            
+              
+              <a class="source" href="index.html">
+                index.js
+              </a>
+            
+              
+              <a class="source" href="index.html">
+                index.js
+              </a>
+            
+              
+              <a class="source" href="index.html">
+                index.js
+              </a>
+            
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>index.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>module.exports = _ = {
+
+  args: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(_args)</span> {</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">Array</span>.prototype.slice.call(_args)
+  },
+
+  type: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(variable, type)</span> {</span>
+    <span class="hljs-keyword">if</span>(!type) <span class="hljs-keyword">return</span> <span class="hljs-keyword">typeof</span> variable;
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> <span class="hljs-keyword">typeof</span> variable === type;
+  },
+ 
+  undef: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(variables)</span> {</span>
+    <span class="hljs-keyword">if</span>(!(variables <span class="hljs-keyword">instanceof</span> <span class="hljs-built_in">Array</span>)) variables = _.args(<span class="hljs-built_in">arguments</span>);
+    <span class="hljs-keyword">return</span> variables.reduce(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(state, variable)</span> {</span>
+      <span class="hljs-keyword">return</span> state &amp;&amp; _.type(variable, <span class="hljs-string">'undefined'</span>);
+    }, <span class="hljs-literal">true</span>);
+  },
+  
+  union: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+    <span class="hljs-keyword">var</span> results = [];
+    
+    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-built_in">arguments</span>.length; i++) {
+      <span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> j = <span class="hljs-number">0</span>; j &lt; <span class="hljs-built_in">arguments</span>[i].length; j++) {
+        <span class="hljs-keyword">if</span>(results.indexOf(<span class="hljs-built_in">arguments</span>[i][j] === -<span class="hljs-number">1</span>)) {
+          results.push(<span class="hljs-built_in">arguments</span>[i][j]);
+        }
+      }
+    }
+
+    <span class="hljs-keyword">return</span> results;
+  }
+
+};</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

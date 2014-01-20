@@ -17,6 +17,20 @@ module.exports = function (grunt) {
         file: 'app.js'
       }
     },
+    docco: {
+      server: {
+        src: ['app.js', 'routes/**/*.js'],
+        options: {
+          output: 'docs/server/'
+        }
+      },
+      client: {
+        src: ['public/js/**/*.js'],
+        options: {
+          output: 'docs/client/'
+        }
+      }
+    },
     browserify: {
       dist: {
         files: {
@@ -68,6 +82,7 @@ module.exports = function (grunt) {
   
   grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-browserify');
+  grunt.loadNpmTasks('grunt-docco');
 
   grunt.config.requires('watch.server.files');
   files = grunt.config('watch.server.files');
@@ -89,4 +104,5 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('default', ['develop', 'watch']);
+  grunt.registerTask('doc', ['docco']);
 };

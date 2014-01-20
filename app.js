@@ -100,14 +100,25 @@ admins.on('connection', function(err, socket, session) {
     // pass to collection apis
     collections(socket);
 
-    socket.on('message', function() {
-      
+    socket.on('message', function(message) {
+      socket.emit('message', {
+        name:'Command not recognized',
+        type: 'warning'
+      });      
+    });
+
+    socket.on('disconnect', function() {
+      socket.broadcast.emit('message', {
+        name: session.name,
+        body: 'has disconnected',
+        type: 'info' 
+      }); 
     });
 
     socket.broadcast.emit('message', {
       name: session.name,
       body: 'has connected',
-      type: 'connection' 
+      type: 'info' 
     });
 
   }

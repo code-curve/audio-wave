@@ -1,4 +1,11 @@
-var collection = require('./index');
+
+/**
+ * Websocket API Generator
+ *
+ * Creates a websocket api on this socket, which
+ * provides interfaces for each action in actions
+ * and prefixes it with name.
+ */
 
 module.exports = function(name, actions, socket) {
   var action;
@@ -34,6 +41,6 @@ module.exports = function(name, actions, socket) {
   };
 
   for(action in actions) {
-    bind(action);    
+    bind(action);
   }
 };

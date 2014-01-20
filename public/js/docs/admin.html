@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>admin.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>admin.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-comment">/**
+ * Admin
+ *
+ * The admin application is responsible for keeping
+ * track of all sessions, devices, audio files and
+ * composed songs.
+ * 
+ * It also provides a console for talking to the
+ * server and the compose interface for creating
+ * song files from the available audio files.
+ */</span>
+
+angular.module(<span class="hljs-string">'admin'</span>, [<span class="hljs-string">'ngRoute'</span>, <span class="hljs-string">'btford.socket-io'</span>]).
+
+config(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">($routeProvider)</span> {</span>
+  $routeProvider.
+  when(<span class="hljs-string">'/sessions'</span>, {
+    templateUrl: <span class="hljs-string">'/partials/sessions'</span>,
+    controller: <span class="hljs-string">'SessionController'</span>
+  }).
+  when(<span class="hljs-string">'/audio'</span>, {
+    templateUrl: <span class="hljs-string">'/partials/audio'</span>,
+    controller: <span class="hljs-string">'AudioController'</span>
+  }).
+  when(<span class="hljs-string">'/users'</span>, {
+    templateUrl: <span class="hljs-string">'/partials/users'</span>,
+    controller: <span class="hljs-string">'UsersController'</span>
+  }).
+  when(<span class="hljs-string">'/compose'</span>, {
+    templateUrl: <span class="hljs-string">'/partials/compose'</span>,
+    controller: <span class="hljs-string">'ComposeController'</span>
+  }).
+  otherwise({
+    redirectTo: <span class="hljs-string">'/sessions'</span>
+  });
+}).
+
+<span class="hljs-comment">/**
+ * Controllers
+ */</span>
+
+controller({</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>manage devices in sessions</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-string">'SessisionsController'</span>: <span class="hljs-built_in">require</span>(<span class="hljs-string">'./controllers/SessionsController'</span>),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>composition of song files</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-string">'ComposeController'</span>: <span class="hljs-built_in">require</span>(<span class="hljs-string">'./controllers/ComposeController'</span>),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>manage administrators and registered users</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-string">'UsersController'</span>: <span class="hljs-built_in">require</span>(<span class="hljs-string">'./controllers/UsersController'</span>),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>manage uploaded audio tracks</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-string">'AudioController'</span>: <span class="hljs-built_in">require</span>(<span class="hljs-string">'./controllers/AudioController'</span>)
+}).
+
+<span class="hljs-comment">/**
+ * Directives
+ */</span>
+
+directive({</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>interface for editing collections</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-string">'editor'</span>: <span class="hljs-built_in">require</span>(<span class="hljs-string">'./directives/editor'</span>),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>console for server communication</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-string">'console'</span>: <span class="hljs-built_in">require</span>(<span class="hljs-string">'./directives/console'</span>),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>searchable collection interface </p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-string">'collection'</span>: <span class="hljs-built_in">require</span>(<span class="hljs-string">'./directives/collection'</span>)
+}).
+
+<span class="hljs-comment">/**
+ * Services
+ */</span>
+
+factory({</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>localstorage + cookie shim</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-string">'storage'</span>: <span class="hljs-built_in">require</span>(<span class="hljs-string">'./services/storage'</span>),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>maintain state of ui</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-string">'uiState'</span>: <span class="hljs-built_in">require</span>(<span class="hljs-string">'./services/uiState'</span>),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>web socket wrapper</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-string">'socket'</span>: <span class="hljs-built_in">require</span>(<span class="hljs-string">'./services/socket'</span>),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>socket connect to admin channel</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-string">'adminSocket'</span>: <span class="hljs-built_in">require</span>(<span class="hljs-string">'./services/adminSocket'</span>),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p>collection maintainer</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-string">'collection'</span>: <span class="hljs-built_in">require</span>(<span class="hljs-string">'./services/collection'</span>)
+});</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

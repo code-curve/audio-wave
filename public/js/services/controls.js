@@ -1,3 +1,9 @@
+// Controls
+// --------
+
+// Keeps track of the states of all 
+// the keys that have been pressed.
+
 module.exports = (function() {
   var states, keyMap;  
   
