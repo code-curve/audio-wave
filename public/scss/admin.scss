@@ -115,14 +115,16 @@ ul.items {
 /* Table within collection view */
 .collection table {
   width:100%;
-  font-size:16pt;
+  font-size:12pt;
   color:#666;
   border-spacing:0;
   font-weight:300; 
 
   thead {
-    text-align:left; 
-    color:$theme-primary;
+    text-align:left;
+    color:white;
+    text-transform:Capitalize; 
+    background-color:$theme-primary;
   }
 
   td {
@@ -133,6 +135,10 @@ ul.items {
     cursor:pointer;
     background-color:#fdfdfd;
   }
+}
+
+.caret {
+  color:$theme-primary;
 }
 
 .depth-1 {

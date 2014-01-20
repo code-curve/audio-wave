@@ -192,18 +192,23 @@ ul.items {
 /* Table within collection view */
 .collection table {
   width: 100%;
-  font-size: 16pt;
+  font-size: 12pt;
   color: #666;
   border-spacing: 0;
   font-weight: 300; }
   .collection table thead {
     text-align: left;
-    color: #2ac260; }
+    color: white;
+    text-transform: Capitalize;
+    background-color: #2ac260; }
   .collection table td {
     padding: 4px; }
   .collection table tbody tr:hover {
     cursor: pointer;
     background-color: #fdfdfd; }
+
+.caret {
+  color: #2ac260; }
 
 .depth-1 {
   background-color: #F5F5F5; }

@@ -9,6 +9,7 @@
   <table ng-show='models && models.length > 0'>
     <thead>
       <tr>
+        <td></td> <!-- Shows Selection arrow -->
         <td ng-repeat='(key, value) in models[0]' ng-hide='key[0] == "_"'>
           {{key}}
         </td>
@@ -17,7 +18,9 @@
     <tbody>
       <tr ng-repeat='model in models | filter:search'
         ng-click='focus($index)'>
-        
+        <td>
+          <i class='caret fa fa-caret-right' ng-show='$index == cursorIndex'></i>
+        </td>
         <td ng-repeat='(key, value) in model' ng-hide='key[0] == "_"'>
           {{value}}
         </td>

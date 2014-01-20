@@ -18,7 +18,12 @@ module.exports = function() {
       $scope.name = $element.attr('collection-name');
       $scope.models = collection($scope.name);
       $scope.search = '';
-      console.log($scope.models);
+      $scope.cursorIndex = 0;
+
+      $scope.focus = function(idx) {
+        $scope.cursorIndex = idx;
+      };
+        
       console.log($scope.name, 'directive controller');
     }
   }  
