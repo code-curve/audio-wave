@@ -19,7 +19,7 @@ module.exports = function (grunt) {
     },
     docco: {
       server: {
-        src: ['app.js', 'routes/**/*.js'],
+        src: ['app.js', 'routes/**/**/*.js'],
         options: {
           output: 'docs/server/'
         }

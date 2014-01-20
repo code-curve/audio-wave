@@ -59,8 +59,8 @@
               </a>
             
               
-              <a class="source" href="index.html">
-                index.js
+              <a class="source" href="hub.html">
+                hub.js
               </a>
             
               
@@ -106,15 +106,47 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre>
-<span class="hljs-comment">/**
- * Websocket API Generator
- *
- * Creates a websocket api on this socket, which
- * provides interfaces for each action in actions
- * and prefixes it with name.
- */</span>
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <h2 id="websocket-api-generator">Websocket API Generator</h2>
 
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>Creates a websocket api on this socket, which
+provides interfaces for each action in actions
+and prefixes it with name.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
 module.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name, actions, socket)</span> {</span>
   <span class="hljs-keyword">var</span> action;
   
@@ -129,13 +161,13 @@ module.exports = <span class="hljs-function"><span class="hljs-keyword">function
         </li>
         
         
-        <li id="section-2">
+        <li id="section-5">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-2">&#182;</a>
+                <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
-              <p>the first two arguments are socket io</p>
+              <p>The first two arguments are socket io things</p>
 
             </div>
             
@@ -144,13 +176,15 @@ module.exports = <span class="hljs-function"><span class="hljs-keyword">function
         </li>
         
         
-        <li id="section-3">
+        <li id="section-6">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-3">&#182;</a>
+                <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
-              <p>hacky callbacking</p>
+              <p>Put the callback at the end of the array
+so that when we call apply, it gets used 
+as the last argument.</p>
 
             </div>
             
@@ -164,20 +198,18 @@ module.exports = <span class="hljs-function"><span class="hljs-keyword">function
             data: docs
           });
         }
-      });
-      
-      console.log(args);</pre></div></div>
+      });</pre></div></div>
             
         </li>
         
         
-        <li id="section-4">
+        <li id="section-7">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-4">&#182;</a>
+                <a class="pilcrow" href="#section-7">&#182;</a>
               </div>
-              <p>pass on arguments from socket event</p>
+              <p>Pass on arguments from socket event</p>
 
             </div>
             

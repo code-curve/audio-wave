@@ -1,7 +1,5 @@
 
-/**
- * Module dependencies
- */
+// ## Module dependencies
 
 var express = require('express')
   , routes = require('./routes')
@@ -11,25 +9,20 @@ var express = require('express')
   , MongoStore = require('connect-mongo')(express)
   , io = require('socket.io');
 
-/**
- * Route dependencies
- */
+
+// ## Route dependencies
 
 var Hub = require('./routes/hub')
   , auth = require('./routes/auth')
   , collections = require('./routes/collections');
 
-/**
- * Server setup
- */
+// ## Server Setup
 
 var app = express()
   , server = http.createServer(app)
   , io = io.listen(server);
 
-/**
- * Session setup
- */
+// ## Session Setup
 
 var sessionStore = new MongoStore({ db: 'audio-drop' })
   , cookieParser = express.cookieParser('waytoblue')
@@ -56,57 +49,54 @@ app.configure('development', function() {
 });
 
 
-/**
- * Routes
- */
-console.log('Create Routes');
+// ## Routes
 
-// audio wave home page
+// - Audio wave home page
 app.get('/', routes.index);
-//partials
+// - Partials
 app.get('/partials/:name', routes.partial);
 
-// join session at id
+// - Join session at id
 app.get('/s/:id');
 
-// get admin app
+// - Get admin app
 app.get('/admin', auth.check, routes.admin);
-// get login screen
+// - Get login screen
 app.get('/admin/login', routes.login);
-// sign in
+// - Sign in
 app.post('/auth/login', auth.login);
-// sign out
+// - Sign out
 app.get('/auth/logout', auth.logout);
 
-/**
- * Sockets
- */
-
+// ## Sockets
 var admins = sockets.of('/admin');
 admins.on('connection', function(err, socket, session) {
   if(err) throw err;
   
-  // sockets that connect to /admin must authenticate  
+  // Sockets that connect to `/admin` must authenticate  
   if(!session.name) {
-    // log no auth
+    // Log no auth
     // TODO  
     
     socket.emit('Not authenticated. Closing connection');
     delete socket;
   } else {
-    // log success
+    // Log success
     // TODO
     
-    // pass to collection apis
+    // Pass socket to collections api
     collections(socket);
-
+    
+    // Temporary code to handle messages
     socket.on('message', function(message) {
       socket.emit('message', {
         name:'Command not recognized',
         type: 'warning'
       });      
     });
-
+    
+    // When the user disconnects, broadcast
+    // the event.
     socket.on('disconnect', function() {
       socket.broadcast.emit('message', {
         name: session.name,
@@ -115,6 +105,8 @@ admins.on('connection', function(err, socket, session) {
       }); 
     });
 
+    // Finally, broadcast a connection
+    // message from this socket.
     socket.broadcast.emit('message', {
       name: session.name,
       body: 'has connected',
@@ -129,6 +121,7 @@ users.on('connection', function(err, socket, session) {
   if(err) throw err;
   console.log('Socket connected');
     
-  // pass socket straight through to Hub
+  // Pass socket straight through to Hub
+  // TODO
 });
 

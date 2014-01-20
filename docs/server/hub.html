@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>hub.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page">
+            
+              
+              <a class="source" href="app.html">
+                app.js
+              </a>
+            
+              
+              <a class="source" href="index.html">
+                index.js
+              </a>
+            
+              
+              <a class="source" href="index.html">
+                index.js
+              </a>
+            
+              
+              <a class="source" href="api.html">
+                api.js
+              </a>
+            
+              
+              <a class="source" href="index.html">
+                index.js
+              </a>
+            
+              
+              <a class="source" href="collections.html">
+                collections.js
+              </a>
+            
+              
+              <a class="source" href="index.html">
+                index.js
+              </a>
+            
+              
+              <a class="source" href="comparisons.html">
+                comparisons.js
+              </a>
+            
+              
+              <a class="source" href="hub.html">
+                hub.js
+              </a>
+            
+              
+              <a class="source" href="index.html">
+                index.js
+              </a>
+            
+              
+              <a class="source" href="index.html">
+                index.js
+              </a>
+            
+              
+              <a class="source" href="index.html">
+                index.js
+              </a>
+            
+              
+              <a class="source" href="index.html">
+                index.js
+              </a>
+            
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>hub.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <h2 id="hub">Hub</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Hub is designed to act as a mediator and doorway
+between users and the main application. Users
+should be passed into Hub through the connect 
+method, which takes a socket as an argument.
+Once connected, Hub listens for a registration
+event, at which point a user will be built using
+the user proxy supplied at construction and added
+to the user list.</p>
+<p>Hub reveals 4 important methods.</p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <h3 id="select">select</h3>
+<p>Returns a query function that will return 
+a user set based on query parameters.</p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <h3 id="all">all</h3>
+<p>Returns a list of all users. Technically 
+an alias for select.</p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <h3 id="connect">connect</h3>
+<p>Accepts a socket and waits for a registration
+event before building a new proxy for the user
+and adding it to the user list.</p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <h3 id="on">on</h3>
+<p>Listen to user events. See Whispers.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+<span class="hljs-keyword">var</span> Whispers = <span class="hljs-built_in">require</span>(<span class="hljs-string">'whispers'</span>)
+  , _ = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../util'</span>)
+  , comparisons = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./comparisons'</span>);
+
+module.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(userProxy)</span> {</span>
+  
+  <span class="hljs-keyword">var</span> users = [];
+  <span class="hljs-keyword">var</span> events = <span class="hljs-keyword">new</span> Whispers();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <h1 id="connect">connect</h1>
+<p><code>(socket)</code>
+Accepts a socket (designed to be used with socket.io)
+and listens for a registration event from the socket,
+upon registration, builds a proxy from the user proxy
+and adds it to users.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">connect</span><span class="hljs-params">(socket)</span> {</span>
+    
+    socket.on(<span class="hljs-string">'register'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(settings)</span> {</span>
+      <span class="hljs-keyword">var</span> proxy, index;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>Add the user to the users list</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      proxy = userProxy(user, settings);
+      index = users.push(proxy) - <span class="hljs-number">1</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>Fire a registration event</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      events.say(<span class="hljs-string">'registration'</span>, proxy);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>Remove this user when they disconnect</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      socket.on(<span class="hljs-string">'disconnect'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+        <span class="hljs-keyword">var</span> users = users.splice(index, <span class="hljs-number">1</span>);
+        events.say(<span class="hljs-string">'disconnect'</span>, users[<span class="hljs-number">0</span>]);
+      });
+
+    });    
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <h1 id="select">select</h1>
+<p>Returns a query function based on a metric, comparator,
+threshold and an optional user set. Example use:</p>
+<p><code>var session = Hub.select(&#39;session&#39;, &#39;==&#39;, 3);</code></p>
+<p>Now calling <code>session()</code> will yield a user set of all
+the users who’s session property === 3.</p>
+<p>For flexibility and advanced querying you can pass
+a function as the comparator value. The function <strong>must</strong>
+accept two inputs and return a boolean value.</p>
+<p>Calling select without the user set parameter will
+default to using users. Otherwise, queries will be
+performed on this subset.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">select</span><span class="hljs-params">(metric, comparator, threshold, set)</span> {</span>
+    
+    <span class="hljs-keyword">if</span>(_.undef(set)) {
+      set = users;
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p>If no arguments are passed, return every user</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span>(<span class="hljs-built_in">arguments</span>.length === <span class="hljs-number">0</span>) {
+      <span class="hljs-keyword">return</span> set;
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <p>Otherwise, all arguments must be defined</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span>(_.undef(metric, comparator, threshold)) {
+      <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'One or more select arguments were undefined'</span>);
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <p>Metric must be a string</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span>(!_.type(metric, <span class="hljs-string">'string'</span>)) {
+      <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Metric must be a string'</span>);
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-16">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <p>Comparator must be a function or a sign</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span>(!_.type(comparator, <span class="hljs-string">'function'</span>)) {
+      <span class="hljs-keyword">if</span>(_.type(comparator, <span class="hljs-string">'string'</span>)) {
+        
+        <span class="hljs-keyword">if</span>(!comparisons[comparator]) { 
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'When passed as a string, comparator must be '</span> 
+              + <span class="hljs-string">' one of the following'</span> + <span class="hljs-built_in">Object</span>.keys(comparisons));
+        }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-17">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <p>No error was thrown, get comparison function
+based on the comparator symbol</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        comparator = comparisons[comparator];
+ 
+      } <span class="hljs-keyword">else</span> {
+        console.log(comparator, <span class="hljs-keyword">typeof</span> comparator);
+        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Comparator must be a comparison function, or a string'</span>);
+      }
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <p>Threshold must be a number</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span>(!_.type(threshold, <span class="hljs-string">'number'</span>)) {
+      <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Threshold must be a number'</span>);
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <p>Return a function that will give the results
+of the query when called.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> result = set.filter.bind(users, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(user)</span> {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-20">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <p>Filter out users based on some metric, 
+comparing it against the threshold with 
+our comparator funtion.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">return</span> comparator(user[metric], threshold);
+    });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-21">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-21">&#182;</a>
+              </div>
+              <p>Provide iterator method for result set</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    result.each = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(iterator)</span> {</span>
+      <span class="hljs-keyword">var</span> userSet = result();
+      <span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; userSet; i++) {
+        iterator(userSet[i], i);
+      }
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-22">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-22">&#182;</a>
+              </div>
+              <p>Provide global emit for sockets in result set</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    result.emit = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+      result.each(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(user)</span> {</span>
+        user.socket.emit.apply(user.socket, <span class="hljs-built_in">arguments</span>);
+      });
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-23">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-23">&#182;</a>
+              </div>
+              <p>Set some property of all users in this set</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    result.set = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(property, value)</span> {</span>
+      result.each(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(user)</span> {</span>
+        user[property] = value;
+      });
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-24">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-24">&#182;</a>
+              </div>
+              <p>Provides chainable interface so that we can chain
+another selection onto an existing result set.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    result.and = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(metric, comparator, threshold)</span> {</span>
+      <span class="hljs-built_in">arguments</span>[<span class="hljs-built_in">arguments</span>.length] = result();
+      <span class="hljs-keyword">return</span> select.bind(<span class="hljs-keyword">this</span>, <span class="hljs-built_in">arguments</span>);
+    };
+    
+    <span class="hljs-keyword">return</span> result;
+  };
+
+  <span class="hljs-keyword">return</span> {
+    connect: connect,
+    select: select,
+    all: select,
+    on: events.on
+  };
+};</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>
