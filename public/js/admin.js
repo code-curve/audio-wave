@@ -73,7 +73,11 @@ factory({
   // Web socket wrapper
   'socket': require('./services/socket'),
   // Socket connect to admin channel
-  'adminSocket': require('./services/adminSocket'),
+
+  //'adminSocket': require('./services/adminSocket'),
+  'adminSocket': function(socket) {
+    console.log(socket);
+  },
   // Collection maintainer
   'collection': require('./services/collection')
 });
