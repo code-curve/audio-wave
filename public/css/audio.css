@@ -14,6 +14,12 @@ button {
   background-color: #2aa4c2;
   color: #fff; }
 
+code {
+  font-family: "Lucida Console", "Lucida Sans Typewriter", Monaco, "Bitstream VeraSans Mono", monospace;
+  background-color: #eee;
+  border-radius: 4px;
+  border: solid 1px #aaa; }
+
 .wrapper {
   height: 100%; }
 

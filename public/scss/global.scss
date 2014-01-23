@@ -1,20 +1,51 @@
 @import 'mixins';
 @import 'theme';
+@import 'reset';
 
 html, body {
   @include max;
   @include reset;
   
-  background-color:$bg-color;
-  color:$fg-color;
-  font-family:'Ubuntu', 'Helvetica', 'Arial', 'Sans-serif';
+  background-color:#f3f3f3;
+  color:#555;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  border-bottom:solid 6px $theme-primary;
+  font-weight:300; 
+}
 
 header {
-  
+  $banner-height:100px;
+  background-color:$theme-primary;
+  color:#fff;
+  text-align:center;
+  height:$banner-height;
+  line-height:$banner-height;
 }
 
-.content {
-  background-color:#E2E2E2;
+.about {
+  overflow:hidden;
+}
+.config {
+  overflow:hidden;
+}
+
+.block {
+  width:30%;
+  margin:1.5%;
+  float:left;
+  background-color:#fff;
+
+  h3 {
+    padding:6px;
+  }
+  
+  p {
+    padding:6px;
+  }
+}
+
+.footer {
+  text-align:center;
 }
