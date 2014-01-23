@@ -35,6 +35,22 @@ config(function($routeProvider) {
   });
 }).
 
+// Services
+// --------
+
+factory({
+  // Localstorage + cookie shim
+  'storage': require('./services/storage'),
+  // Maintain state of ui
+  'uiState': require('./services/uiState'),
+  // Web socket wrapper
+  'socket': require('./services/socket'),
+  // Socket connect to admin channel
+  'adminSocket': require('./services/adminSocket'),
+  // Collection maintainer
+  'collection': require('./services/collection')
+}).
+
 // Controllers
 // -----------
 
@@ -59,25 +75,7 @@ directive({
   'console': require('./directives/console'),
   // Searchable collection interface 
   'collection': require('./directives/collection')
-}).
-
-
-// Services
-// --------
-
-factory({
-  // Localstorage + cookie shim
-  'storage': require('./services/storage'),
-  // Maintain state of ui
-  'uiState': require('./services/uiState'),
-  // Web socket wrapper
-  'socket': require('./services/socket'),
-  // Socket connect to admin channel
-
-  //'adminSocket': require('./services/adminSocket'),
-  'adminSocket': function(socket) {
-    console.log(socket);
-  },
-  // Collection maintainer
-  'collection': require('./services/collection')
 });
+
+
+
