@@ -11,7 +11,7 @@ input:focus {
 
 button {
   border: none;
-  background-color: #2ac260;
+  background-color: #2aa4c2;
   color: #fff; }
 
 html, body {
@@ -54,7 +54,7 @@ p, h1, h2, h3, h4, h5, h6, ul, ol {
 
 body {
   text-align: center;
-  background-color: #2ac260; }
+  background-color: #2aa4c2; }
 
 form {
   width: 312px;
@@ -80,4 +80,4 @@ input {
   color: #fff;
   font-size: 32pt; }
   .logo .special {
-    color: #84f0a3; }
+    color: #e0f9ff; }

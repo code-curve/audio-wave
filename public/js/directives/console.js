@@ -20,15 +20,15 @@ module.exports = function(uiState) {
       }
         
       document.addEventListener('keydown', function(e)   {
-        // toggle on ` key
+        // Toggle on ` key
         if(e.keyCode === 192) {
           showing = !showing;
           uiState.save(uiKey, showing);
         
           checkVisibility();
-          // give focus to input 
+          // Give focus to input 
           element.find('input')[0].focus();
-          // stop ` being inserted
+          // Stop ` being inserted into console
           e.preventDefault();
         }
       });
@@ -38,7 +38,7 @@ module.exports = function(uiState) {
 
       $scope.messages = [];
       $scope.input = '';
-
+      
       adminSocket.on('message', function(message) {
         $scope.addMessage(message);
       });

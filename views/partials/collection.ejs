@@ -9,7 +9,7 @@
   <table ng-show='models && models.length > 0'>
     <thead>
       <tr>
-        <td></td> <!-- Shows Selection arrow -->
+        <td><!-- Shows selection caret --></td>
         <td ng-repeat='(key, value) in models[0]' ng-hide='key[0] == "_"'>
           {{key}}
         </td>
@@ -17,12 +17,13 @@
     </thead>
     <tbody>
       <tr ng-repeat='model in models | filter:search'
-        ng-click='focus($index)'>
+        ng-click='focus(model._id)'>
         <td>
-          <i class='caret fa fa-caret-right' ng-show='$index == cursorIndex'></i>
+          <i class='caret fa fa-caret-right' 
+            ng-show='model._id == cursorIndex'></i>
         </td>
-        <td ng-repeat='(key, value) in model' ng-hide='key[0] == "_"'>
-          {{value}}
+        <td ng-repeat='(key, value) in model' ng-hide='key[0] == "_"'
+          ng-bind='value'> 
         </td>
       </tr>
     </tbody>

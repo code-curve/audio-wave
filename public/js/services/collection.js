@@ -8,7 +8,7 @@
 // for more details.
 
 // After the returned function is called with a name
-// parameter, the adminSocket waits for the servers
+// parameter, the adminSocket waits for the server's
 // ready event, and then proceeds to listen to the events
 // (__create__, __get__, __update__, __remove__) 
 // for that name and creates a set of methods to manipulate 
@@ -24,9 +24,6 @@ module.exports = function(adminSocket) {
   // Store all available collections in here.
   var collections = {};
 
-  
-  // Has this socket recieved ready signal?
-  var ready = false;
 
   // Find and return a model from a collection
   // based on the _id property of the query 
@@ -67,30 +64,27 @@ module.exports = function(adminSocket) {
       return collections[name];
     }
 
-    console.log('create', name);
+    console.log('create', name, 'collection factory');
     
     // aliasing
     socket = adminSocket;
     collection = collections[name] = [];
     event = events(name);
 
-    if(!ready) {
-      console.log('wait to be ready'); 
-      socket.on('ready', function() {
-        console.log('socket ready');
-        socket.emit(event.get);
-        ready = true;
-      });
-    } else {
-      console.log(event.get);
+    if(socket.ready) {
       socket.emit(event.get);
+    } else {
+      socket.on('ready', function() {
+        socket.emit(event.get);
+      });
     }
     
     // ## Socket Events
 
     socket.on(event.get, function(models) {
+      console.log('GET collection data');
       collection.length = 0;
-      // I believe there's some explaing to do here.
+      // I believe there's some explaining to do here.
       collection.push.apply(collection, models.data);
     });
 
@@ -103,7 +97,7 @@ module.exports = function(adminSocket) {
     });
 
     socket.on(event.update, function(model, updated) {
-      // create safeguard with model for find -> null
+      // Create safeguard with model for find -> null
       (find(collection, model) || model) = updated;
     });
 
@@ -121,10 +115,13 @@ module.exports = function(adminSocket) {
       socket.emit(event.update, model, updated);
     }; 
     
+    collection.name = name;
+    
+    // NEEDS REMOVING BEFORE PRODUCTION
     if(name === 'admins') {
       window.collection = collection;
     }
-
+        
     return collection;
   }
 

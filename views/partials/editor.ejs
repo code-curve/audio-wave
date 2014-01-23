@@ -1,0 +1,10 @@
+<div class='editor'>
+  <h2>{{collection.name}}</h2>
+  <div class='document'>
+    <div ng-repeat='(key, value) in collection[cursorIndex]'>
+      <label>{{key}}</label>
+      <textarea ng-model='value'></textarea>
+    </div>
+    <button>Save</button>
+  </div>
+</div>

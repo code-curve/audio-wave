@@ -6,5 +6,12 @@
 // to the admin channel.
 
 module.exports = function(socket) {
-  return socket('admin');
+  var adminSocket = socket('admin');
+  adminSocket.ready = false;
+  
+  adminSocket.on('ready', function() {
+    adminSocket.ready = true;
+  });
+  
+  return adminSocket;
 };

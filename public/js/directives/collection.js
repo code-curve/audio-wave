@@ -20,10 +20,11 @@ module.exports = function() {
       $scope.search = '';
       $scope.cursorIndex = 0;
 
-      $scope.focus = function(idx) {
-        $scope.cursorIndex = idx;
+      $scope.focus = function(id) {
+        console.log(id);
+        $scope.cursorIndex = id;
       };
-        
+              
       console.log($scope.name, 'directive controller');
     }
   }  

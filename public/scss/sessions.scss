@@ -12,6 +12,7 @@
 
 .track {
   background-color:#fff;
+  overflow:hidden;
 }
 
 .progress {
@@ -32,6 +33,31 @@
   font-size:18pt;
   background-color:inherit;
   color:#777;
+  border-bottom:solid 3px #AAA;
+  float:left; 
+ 
+  outline:none;
+  cursor:pointer;
+  position:relative;
+ 
+  &:hover {
+    color:#888;
+  }
+ 
+  &:active {
+    border:none;
+    top:3px;
+  }
+  
+}
+
+.track>div {
+  float:left;
+}
+
+.track .controls {
+  width:100%;
+  overflow:hidden;
 }
 
 .console {

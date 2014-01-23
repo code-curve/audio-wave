@@ -27,7 +27,7 @@ input:focus {
 
 button {
   border: none;
-  background-color: #2ac260;
+  background-color: #2aa4c2;
   color: #fff; }
 
 .bottom {
@@ -39,30 +39,48 @@ button {
   box-sizing: border-box; }
 
 .track {
-  background-color: #fff; }
+  background-color: #fff;
+  overflow: hidden; }
 
 .progress {
-  background-color: #20a34f;
+  background-color: #206fa3;
   height: 6px;
   width: 100%; }
 
 .current {
   width: 40%;
   height: 100%;
-  background-color: #2ac260; }
+  background-color: #2aa4c2; }
 
 .track button {
   border: none;
   margin: 0;
   font-size: 18pt;
   background-color: inherit;
-  color: #777; }
+  color: #777;
+  border-bottom: solid 3px #AAA;
+  float: left;
+  outline: none;
+  cursor: pointer;
+  position: relative; }
+  .track button:hover {
+    color: #888; }
+  .track button:active {
+    border: none;
+    top: 3px; }
+
+.track > div {
+  float: left; }
+
+.track .controls {
+  width: 100%;
+  overflow: hidden; }
 
 .console {
   height: 200px;
   width: 100%;
   font-family: 'monospace';
-  background-color: #20a34f;
+  background-color: #206fa3;
   padding: 8px;
   color: #FFF;
   overflow-y: scroll;

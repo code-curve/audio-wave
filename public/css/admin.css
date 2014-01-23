@@ -27,7 +27,7 @@ input:focus {
 
 button {
   border: none;
-  background-color: #2ac260;
+  background-color: #2aa4c2;
   color: #fff; }
 
 input {
@@ -43,7 +43,7 @@ input:focus {
 
 button {
   border: none;
-  background-color: #2ac260;
+  background-color: #2aa4c2;
   color: #fff; }
 
 .logo-box {
@@ -56,7 +56,7 @@ button {
   font-size: 24pt;
   margin: 40px 0; }
   .logo .special {
-    color: #2ac260; }
+    color: #2aa4c2; }
   .logo:before {
     content: ' ';
     position: absolute;
@@ -66,7 +66,7 @@ button {
     width: 30px;
     height: 30px;
     border-radius: 100%;
-    background-color: #2ac260; }
+    background-color: #2aa4c2; }
   .logo:after {
     content: ' ';
     position: absolute;
@@ -76,7 +76,7 @@ button {
     height: 0px;
     border-style: solid;
     border-width: 0 15px 30px 15px;
-    border-color: transparent transparent #2ac260 transparent; }
+    border-color: transparent transparent #2aa4c2 transparent; }
 
 .message {
   text-align: left;
@@ -111,7 +111,8 @@ aside.admin.menu {
   left: 0;
   background-color: #fff;
   height: 100%;
-  width: 200px; }
+  width: 200px;
+  box-shadow: 3px 0 5px rgba(0, 0, 0, 0.1); }
 
 /* Flexible width content area */
 .view {
@@ -143,9 +144,9 @@ ul.items {
       text-decoration: none;
       display: block; }
     ul.items li:hover {
-      border-color: #2ac260;
+      border-color: #2aa4c2;
       cursor: pointer;
-      background-color: #E0FFEA; }
+      background-color: #e0f9ff; }
     ul.items li:active {
       border: none; }
 
@@ -187,7 +188,8 @@ ul.items {
   padding-top: 26px;
   /* Account for search */
   box-sizing: border-box;
-  height: 100%; }
+  height: 100%;
+  box-shadow: 3px 0 5px rgba(0, 0, 0, 0.1); }
 
 /* Table within collection view */
 .collection table {
@@ -200,7 +202,7 @@ ul.items {
     text-align: left;
     color: white;
     text-transform: Capitalize;
-    background-color: #2ac260; }
+    background-color: #2aa4c2; }
   .collection table td {
     padding: 4px; }
   .collection table tbody tr:hover {
@@ -208,7 +210,7 @@ ul.items {
     background-color: #fdfdfd; }
 
 .caret {
-  color: #2ac260; }
+  color: #2aa4c2; }
 
 .depth-1 {
   background-color: #F5F5F5; }

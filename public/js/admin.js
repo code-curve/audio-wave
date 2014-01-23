@@ -16,7 +16,7 @@ config(function($routeProvider) {
   $routeProvider.
   when('/sessions', {
     templateUrl: '/partials/sessions',
-    controller: 'SessionController'
+    controller: 'SessionsController'
   }).
   when('/audio', {
     templateUrl: '/partials/audio',
@@ -40,7 +40,7 @@ config(function($routeProvider) {
 
 controller({
   // Manage devices in sessions
-  'SessisionsController': require('./controllers/SessionsController'),
+  'SessionsController': require('./controllers/SessionsController'),
   // Composition of song files
   'ComposeController': require('./controllers/ComposeController'),
   // Manage administrators and registered users
