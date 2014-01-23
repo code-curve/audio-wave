@@ -115,13 +115,9 @@ module.exports = function(adminSocket) {
       socket.emit(event.update, model, updated);
     }; 
     
+    // Reveal the name of this collection
     collection.name = name;
     
-    // NEEDS REMOVING BEFORE PRODUCTION
-    if(name === 'admins') {
-      window.collection = collection;
-    }
-        
     return collection;
   }
 

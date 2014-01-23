@@ -113,11 +113,6 @@
                 uiState.js
               </a>
             
-              
-              <a class="source" href="userSocket.html">
-                userSocket.js
-              </a>
-            
           </div>
         </li>
       </ul>
@@ -180,7 +175,7 @@ for more details.</p>
                 <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
               <p>After the returned function is called with a name
-parameter, the adminSocket waits for the servers
+parameter, the adminSocket waits for the server’s
 ready event, and then proceeds to listen to the events
 (<strong>create</strong>, <strong>get</strong>, <strong>update</strong>, <strong>remove</strong>) 
 for that name and creates a set of methods to manipulate 
@@ -231,21 +226,6 @@ module.exports = <span class="hljs-function"><span class="hljs-keyword">function
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-7">&#182;</a>
               </div>
-              <p>Has this socket recieved ready signal?</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">var</span> ready = <span class="hljs-literal">false</span>;</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-8">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-8">&#182;</a>
-              </div>
               <p>Find and return a model from a collection
 based on the <em>id property of the query 
 object. </em>(Query object normally comes from
@@ -265,11 +245,11 @@ the database)_</p>
         </li>
         
         
-        <li id="section-9">
+        <li id="section-8">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-9">&#182;</a>
+                <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
               <p>Helper method to provide clean looking
 names for socket events</p>
@@ -288,11 +268,11 @@ names for socket events</p>
         </li>
         
         
-        <li id="section-10">
+        <li id="section-9">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-10">&#182;</a>
+                <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
               <p>Creates interface for collection with this name
 and returns dynamic collection array along
@@ -307,11 +287,11 @@ module doc comment for more details. </p>
         </li>
         
         
-        <li id="section-11">
+        <li id="section-10">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-11">&#182;</a>
+                <a class="pilcrow" href="#section-10">&#182;</a>
               </div>
               <p>if we have already loaded this collection</p>
 
@@ -322,11 +302,11 @@ module doc comment for more details. </p>
         </li>
         
         
-        <li id="section-12">
+        <li id="section-11">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-12">&#182;</a>
+                <a class="pilcrow" href="#section-11">&#182;</a>
               </div>
               <p>return it straight away</p>
 
@@ -336,7 +316,32 @@ module doc comment for more details. </p>
       <span class="hljs-keyword">return</span> collections[name];
     }
 
-    console.log(<span class="hljs-string">'create'</span>, name);</pre></div></div>
+    console.log(<span class="hljs-string">'create'</span>, name, <span class="hljs-string">'collection factory'</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>aliasing</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    socket = adminSocket;
+    collection = collections[name] = [];
+    event = events(name);
+
+    <span class="hljs-keyword">if</span>(socket.ready) {
+      socket.emit(event.get);
+    } <span class="hljs-keyword">else</span> {
+      socket.on(<span class="hljs-string">'ready'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+        socket.emit(event.get);
+      });
+    }</pre></div></div>
             
         </li>
         
@@ -347,25 +352,14 @@ module doc comment for more details. </p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-13">&#182;</a>
               </div>
-              <p>aliasing</p>
+              <h2 id="socket-events">Socket Events</h2>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    socket = adminSocket;
-    collection = collections[name] = [];
-    event = events(name);
-
-    <span class="hljs-keyword">if</span>(!ready) {
-      console.log(<span class="hljs-string">'wait to be ready'</span>); 
-      socket.on(<span class="hljs-string">'ready'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
-        console.log(<span class="hljs-string">'socket ready'</span>);
-        socket.emit(event.get);
-        ready = <span class="hljs-literal">true</span>;
-      });
-    } <span class="hljs-keyword">else</span> {
-      console.log(event.get);
-      socket.emit(event.get);
-    }</pre></div></div>
+            <div class="content"><div class='highlight'><pre>
+    socket.on(event.get, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(models)</span> {</span>
+      console.log(<span class="hljs-string">'GET collection data'</span>);
+      collection.length = <span class="hljs-number">0</span>;</pre></div></div>
             
         </li>
         
@@ -376,24 +370,7 @@ module doc comment for more details. </p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-14">&#182;</a>
               </div>
-              <h2 id="socket-events">Socket Events</h2>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>
-    socket.on(event.get, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(models)</span> {</span>
-      collection.length = <span class="hljs-number">0</span>;</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-15">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-15">&#182;</a>
-              </div>
-              <p>I believe there’s some explaing to do here.</p>
+              <p>I believe there’s some explaining to do here.</p>
 
             </div>
             
@@ -413,13 +390,13 @@ module doc comment for more details. </p>
         </li>
         
         
-        <li id="section-16">
+        <li id="section-15">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-16">&#182;</a>
+                <a class="pilcrow" href="#section-15">&#182;</a>
               </div>
-              <p>create safeguard with model for find -&gt; null</p>
+              <p>Create safeguard with model for find -&gt; null</p>
 
             </div>
             
@@ -429,11 +406,11 @@ module doc comment for more details. </p>
         </li>
         
         
-        <li id="section-17">
+        <li id="section-16">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-17">&#182;</a>
+                <a class="pilcrow" href="#section-16">&#182;</a>
               </div>
               <h2 id="exposed-methods">Exposed methods</h2>
 
@@ -450,12 +427,23 @@ module doc comment for more details. </p>
 
     collection.update = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(model, updated)</span> {</span>
       socket.emit(event.update, model, updated);
-    }; 
-    
-    <span class="hljs-keyword">if</span>(name === <span class="hljs-string">'admins'</span>) {
-      window.collection = collection;
-    }
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-17">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <p>Reveal the name of this collection</p>
 
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    collection.name = name;
+    
     <span class="hljs-keyword">return</span> collection;
   }
 

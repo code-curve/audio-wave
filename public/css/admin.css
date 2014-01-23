@@ -1,3 +1,19 @@
+input {
+  border: none;
+  outline: none;
+  padding: 4px;
+  background-color: #fbfbfb;
+  transition-duration: 0.3s; }
+
+input:focus {
+  background-color: #fff;
+  transition-duration: 0.3s; }
+
+button {
+  border: none;
+  background-color: #2aa4c2;
+  color: #fff; }
+
 html, body {
   width: 100%;
   height: 100%;
@@ -5,6 +21,12 @@ html, body {
   margin: 0;
   list-style-type: none;
   font-family: 'Open Sans', sans-serif; }
+
+input, button {
+  outline: none; }
+
+button {
+  cursor: pointer; }
 
 input, pre, code {
   font-family: 'Open Sans', sans-serif; }
@@ -198,6 +220,8 @@ ul.items {
   color: #666;
   border-spacing: 0;
   font-weight: 300; }
+  .collection table tr:nth-child(even) {
+    background-color: #f8f8f8; }
   .collection table thead {
     text-align: left;
     color: white;
@@ -208,6 +232,8 @@ ul.items {
   .collection table tbody tr:hover {
     cursor: pointer;
     background-color: #fdfdfd; }
+  .collection table tbody td {
+    border-right: solid 1px #eee; }
 
 .caret {
   color: #2aa4c2; }

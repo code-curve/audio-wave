@@ -1,9 +1,18 @@
 @import 'mixins';
+@import 'theme';
 
 html, body {
   @include max;
   @include reset;
   font-family: 'Open Sans', sans-serif;  
+}
+
+input, button {
+  outline:none;
+}
+
+button {
+  cursor:pointer;
 }
 
 input, pre, code {

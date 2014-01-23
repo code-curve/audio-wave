@@ -113,11 +113,6 @@
                 uiState.js
               </a>
             
-              
-              <a class="source" href="userSocket.html">
-                userSocket.js
-              </a>
-            
           </div>
         </li>
       </ul>
@@ -182,7 +177,14 @@ to the admin channel.</p>
             
             <div class="content"><div class='highlight'><pre>
 module.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(socket)</span> {</span>
-  <span class="hljs-keyword">return</span> socket(<span class="hljs-string">'admin'</span>);
+  <span class="hljs-keyword">var</span> adminSocket = socket(<span class="hljs-string">'admin'</span>);
+  adminSocket.ready = <span class="hljs-literal">false</span>;
+  
+  adminSocket.on(<span class="hljs-string">'ready'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+    adminSocket.ready = <span class="hljs-literal">true</span>;
+  });
+  
+  <span class="hljs-keyword">return</span> adminSocket;
 };</pre></div></div>
             
         </li>

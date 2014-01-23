@@ -18,13 +18,11 @@ module.exports = function() {
       
       // Get the name of the collection for this editor
       $scope.name = $element.attr('collection-name');
-      
+            
       // Get the collection for this name from
       // the collection factory and bind it to
       // the scope. 
-      collection = collection($scope.name);
-      $scope.collection = collection;
-      
+      $scope.collection = collection($scope.name);
     }
   }  
 };

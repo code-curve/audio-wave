@@ -20,7 +20,7 @@
         ng-click='focus(model._id)'>
         <td>
           <i class='caret fa fa-caret-right' 
-            ng-show='model._id == cursorIndex'></i>
+            ng-show='model._id == models.focus'></i>
         </td>
         <td ng-repeat='(key, value) in model' ng-hide='key[0] == "_"'
           ng-bind='value'> 

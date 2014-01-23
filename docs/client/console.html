@@ -113,11 +113,6 @@
                 uiState.js
               </a>
             
-              
-              <a class="source" href="userSocket.html">
-                userSocket.js
-              </a>
-            
           </div>
         </li>
       </ul>
@@ -173,7 +168,7 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
-              <p>toggle on ` key</p>
+              <p>Toggle on ` key</p>
 
             </div>
             
@@ -192,7 +187,7 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
-              <p>give focus to input </p>
+              <p>Give focus to input </p>
 
             </div>
             
@@ -207,7 +202,7 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
-              <p>stop ` being inserted</p>
+              <p>Stop ` being inserted into console</p>
 
             </div>
             
@@ -220,7 +215,7 @@
 
       $scope.messages = [];
       $scope.input = <span class="hljs-string">''</span>;
-
+      
       adminSocket.on(<span class="hljs-string">'message'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(message)</span> {</span>
         $scope.addMessage(message);
       });

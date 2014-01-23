@@ -122,6 +122,10 @@ ul.items {
   border-spacing:0;
   font-weight:300; 
 
+  tr:nth-child(even) {
+    background-color:#f8f8f8;
+  }
+
   thead {
     text-align:left;
     color:white;
@@ -136,6 +140,10 @@ ul.items {
   tbody tr:hover {
     cursor:pointer;
     background-color:#fdfdfd;
+  }
+
+  tbody td { 
+    border-right:solid 1px #eee;
   }
 }
 

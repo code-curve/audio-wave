@@ -28,12 +28,13 @@
 }
 
 .track button {
+  $button-depress:6px;
   border:none;
   margin:0;
   font-size:18pt;
   background-color:inherit;
   color:#777;
-  border-bottom:solid 3px #AAA;
+  border-bottom:solid $button-depress #AAA;
   float:left; 
  
   outline:none;
@@ -46,7 +47,7 @@
  
   &:active {
     border:none;
-    top:3px;
+    top:$button-depress;
   }
   
 }

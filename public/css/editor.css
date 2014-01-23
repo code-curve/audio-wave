@@ -52,54 +52,26 @@ p, h1, h2, h3, h4, h5, h6, ul, ol {
   margin: 0;
   list-style-type: none; }
 
-.message {
-  text-align: left;
-  border-radius: 4px;
-  padding: 8px;
-  background-color: #EEE;
-  color: #BBB; }
-  .message h3, .message p {
-    margin: 0;
-    padding: 0; }
+.editor {
+  border-left: solid 20px #2aa4c2;
+  padding: 4px;
+  background-color: #fafafa; }
 
-.error.message {
-  background-color: #FFAAAA;
-  color: #BE0E0E; }
+.editor h2 {
+  color: #444;
+  text-transform: capitalize; }
 
-.success.message {
-  background-color: #AAFFAA;
-  color: #0EBE0E; }
+.editor label {
+  display: block;
+  text-decoration: underline;
+  color: #666; }
 
-.info.message {
-  background-color: #E5E5F3;
-  color: #BABAD6; }
-
-body {
-  text-align: center;
-  background-color: #2aa4c2; }
-
-form {
-  width: 312px;
-  margin: 0 auto; }
-
-input {
-  color: #777;
+.editor textarea {
   border: none;
-  border-radius: 4px;
-  font-weight: 300;
-  font-size: 20pt;
-  padding: 8px;
-  margin: 2px 0;
-  outline: none; }
+  width: 100%;
+  outline: none;
+  color: #888; }
 
-.invalid input {
-  color: #BE0E0E; }
-
-.message {
-  margin-top: 4px; }
-
-.logo {
-  color: #fff;
-  font-size: 32pt; }
-  .logo .special {
-    color: #e0f9ff; }
+.editor button {
+  font-size: 12pt;
+  padding: 8px; }
