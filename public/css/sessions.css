@@ -5,6 +5,9 @@ input {
   background-color: #fbfbfb;
   transition-duration: 0.3s; }
 
+a {
+  color: #2aa4c2; }
+
 input:focus {
   background-color: #fff;
   transition-duration: 0.3s; }
@@ -48,6 +51,9 @@ input {
   padding: 4px;
   background-color: #fbfbfb;
   transition-duration: 0.3s; }
+
+a {
+  color: #2aa4c2; }
 
 input:focus {
   background-color: #fff;

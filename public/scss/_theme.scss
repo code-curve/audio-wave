@@ -8,6 +8,10 @@ input {
   transition-duration:0.3s;
 }
 
+a {
+  color: $theme-primary;
+}
+
 input:focus {
   background-color:#fff;
   transition-duration:0.3s;

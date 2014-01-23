@@ -5,6 +5,9 @@ input {
   background-color: #fbfbfb;
   transition-duration: 0.3s; }
 
+a {
+  color: #2aa4c2; }
+
 input:focus {
   background-color: #fff;
   transition-duration: 0.3s; }
@@ -26,6 +29,9 @@ input {
   padding: 4px;
   background-color: #fbfbfb;
   transition-duration: 0.3s; }
+
+a {
+  color: #2aa4c2; }
 
 input:focus {
   background-color: #fff;
@@ -94,11 +100,14 @@ header {
   width: 30%;
   margin: 1.5%;
   float: left;
-  background-color: #fff; }
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+  min-height: 216px; }
   .block h3 {
     padding: 6px; }
   .block p {
-    padding: 6px; }
+    padding: 10px; }
 
 .footer {
   text-align: center; }

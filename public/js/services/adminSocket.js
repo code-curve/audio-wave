@@ -13,6 +13,5 @@ module.exports = function(socket) {
     adminSocket.ready = true;
   });
   
-  alert('now');
   return adminSocket;
 };
