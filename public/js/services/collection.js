@@ -64,8 +64,6 @@ module.exports = function(adminSocket) {
       return collections[name];
     }
 
-    console.log('create', name, 'collection factory');
-    
     // aliasing
     socket = adminSocket;
     collection = collections[name] = [];
@@ -82,10 +80,10 @@ module.exports = function(adminSocket) {
     // ## Socket Events
 
     socket.on(event.get, function(models) {
-      console.log('GET collection data');
       collection.length = 0;
       // I believe there's some explaining to do here.
       collection.push.apply(collection, models.data);
+      collection.focus = collection[0]._id;
     });
 
     socket.on(event.create, function(model) {
