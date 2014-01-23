@@ -1,7 +1,7 @@
 <div class='editor'>
   <h2>{{collection.name}}</h2>
   <div class='document'>
-    <div ng-repeat='(key, value) in collection[collection.focus]'>
+    <div ng-repeat='(key, value) in selection()'>
       <label>{{key}}</label>
       <textarea ng-model='value'></textarea>
     </div>

@@ -23,6 +23,16 @@ module.exports = function() {
       // the collection factory and bind it to
       // the scope. 
       $scope.collection = collection($scope.name);
+
+      $scope.selection = function() {
+        var models = $scope.collection;
+        for(var i = 0; i < models.length; i++) {
+          if(models.focus === models[i]._id) {
+            return models[i]
+          }
+        }
+        return {};
+      }
     }
   }  
 };
