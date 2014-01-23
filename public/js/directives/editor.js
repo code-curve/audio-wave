@@ -23,7 +23,9 @@ module.exports = function() {
       // the collection factory and bind it to
       // the scope. 
       $scope.collection = collection($scope.name);
-
+      
+      $scope.saving = false;
+    
       $scope.selection = function() {
         var models = $scope.collection;
         for(var i = 0; i < models.length; i++) {
@@ -32,7 +34,14 @@ module.exports = function() {
           }
         }
         return {};
-      }
+      };
+
+      $scope.save = function() {
+        var focus = $scope.selection();
+        $scope.collection.update(focus, focus);
+        $scope.saving = true; 
+      };
+
     }
   }  
 };

@@ -5,6 +5,9 @@
       <label>{{key}}</label>
       <textarea ng-model='value'></textarea>
     </div>
-    <button>Save</button>
+    <button ng-click='save()'>
+      <span ng-hide='saving'>Save</span>
+      <i class="fa fa-cog fa-spin" ng-show='saving'></i>
+    </button>
   </div>
 </div>

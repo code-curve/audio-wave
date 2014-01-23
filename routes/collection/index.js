@@ -56,6 +56,7 @@ module.exports = function(name) {
     // object (values) and a callback function. Very
     // much modeled on the MongoDb api.
     update: function(where, values, done) {
+      console.log(arguments);
       if(!done) throw new Error('Get method requires a callback')
       db.update(where, { $set: values }, function(err) {
         // callback with ...
