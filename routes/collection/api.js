@@ -16,9 +16,12 @@ module.exports = function(name, actions, socket) {
     
     socket.on(eventName, function() {
       console.log('WS.do', eventName);
+
+      console.log('\n\n',eventName, '\n\n', arguments, '\n\n');
+      // The first two arguments are socket io things, wait...
+      args = Array.prototype.slice.call(arguments, 0);
       
-      // The first two arguments are socket io things
-      args = Array.prototype.slice.call(arguments, 2);
+      console.log('NEW ARGS', args);
 
       // Put the callback at the end of the array
       // so that when we call apply, it gets used 
@@ -34,7 +37,7 @@ module.exports = function(name, actions, socket) {
           });
         }
       });
-      
+         
       // Pass on arguments from socket event
       actions[action].apply(this, args);
     });

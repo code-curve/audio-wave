@@ -39,6 +39,15 @@ module.exports = _ = {
     }, true);
   },
   
+  copy: function(object) {
+    var key, duplicate;
+    duplicate = {};
+    for(key in object) {
+      duplicate[key] = object[key];
+    }
+    return duplicate;
+  },
+  
   // # union
   // `(arr1, arr2, ...)`
   // Performs a union on all of the arrays that
@@ -46,7 +55,7 @@ module.exports = _ = {
   // checking. Returns resulting array.
   union: function() {
     var results = [];
-    
+     
     for(var i = 0; i < arguments.length; i++) {
       for(var j = 0; j < arguments[i].length; j++) {
         if(results.indexOf(arguments[i][j] === -1)) {

@@ -56,11 +56,24 @@ module.exports = function(name) {
     // object (values) and a callback function. Very
     // much modeled on the MongoDb api.
     update: function(where, values, done) {
-      console.log(arguments);
       if(!done) throw new Error('Get method requires a callback')
+      console.log('Find', where);
+      console.log('Update To', values);
+      
+      where = mongo.idify(where);
+
       db.update(where, { $set: values }, function(err) {
+        var key, docs;
+        
+        docs = values;
+        // combine where with values
+        // to recreate original object
+        for(key in where) {
+          docs[key] = where[key];
+        }
+
         // callback with ...
-        done(err, where, values);
+        done(err, docs);
       });
     },
     
@@ -70,6 +83,7 @@ module.exports = function(name) {
     // The callback is called when the remove method has finished. 
     remove: function(item, done) {
       if(!done) throw new Error('Get method requires a callback')
+      item = mongo.idify(item);
       db.remove(item, function() {
         // callback with item so
         // clients know which to remove

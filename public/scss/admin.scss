@@ -92,7 +92,11 @@ ul.items {
   margin-left:$collection-width;
   height:100%;
   padding:8px; 
-  box-sizing:border-box; 
+  box-sizing:border-box;
+    
+  >div {
+    margin-bottom:10px;
+  }
 }
 
 .panel {

@@ -221,6 +221,8 @@ ul.items {
   height: 100%;
   padding: 8px;
   box-sizing: border-box; }
+  .actions > div {
+    margin-bottom: 10px; }
 
 .panel {
   box-sizing: border-box;

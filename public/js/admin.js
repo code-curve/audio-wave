@@ -71,6 +71,8 @@ controller({
 directive({
   // Interface for editing collections
   'editor': require('./directives/editor'),
+  // Interface for creating items for collections
+  'creator': require('./directives/creator'),
   // Console for server communication
   'console': require('./directives/console'),
   // Searchable collection interface 

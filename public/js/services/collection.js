@@ -1,3 +1,4 @@
+var _ = require('../util');
 
 // collection Factory
 // ------------------ 
@@ -30,7 +31,7 @@ module.exports = function(adminSocket) {
   // object. _(Query object normally comes from
   // the database)_
   function find(collection, query) {
-    for(var i = 0; i < collection[i].length; i++) {
+    for(var i = 0; i < collection.length; i++) {
       if(collection[i]._id === query._id) {
         return collection[i];
       }
@@ -55,7 +56,7 @@ module.exports = function(adminSocket) {
   // with collection manipulation methods. See
   // module doc comment for more details. 
   function model(name) {
-    var collection, socket, event;
+    var collection, socket, event, listeners;
 
     // if we have already loaded this collection
     if(collections[name]) {
@@ -63,6 +64,9 @@ module.exports = function(adminSocket) {
       console.log('load', name);
       return collections[name];
     }
+    
+    // event listeners
+    listeners = {};
 
     // aliasing
     socket = adminSocket;
@@ -83,20 +87,39 @@ module.exports = function(adminSocket) {
       collection.length = 0;
       // I believe there's some explaining to do here.
       collection.push.apply(collection, models.data);
-      collection.focus = collection[0]._id;
+      collection.focus(collection[0]._id);
+      collection.trigger('get', models);
     });
 
     socket.on(event.create, function(model) {
-      collection.push(model);
+      collection.push(model.data);
+      collection.trigger('create', model);
     });
 
     socket.on(event.remove, function(model) {
       delete find(collection, model);
+      collection.trigger('remove', model);
     });
 
-    socket.on(event.update, function(model, updated) {
-      // Create safeguard with model for find -> null
-      (find(collection, model) || model) = updated;
+    socket.on(event.update, function(updated) {
+      var key, model;
+      updated = updated.data;
+
+      // __Important__ to read!
+      // We need to update the values of the model
+      // the collection, we can access it using find
+      model = find(collection, updated);
+        if(model) { 
+        // We can't set the value of model to 
+        // updated as that will overwrite the reference.
+        // We need to loop through and update the
+        // properties of the object one by one.
+        for(key in updated) {
+          model[key] = updated[key];
+        }
+        // And we're done!
+        collection.trigger('update', model);
+      }
     });
 
     // ## Exposed methods  
@@ -110,9 +133,57 @@ module.exports = function(adminSocket) {
     };
 
     collection.update = function(model, updated) {
-      socket.emit(event.update, model, updated);
+      var key, values;
+      values = {}
+
+      // if the same object was passed twice
+      if(model === updated) {
+        model = _.copy(updated);
+      }
+      
+      // only need the id to make the update
+      model = {
+        _id: model._id
+      }
+
+      // strip mongo/angular properties
+      for(key in updated) {
+        if(!(key[0] === '$' || key[0] === '_')) {
+          values[key] = updated[key];
+        }
+      }
+      socket.emit(event.update, model, values);
     }; 
+
+    collection.on = function(eventName, fn) {
+      if(!(listeners[eventName] instanceof Array)) {
+        listeners[eventName] = [];
+      }
+      listeners[eventName].push(fn);
+    };
+
+    collection.trigger = function(eventName, data) {
+      data = [].slice.call(arguments, 1);
+      if(listeners[eventName] instanceof Array) {
+        for(var i = 0; i < listeners[eventName].length; i++) {
+          listeners[eventName][i].apply(this, data);
+        }
+      }
+    };
     
+    collection.focus = function(_id) {
+      console.log('focus on', _id);
+      for(var i = 0; i < collection.length; i++) {
+        if(collection[i]._id === _id) {
+          collection.focused = _.copy(collection[i]);
+        }
+      }
+      collection.trigger('focus', collection.focused);
+    }
+    
+    // the item that currently has focus
+    collection.focused = {};
+  
     // Reveal the name of this collection
     collection.name = name;
     

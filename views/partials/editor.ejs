@@ -1,9 +1,9 @@
 <div class='editor'>
   <h2>{{collection.name}}</h2>
   <div class='document'>
-    <div ng-repeat='(key, value) in selection()'>
+    <div ng-repeat='(key, value) in model'>
       <label>{{key}}</label>
-      <textarea ng-model='value'></textarea>
+      <textarea ng-model='model[key]'></textarea>
     </div>
     <button ng-click='save()'>
       <span ng-hide='saving'>Save</span>

@@ -17,10 +17,10 @@
     </thead>
     <tbody>
       <tr ng-repeat='model in models | filter:search'
-        ng-click='focus(model._id)'>
+        ng-click='models.focus(model._id)'>
         <td>
           <i class='caret fa fa-caret-right' 
-            ng-show='model._id == models.focus'></i>
+            ng-show='model._id == models.focused._id'></i>
         </td>
         <td ng-repeat='(key, value) in model' ng-hide='key[0] == "_"'
           ng-bind='value'> 

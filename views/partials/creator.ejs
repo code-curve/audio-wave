@@ -1,0 +1,13 @@
+<div class='editor'>
+  <h2>Create {{collection.name}}</h2>
+  <div class='document'>
+    <div ng-repeat='(key, value) in schema'>
+      <label>{{key}}</label>
+      <textarea ng-model='instance[key]'></textarea>
+    </div>
+    <button ng-click='create()'>
+      <span ng-hide='creating'>Create</span>
+      <i class="fa fa-cog fa-spin" ng-show='creating'></i>
+    </button>
+  </div>
+</div>

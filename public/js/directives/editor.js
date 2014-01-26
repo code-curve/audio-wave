@@ -24,23 +24,24 @@ module.exports = function() {
       // the scope. 
       $scope.collection = collection($scope.name);
       
+      $scope.model = {};
+   
       $scope.saving = false;
-    
-      $scope.selection = function() {
-        var models = $scope.collection;
-        for(var i = 0; i < models.length; i++) {
-          if(models.focus === models[i]._id) {
-            return models[i]
-          }
-        }
-        return {};
-      };
-
+       
       $scope.save = function() {
-        var focus = $scope.selection();
-        $scope.collection.update(focus, focus);
+        var model = $scope.model;
+        console.log('edited', $scope.model);
+        $scope.collection.update(model, model);
         $scope.saving = true; 
       };
+      
+      $scope.collection.on('update', function() {
+        $scope.saving = false;
+      });
+  
+      $scope.collection.on('focus', function(model) {
+        $scope.model = model;
+      });
 
     }
   }  

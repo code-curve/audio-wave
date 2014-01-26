@@ -8,10 +8,16 @@
 // mongo collection with this name,
 // ready for use.
 
-var mongojs = require('mongojs');
+var mongojs = require('mongojs'),
+  ObjectId = mongojs.ObjectId;
 
-module.exports = function(collection) {
+module.exports = mongo = function(collection) {
   var db = mongojs('audio-drop', [collection]);
   
   return db[collection];
+}
+
+mongo.idify = function(object) {
+  object._id = ObjectId(object._id);
+  return object;
 }
