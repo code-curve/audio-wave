@@ -41,14 +41,13 @@ ul.items {
   
   li {
     -webkit-user-select:none;
-    padding:4px 6px;
     border-right:solid 4px #ddd;
     transition-property:border;
     transition-duration:0.3s;    
    
-    a { 
-      @include max;
+    a {
       color:#444;
+      padding:4px 6px;
       text-decoration:none;
       display:block;
     }

@@ -84,10 +84,10 @@ module.exports = function(name) {
     remove: function(item, done) {
       if(!done) throw new Error('Get method requires a callback')
       item = mongo.idify(item);
-      db.remove(item, function() {
+      db.remove(item, function(err) {
         // callback with item so
         // clients know which to remove
-        done(item);
+        done(err, item);
       });
     }
   

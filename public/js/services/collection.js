@@ -31,12 +31,26 @@ module.exports = function(adminSocket) {
   // object. _(Query object normally comes from
   // the database)_
   function find(collection, query) {
-    for(var i = 0; i < collection.length; i++) {
+    var i;
+    for(i = 0; i < collection.length; i++) {
       if(collection[i]._id === query._id) {
         return collection[i];
       }
     }
     return null;
+  }
+
+  function remove(collection, query) {
+    var i, index;
+    for(i = 0; i < collection.length; i++) {
+      if(collection[i]._id === query._id) {
+        index = i;
+      }
+    }
+
+    if(typeof index !== 'undefined') {
+      collection.splice(index, 1);
+    }
   }
 
   // Helper method to provide clean looking
@@ -50,7 +64,20 @@ module.exports = function(adminSocket) {
     }
   }
   
-  
+  // Removes all angular properties from
+  // an object, so that it may be used for
+  // querying at mongo
+  function sanitize(object) {
+    var key, sanitized;
+    sanitized = {};
+    for(key in object) {
+      if(key[0] !== '$') {
+        sanitized[key] = object[key];
+      }
+    }
+    return sanitized;
+  }
+
   // Creates interface for collection with this name
   // and returns dynamic collection array along
   // with collection manipulation methods. See
@@ -97,7 +124,8 @@ module.exports = function(adminSocket) {
     });
 
     socket.on(event.remove, function(model) {
-      delete find(collection, model);
+      model = model.data;
+      remove(collection, model);  
       collection.trigger('remove', model);
     });
 
@@ -109,7 +137,7 @@ module.exports = function(adminSocket) {
       // We need to update the values of the model
       // the collection, we can access it using find
       model = find(collection, updated);
-        if(model) { 
+      if(model) { 
         // We can't set the value of model to 
         // updated as that will overwrite the reference.
         // We need to loop through and update the
@@ -129,6 +157,7 @@ module.exports = function(adminSocket) {
     };
     
     collection.remove = function(model) {
+      model = sanitize(model);
       socket.emit(event.remove, model);
     };
 

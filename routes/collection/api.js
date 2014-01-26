@@ -12,17 +12,12 @@ module.exports = function(name, actions, socket) {
   function bind(action) {
     var eventName, args;
     eventName = name + '/' + action;
-    console.log('WS.on', eventName);
     
     socket.on(eventName, function() {
-      console.log('WS.do', eventName);
 
-      console.log('\n\n',eventName, '\n\n', arguments, '\n\n');
       // The first two arguments are socket io things, wait...
       args = Array.prototype.slice.call(arguments, 0);
       
-      console.log('NEW ARGS', args);
-
       // Put the callback at the end of the array
       // so that when we call apply, it gets used 
       // as the last argument.

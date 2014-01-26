@@ -23,6 +23,9 @@ code {
   border-radius: 4px;
   border: solid 1px #aaa; }
 
+.danger {
+  background-color: #C22A2A; }
+
 html, body {
   width: 100%;
   height: 100%;
@@ -69,6 +72,9 @@ code {
   background-color: #eee;
   border-radius: 4px;
   border: solid 1px #aaa; }
+
+.danger {
+  background-color: #C22A2A; }
 
 .message {
   text-align: left;

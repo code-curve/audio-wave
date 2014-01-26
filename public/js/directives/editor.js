@@ -14,11 +14,10 @@ module.exports = function() {
       console.log('Editor');
     },
     controller: function($scope, $element, collection) {
-      var collection;
       
       // Get the name of the collection for this editor
       $scope.name = $element.attr('collection-name');
-            
+             
       // Get the collection for this name from
       // the collection factory and bind it to
       // the scope. 
@@ -27,7 +26,11 @@ module.exports = function() {
       $scope.model = {};
    
       $scope.saving = false;
-       
+      
+      $scope.remove = function() {
+        $scope.collection.remove($scope.model);
+      };
+
       $scope.save = function() {
         var model = $scope.model;
         console.log('edited', $scope.model);

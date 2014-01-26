@@ -23,6 +23,9 @@ code {
   border-radius: 4px;
   border: solid 1px #aaa; }
 
+.danger {
+  background-color: #C22A2A; }
+
 html, body {
   width: 100%;
   height: 100%;
@@ -70,6 +73,9 @@ code {
   border-radius: 4px;
   border: solid 1px #aaa; }
 
+.danger {
+  background-color: #C22A2A; }
+
 input {
   border: none;
   outline: none;
@@ -94,6 +100,9 @@ code {
   background-color: #eee;
   border-radius: 4px;
   border: solid 1px #aaa; }
+
+.danger {
+  background-color: #C22A2A; }
 
 .logo-box {
   position: relative;
@@ -182,14 +191,12 @@ ul.items {
   font-weight: 300; }
   ul.items li {
     -webkit-user-select: none;
-    padding: 4px 6px;
     border-right: solid 4px #ddd;
     transition-property: border;
     transition-duration: 0.3s; }
     ul.items li a {
-      width: 100%;
-      height: 100%;
       color: #444;
+      padding: 4px 6px;
       text-decoration: none;
       display: block; }
     ul.items li:hover {
