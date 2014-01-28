@@ -14,6 +14,7 @@ var express = require('express')
 
 var Hub = require('./routes/hub')
   , auth = require('./routes/auth')
+  , upload = require('./routes/upload')
   , collections = require('./routes/collections');
 
 // ## Server Setup
@@ -68,6 +69,14 @@ app.get('/admin/login', routes.login);
 app.post('/auth/login', auth.login);
 // - Sign out
 app.get('/auth/logout', auth.logout);
+
+// - Upload files
+var type;
+// Create a route for each type of upload
+for(type in upload) {
+  console.log('[UPLOAD]', type);
+  app.post('/upload/' + type, upload[type]);
+}
 
 // ## Sockets
 var admins = sockets.of('/admin');
