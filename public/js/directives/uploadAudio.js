@@ -3,8 +3,17 @@ module.exports = function() {
   return {
     restrict: 'A',
     templateUrl: 'partials/uploadAudio',
-    controller: function($scope, $upload) {
+    controller: function($scope, $upload, $timeout) {
       
+      function remove(file) {
+        var i;
+        for(i = 0; i < $scope.files.length; i++) {
+          if($scope.files[i] === file) {
+            $scope.files.splice(i, 1);
+          }
+        }
+      }
+
       function upload(file) {
         file.uploaded = false;
 
@@ -15,6 +24,8 @@ module.exports = function() {
           file.progress = 100 * (e.loaded / e.total); 
         }).success(function(data) {
           file.uploaded = true;
+          // Get rid of the success notification
+          $timeout(remove.bind(this, file), 5000);
         }).error(function(data, status) {
           console.log('error', data);
           file.error = data.error;

@@ -6,6 +6,8 @@
 
 $sidebar-width: 200px;
 $collection-width: 300px;
+$collection-width-small: 200px;
+$collection-width-big: 400px;
 
 body {
   background-color:#EEE;
@@ -84,6 +86,24 @@ ul.items {
     right:6px;
   }
 
+}
+
+.big {
+  .actions {
+    margin-left:$collection-width-big;
+  }
+  .collection {
+    width:$collection-width-big;
+  }
+}
+
+.small {
+  .actions {
+    margin-left:$collection-width-small;
+  }
+  .collection {
+    width:$collection-width-small;
+  }
 }
 
 /* Panel for collections editor */

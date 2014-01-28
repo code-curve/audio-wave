@@ -122,5 +122,6 @@ module.exports = function(settings) {
 
   return function(socket) {
     api(name, actions, socket);
+    return actions;
   }  
 };

@@ -222,6 +222,16 @@ ul.items {
     top: 6px;
     right: 6px; }
 
+.big .actions {
+  margin-left: 400px; }
+.big .collection {
+  width: 400px; }
+
+.small .actions {
+  margin-left: 200px; }
+.small .collection {
+  width: 200px; }
+
 /* Panel for collections editor */
 .actions {
   margin-left: 300px;

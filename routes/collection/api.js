@@ -58,4 +58,6 @@ module.exports = function(name, actions, socket, sockets) {
       bind(action);
     //}
   }
+
+  return actions;
 };
