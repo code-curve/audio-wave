@@ -5,26 +5,14 @@
   height:100%;
 }
 
-aside.library {
-  box-sizing:border-box;
-  width:30%;
-  padding:10px;
-  float:left;
-  height:100%;
-}
+.upload.progress {
+  height:6px;
+  background-color:#ccc;
+  width:100%;
 
-div.upload {
-  box-sizing:border-box;
-  padding:10px;
-  width:70%;
-  float:left;
-  height:100%;
-}
-
-.upload {
-  
-  button {
-    font-size:16pt;    
-    text-transform:lowercase;
+  .progress.bar {
+    height:100%;
+    width:0%;
+    background-color:$theme-primary;
   }
-} 
+}

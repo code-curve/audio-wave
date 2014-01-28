@@ -41,6 +41,7 @@ app.use(cookieParser);
 app.use(express.session({
   store: sessionStore
 }));
+
 app.use(app.router);
 server.listen(app.get('port'));
 
@@ -70,7 +71,6 @@ app.get('/auth/logout', auth.logout);
 
 // ## Sockets
 var admins = sockets.of('/admin');
-console.log('listen on /admin');
 admins.on('connection', function(err, socket, session) {
   if(err) throw err;
   

@@ -10,7 +10,7 @@
 // song files from the available audio files.
 //
 
-angular.module('admin', ['ngRoute', 'btford.socket-io']).
+angular.module('admin', ['ngRoute', 'btford.socket-io', 'angularFileUpload']).
 
 config(function($routeProvider) {
   $routeProvider.
@@ -69,6 +69,7 @@ controller({
 // ----------
 
 directive({
+  'uploadAudio': require('./directives/uploadAudio'),
   // Interface for editing collections
   'editor': require('./directives/editor'),
   // Interface for creating items for collections

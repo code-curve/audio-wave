@@ -1,0 +1,30 @@
+<div class='editor'>
+  <h2>Upload Audio</h2>
+  <div class='document'>
+    <div class='files'> 
+      <div ng-repeat='file in files'>
+        <strong>{{file.name}}</strong>
+        <div class='upload progress' ng-hide='file.uploaded || file.error'>
+          <div class='progress bar' style='width:{{file.progress}}%'></div>
+        </div>
+        <div class='success message' ng-show='file.uploaded'>File Uploaded</div>
+        <div class='error message' ng-show='file.error'>{{file.error}}</div>
+      </div>
+    </div>
+
+    <input type="file" ng-file-select="select($files)" multiple>
+    
+    <div ng-file-drop="select($files)" ng-file-drag-over-class=""
+        ng-show="dropSupported">drop files here</div>
+    
+    <div ng-file-drop-available="dropSupported=true" 
+        ng-show="!dropSupported">HTML5 Drop File is not supported!</div>
+    
+    <button ng-click='upload()'>
+      <span ng-hide='uploading'>Upload</span>
+      <i class="fa fa-cog fa-spin" ng-show='uploading'></i>
+    </button>
+
+    <button class='danger' ng-click="upload.abort()">Cancel</button>
+  </div>
+</div>

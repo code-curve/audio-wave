@@ -13,7 +13,8 @@
     "whispers": "~0.0.2",
     "session.socket.io": "~0.1.6",
     "connect-mongo": "~0.4.0",
-    "connect": "~2.12.0"
+    "connect": "~2.12.0",
+    "bcrypt": "~0.7.7"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
