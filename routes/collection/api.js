@@ -6,7 +6,7 @@
 // provides interfaces for each action in actions
 // and prefixes it with name.
 
-module.exports = function(name, actions, socket, sockets) {
+module.exports = function(name, actions, socket) {
   var action;
   function _bind(all) {
     return function(action) {
@@ -22,15 +22,20 @@ module.exports = function(name, actions, socket, sockets) {
         // so that when we call apply, it gets used 
         // as the last argument.
         args.push(function(err, docs) {
+          var sockets, id;
           if(err) {
             socket.emit(eventName, {
               error: err
             });
           } else {
             if(all) {
-              sockets.emit(eventName, {
-                data: docs
-              });
+              sockets = socket.namespace.sockets;
+              for(id in sockets) {
+                console.log('WRITING TO SOCKET');
+                sockets[id].emit(eventName, {
+                  data: docs
+                });
+              }
             } else {
               socket.emit(eventName, {
                 data: docs
@@ -52,11 +57,11 @@ module.exports = function(name, actions, socket, sockets) {
     // `get` should only propagate to
     // the initiator, whereas the
     // the other options should
-    //if(action === 'get') {
-    //  bindToAll(action);
-    //} else {
+    if(action === 'get') {
       bind(action);
-    //}
+    } else {
+      bindToAll(action);
+    }
   }
 
   return actions;

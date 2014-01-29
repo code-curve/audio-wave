@@ -22,15 +22,16 @@ module.exports = function() {
           file: file
         }).progress(function(e) {
           file.progress = 100 * (e.loaded / e.total); 
-        }).success(function(data) {
-          file.uploaded = true;
-          // Get rid of the success notification
-          $timeout(remove.bind(this, file), 5000);
+        }).success(function(res) {
+          if(res.status === 'success') {
+            file.uploaded = true;
+            // Get rid of the success notification
+            $timeout(remove.bind(this, file), 5000);
+          } else {
+            file.error = res.data.message;
+          }
         }).error(function(data, status) {
-          console.log('error', data);
-          file.error = data.error;
           file.error = 'There was a problem uploading.';
-          console.log(file.error);
         });
 
       }

@@ -6,27 +6,54 @@
   border-left:solid 20px $theme-primary;
   padding:4px;
   background-color:#fafafa;
+  
+  h2 {
+    color:#444;
+    text-transform:capitalize;
+  }
+
+  label {
+    display:block;
+    text-decoration:underline;
+    color:#666;
+  }
+
+  textarea {
+    border:none;
+    width:100%;
+    outline:none;
+    color:#888;
+  }
+
+  button {
+    font-size:12pt;
+    padding:8px;
+  }
+  
+  .drop {
+    opacity:0.4;
+    background-color:$theme-light;
+    color:$theme-dark;
+    padding:8px 4px;
+    margin:8px 2px;
+    border-radius:4px;
+    border: {
+      style: dashed;
+      width:2px;
+      color:$theme-primary;
+    }
+  }
+
+  .drop.active {
+    opacity:1;
+    color:$theme-primary;
+  }
 }
 
-.editor h2 {
-  color:#444;
-  text-transform:capitalize;
+i.success {
+  color:#2AC242;
 }
 
-.editor label {
-  display:block;
-  text-decoration:underline;
-  color:#666;
-}
-
-.editor textarea {
-  border:none;
-  width:100%;
-  outline:none;
-  color:#888;
-}
-
-.editor button {
-  font-size:12pt;
-  padding:8px;
+i.danger {
+  color:#C22A2A;
 }

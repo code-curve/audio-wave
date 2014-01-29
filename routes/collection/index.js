@@ -74,7 +74,7 @@ module.exports = function(settings) {
     // `(where, values, done)`
     // Takes a query object (where), an updated values
     // object (values) and a callback function. Very
-    // much modeled on the MongoDb api.
+    // much modelled on the MongoDb api.
     update: function(where, values, done) {
       if(!done) throw new Error('Get method requires a callback')
       
