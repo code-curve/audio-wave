@@ -3,8 +3,6 @@ var api = require('../api')
   , path = require('path')
   , probe = require('node-ffprobe');
 
-
-
 module.exports = function(req, res) {
   var file;
   if(req.files) {
@@ -23,12 +21,15 @@ module.exports = function(req, res) {
         probeFile(filePath);
       });
     }
-    
+   
+    // # probeFile
+    // Gets the metadata from the song file
+    // and saves it in the database.
     function probeFile(filePath) {
       probe(filePath, function(err, song) {
         if(err) throw err;
-        console.log('[EXTENSION]', song.fileext);
-        if(song.fileext === '.mp3') {
+        console.log('[EXTENSION]', song);
+        if(song.format.format_name === 'mp3') {
           saveInDb(song);
         } else {
           res.json(api.error({
@@ -53,7 +54,7 @@ module.exports = function(req, res) {
   } else {
     
     res.json(api.error({
-      message: 'No files present'
+      message: 'Could\'t find any files'
     }));
 
   } 

@@ -36,8 +36,7 @@ module.exports = function(userProxy) {
   
   var users = [];
   var events = new Whispers();
-  
-  
+    
   // # connect
   // `(socket)`
   // Accepts a socket (designed to be used with socket.io)

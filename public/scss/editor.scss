@@ -50,10 +50,10 @@
   }
 }
 
-i.success {
+span.success, strong.success, i.success {
   color:#2AC242;
 }
 
-i.danger {
+span.danger, strong.danger, i.danger {
   color:#C22A2A;
 }

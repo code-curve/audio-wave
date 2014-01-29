@@ -6,10 +6,10 @@
         <i class='fa fa-check success' ng-show='file.uploaded'></i>
         <i class='fa fa-times danger' ng-show='file.error'></i>
         <strong>{{file.name}}</strong>
+        <strong class='danger'>{{file.error}}</strong>
         <div class='upload progress' ng-hide='file.uploaded || file.error'>
           <div class='progress bar' style='width:{{file.progress}}%'></div>
         </div>
-        <div class='error message' ng-show='file.error'>{{file.error}}</div>
       </div>
     </div>
     

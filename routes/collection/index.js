@@ -17,7 +17,8 @@
 // a socket and binds the appropriate set of events onto
 // the socket. See [collection/api](api.html) for more details.
 
-var mongo = require('../mongo')
+var Q = require('q')
+  , mongo = require('../mongo')
   , api = require('./api')
   , _ = require('../util');
 
@@ -34,8 +35,9 @@ module.exports = function(settings) {
     // `(item, done)`
     // Takes a schemaless item and a done callback function. 
     // Calls callback when the insert method finishes.
-    create: function(item, done) {
-      if(!done) throw new Error('Get method requires a callback');
+    create: function(item) {
+      var deferred;
+      deferred = Q.defer();
 
       // filter
       if(filters && filters.create instanceof Function) {
@@ -43,11 +45,16 @@ module.exports = function(settings) {
       }
 
       db.insert(item, function(err) {
-        console.log('insert', item, 'into', name);
         // Callback must include item, so that users
         // know which item was added
-        if(done) done(err, item);
+        if(err) {
+          deferred.reject(err)
+        } else {
+          deferred.resolve(item);
+        }
       });
+
+      return deferred.promise;
     },
     
     // # get
@@ -58,16 +65,21 @@ module.exports = function(settings) {
     // just one object. Object selection should be
     // done client side.
     get: function(done) {
-      if(!done) throw new Error('Get method requires a callback')
+      var deferred;
+      deferred = Q.defer();
+
       db.find(function(err, docs) {
-        if(err) throw err;
-        
-        if(filters && filters.get instanceof Function) {
-          docs = filters.get(docs);
-        }  
-        
-        done(err, docs);
+        if(err) {
+          deferred.reject(err);
+        } else { 
+          if(filters && filters.get instanceof Function) {
+            docs = filters.get(docs);
+          }    
+          deferred.resolve(docs);
+        }
       });
+
+      return deferred.promise;
     }, 
   
     // # update
@@ -75,36 +87,43 @@ module.exports = function(settings) {
     // Takes a query object (where), an updated values
     // object (values) and a callback function. Very
     // much modelled on the MongoDb api.
-    update: function(where, values, done) {
-      if(!done) throw new Error('Get method requires a callback')
-      
+    update: function(where, values) {
+      var deferred;
+      deferred = Q.defer();
       where = mongo.idify(where);
 
       db.update(where, { $set: values }, function(err) {
         var key, docs;
-        
-        docs = values;
-        // combine where with values
-        // to recreate original object
-        for(key in where) {
-          docs[key] = where[key];
-        }
+        if(err) {
+          deferred.reject(err);
+        } else {
+          docs = values;
+          // combine where with values
+          // to recreate original object
+          for(key in where) {
+            docs[key] = where[key];
+          }
 
-        if(filters && filters.update instanceof Function) {
-          docs = filters.update(docs);
-        }
+          if(filters && filters.update instanceof Function) {
+            docs = filters.update(docs);
+          }
 
-        // callback with ...
-        done(err, docs);
+          // callback with ...
+          deferred.resolve(docs);
+        }
       });
+
+      return deferred.promise;
     },
     
     // # remove 
     // `(item, done)`
     // Takes a query object (item) and a done callback function. 
     // The callback is called when the remove method has finished. 
-    remove: function(doc, done) {
-      if(!done) throw new Error('Get method requires a callback')
+    remove: function(doc) {
+      var deferred;
+      deferred = Q.defer();
+
       doc = mongo.idify(doc);
 
       if(filters && filters.remove instanceof Function) {
@@ -112,10 +131,16 @@ module.exports = function(settings) {
       }
 
       db.remove(doc, function(err) {
-        // callback with item so
-        // clients know which to remove
-        done(err, doc);
+        if(err) {
+          deferred.reject(err);
+        } else {
+          // callback with item so
+          // clients know which to remove
+          deferred.resolve(doc);
+        }
       });
+
+      return deferred.promise;
     }
   
   };

@@ -16,7 +16,8 @@
     "connect": "~2.12.0",
     "bcrypt": "~0.7.7",
     "mv": "~1.0.0",
-    "node-ffprobe": "~1.2.2"
+    "node-ffprobe": "~1.2.2",
+    "q": "~1.0.0"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

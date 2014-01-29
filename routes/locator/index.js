@@ -1,18 +1,24 @@
+var Q = require('q');
+
+module.exports = locate;
+
 var distances = [];
 
-var locate = function(devices, done) {
+function locate(devices) {
+  var deferred = Q.defer();
+
   // get the users ready
   devices.emit('wakeup');
   
   // when they are ready, start
   devices.when('ready', function() {
     if(devices.length > 0) {
-      listen(devices, done);
+      listen(devices, deferred);
     }
   });
 };
 
-var listen = function(devices, done, to) {
+function listen(devices, deferred, to) {
   
   if(!to) to = 0;
   // prepare this row of distance table
@@ -40,12 +46,10 @@ var listen = function(devices, done, to) {
   // start a new ping or callback
   devices.when('heard', function() {
     if(to < users.length) {
-      listen(users, done, to);
+      listen(users, deferred, to);
     } else {
-      done(distances);
+      deferred.resolve(distances);
     }
   });
   
 };
-
-module.exports = locate;

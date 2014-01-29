@@ -1,4 +1,3 @@
-
 // Websocket API Generator
 // -----------------------
 
@@ -6,52 +5,13 @@
 // provides interfaces for each action in actions
 // and prefixes it with name.
 
+var api = require('../api');
+
 module.exports = function(name, actions, socket) {
-  var action;
-  function _bind(all) {
-    return function(action) {
-      var eventName, args;
-      eventName = name + '/' + action;
-      
-      socket.on(eventName, function() {
-         
-        // The first two arguments are socket io things, wait...
-        args = Array.prototype.slice.call(arguments, 0);
-        
-        // Put the callback at the end of the array
-        // so that when we call apply, it gets used 
-        // as the last argument.
-        args.push(function(err, docs) {
-          var sockets, id;
-          if(err) {
-            socket.emit(eventName, {
-              error: err
-            });
-          } else {
-            if(all) {
-              sockets = socket.namespace.sockets;
-              for(id in sockets) {
-                console.log('WRITING TO SOCKET');
-                sockets[id].emit(eventName, {
-                  data: docs
-                });
-              }
-            } else {
-              socket.emit(eventName, {
-                data: docs
-              });
-            }
-          }
-        });
-           
-        // Pass on arguments from socket event
-        actions[action].apply(this, args);
-      });
-    };
-  }
+  var action, bind, bindToAll;
   
-  var bind = _bind(false);
-  var bindToAll = _bind(true);
+  bind = _bind(false);
+  bindToAll = _bind(true);
 
   for(action in actions) {
     // `get` should only propagate to
@@ -62,6 +22,44 @@ module.exports = function(name, actions, socket) {
     } else {
       bindToAll(action);
     }
+  }
+
+  function _bind(all) {
+    return function(action) {
+      var eventName, args;
+      eventName = name + '/' + action;
+      
+      socket.on(eventName, function() {
+         
+        // The first two arguments are socket io things, wait...
+        args = Array.prototype.slice.call(arguments, 0);
+         
+        // Pass on arguments from socket event
+        actions[action].apply(this, args).then(function(docs) {
+          var data = api.success(docs);
+          if(all) {
+            emitToAll(eventName, data);
+          } else {
+            emit(eventName, data);
+          }
+        }).fail(function(err) {
+          emit(eventName, api.error(err));
+        });
+
+      });
+    };
+  }
+  
+  function emit(eventName, data) {
+    socket.emit(eventName, data);
+  }
+
+  function emitToAll(eventName, data) {
+    var id, sockets;
+    sockets = socket.namespace.sockets;
+    for(id in sockets) {
+      sockets[id].emit(eventName, data);
+    } 
   }
 
   return actions;
