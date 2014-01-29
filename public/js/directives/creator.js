@@ -12,7 +12,7 @@ module.exports = function() {
     restrict: 'A',
     templateUrl: 'partials/creator',
     link: function(scope, element, attrs) {
-      console.log('Creator');
+      
     },
     controller: function($scope, $element, collection) {
       var collection;

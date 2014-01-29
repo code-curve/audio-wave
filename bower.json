@@ -13,7 +13,8 @@
     "angular-route": "~1.2.7",
     "angular-socket-io": "~0.3.0",
     "socket.io-client": "~0.9.16",
-    "ng-file-upload": "~1.2.6"
+    "ng-file-upload": "~1.2.6",
+    "q": "~1.0.0"
   },
   "resolutions": {
     "jquery": "1.8.3"

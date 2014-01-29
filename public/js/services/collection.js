@@ -39,7 +39,11 @@ module.exports = function(adminSocket) {
     }
     return null;
   }
-
+  
+  // ## remove
+  // `(collection, query)`
+  // Removes any items from `collection` that
+  // match the `_id` supplied from `query`.
   function remove(collection, query) {
     var i, index;
     for(i = 0; i < collection.length; i++) {
@@ -78,6 +82,8 @@ module.exports = function(adminSocket) {
     return sanitized;
   }
 
+  // # model
+  // `(name)`
   // Creates interface for collection with this name
   // and returns dynamic collection array along
   // with collection manipulation methods. See
@@ -108,27 +114,51 @@ module.exports = function(adminSocket) {
       });
     }
     
-    // ## Socket Events
-
+    // Socket Events
+    // -------------
+    
+    // # get
+    // `(models)`
+    // When the socket receives a get event,
+    // reset the collection and populate it with
+    // the new models. Finally trigger a get event
+    // for any listeners.
     socket.on(event.get, function(models) {
+      // Remove all items (but don't overwrite the reference)
       collection.length = 0;
-      // I believe there's some explaining to do here.
+      // Hacky way not that won't reset reference
       collection.push.apply(collection, models.data);
       collection.focus(collection[0]._id);
       collection.trigger('get', models);
     });
 
+    // # create
+    // `(models)`
+    // Is called whenever the socket receives
+    // a create event (a new model is created).
+    // Add to the collection and trigger create.
     socket.on(event.create, function(model) {
       collection.push(model.data);
       collection.trigger('create', model);
     });
 
+    // # remove
+    // `(model)`
+    // Is called whenever the socket receives
+    // a remove event. Removes the model from
+    // the collection and triggers remove.
     socket.on(event.remove, function(model) {
       model = model.data;
       remove(collection, model);  
       collection.trigger('remove', model);
     });
 
+    // # update
+    // `(updated)`
+    // Is called whenever the socket receives
+    // an update event, passing the updated model
+    // as an argument. Updates the model in the 
+    // collection and then triggers an update event. 
     socket.on(event.update, function(updated) {
       var key, model;
       updated = updated.data;
@@ -150,17 +180,29 @@ module.exports = function(adminSocket) {
       }
     });
 
-    // ## Exposed methods  
+    // Exposed methods
+    // ---------------
+    // These methods are available on the collection
+    // object, for other methods to use the collection
+    // functionality to update the collections at the 
+    // server side.
   
+    // # create
+    // `(model)`
+    // Adds a model to the collection
     collection.create = function(model) {
       socket.emit(event.create, model);
     };
     
+    // # remove
+    // `(model)`
+    // Removes `model` from the collection
     collection.remove = function(model) {
       model = sanitize(model);
       socket.emit(event.remove, model);
     };
 
+    // # update
     collection.update = function(model, updated) {
       var key, values;
       values = {}
@@ -184,6 +226,10 @@ module.exports = function(adminSocket) {
       socket.emit(event.update, model, values);
     }; 
 
+    // # on
+    // `(eventName, fn)`
+    // Registers a callback function to be triggered
+    // on the event specified by `eventName`.
     collection.on = function(eventName, fn) {
       if(!(listeners[eventName] instanceof Array)) {
         listeners[eventName] = [];
@@ -191,6 +237,11 @@ module.exports = function(adminSocket) {
       listeners[eventName].push(fn);
     };
 
+    // # trigger
+    // `(eventName, data...)`
+    // Triggers all events with the name specified
+    // and passes all the other arguments to those
+    // event listeners.
     collection.trigger = function(eventName, data) {
       data = [].slice.call(arguments, 1);
       if(listeners[eventName] instanceof Array) {
@@ -200,6 +251,12 @@ module.exports = function(adminSocket) {
       }
     };
     
+    // # focus
+    // `(_id)`
+    // Multi purpose focus method which applies a focus
+    // to the model with this id. Creates a copy of the 
+    // focused model (that can be updated) and triggers
+    // a focus event.
     collection.focus = function(_id) {
       console.log('focus on', _id);
       for(var i = 0; i < collection.length; i++) {
