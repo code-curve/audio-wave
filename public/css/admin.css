@@ -222,6 +222,11 @@ ul.items {
     top: 6px;
     right: 6px; }
 
+.huge .actions {
+  margin-left: 600px; }
+.huge .collection {
+  width: 600px; }
+
 .big .actions {
   margin-left: 400px; }
 .big .collection {

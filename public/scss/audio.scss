@@ -16,3 +16,27 @@
     background-color:$theme-primary;
   }
 }
+
+.playback.track {
+  padding:0;
+  margin:0;
+  width:auto;
+  position:relative;
+  height:40px;
+}
+
+.playback .controls {
+  position:absolute;
+  width:60px;
+}
+
+.meta {
+  height:100%;
+  padding-left:58px;
+
+  .text {
+    line-height:34px;
+  }
+}
+
+

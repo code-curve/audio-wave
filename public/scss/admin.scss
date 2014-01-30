@@ -4,10 +4,11 @@
 @import 'logo';
 @import 'message';
 
-$sidebar-width: 200px;
-$collection-width: 300px;
-$collection-width-small: 200px;
-$collection-width-big: 400px;
+$sidebar-width:200px;
+$collection-width:300px;
+$collection-width-small:200px;
+$collection-width-big:400px;
+$collection-width-huge:600px;
 
 body {
   background-color:#EEE;
@@ -87,6 +88,16 @@ ul.items {
   }
 
 }
+
+.huge {
+  .actions {
+    margin-left:$collection-width-huge;
+  }
+  .collection {
+    width:$collection-width-huge;
+  }
+}
+
 
 .big {
   .actions {

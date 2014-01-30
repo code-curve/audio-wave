@@ -42,10 +42,13 @@ module.exports = function() {
       };
 
       $scope.stop = function() {
+        var src;
         $scope.playing = false;
         $scope.progress = 0;
         $scope.audio.pause();
-        $scope.audio.currentTime = 0;
+        src = $scope.audio.src;
+        delete $scope.audio;
+        $scope.audio = new Audio(src);
       };
 
       $scope.progression = function() {

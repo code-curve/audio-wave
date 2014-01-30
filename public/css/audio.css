@@ -37,3 +37,20 @@ button.danger {
     height: 100%;
     width: 0%;
     background-color: #2aa4c2; }
+
+.playback.track {
+  padding: 0;
+  margin: 0;
+  width: auto;
+  position: relative;
+  height: 40px; }
+
+.playback .controls {
+  position: absolute;
+  width: 60px; }
+
+.meta {
+  height: 100%;
+  padding-left: 58px; }
+  .meta .text {
+    line-height: 34px; }

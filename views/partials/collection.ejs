@@ -10,7 +10,7 @@
     <thead>
       <tr>
         <td><!-- Shows selection caret --></td>
-        <td ng-repeat='(key, value) in models[0]' ng-hide='key[0] == "_"'>
+        <td ng-repeat='(key, value) in models[0]' ng-show='schema[key]'>
           {{key}}
         </td>
       </tr>
@@ -22,9 +22,11 @@
           <i class='caret fa fa-caret-right' 
             ng-show='model._id == models.focused._id'></i>
         </td>
-        <td ng-repeat='(key, value) in model' ng-hide='key[0] == "_"'
+        
+        <td ng-repeat='(key, value) in model' ng-show='schema[key]'
           ng-bind='value'> 
         </td>
+
       </tr>
     </tbody>
   </table>
