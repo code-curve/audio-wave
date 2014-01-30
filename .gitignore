@@ -13,6 +13,7 @@ logs
 results
 
 audio
+!routes/audio
 .sass-cache
 public/components
 npm-debug.log
