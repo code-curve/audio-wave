@@ -15,6 +15,7 @@ var express = require('express')
 var Hub = require('./routes/hub')
   , auth = require('./routes/auth')
   , upload = require('./routes/upload')
+  , audio = require('./routes/audio')
   , collections = require('./routes/collections');
 
 // ## Server Setup
@@ -57,6 +58,7 @@ app.configure('development', function() {
 app.get('/', routes.index);
 // - Partials
 app.get('/partials/:name', routes.partial);
+app.get('/partials/:component/:name', routes.partial);
 
 // - Join session at id
 app.get('/s/:id');
@@ -69,6 +71,9 @@ app.get('/admin/login', routes.login);
 app.post('/auth/login', auth.login);
 // - Sign out
 app.get('/auth/logout', auth.logout);
+
+// - Play audio
+app.get('/audio/play/:id', audio.play);
 
 // - Upload files
 var type;

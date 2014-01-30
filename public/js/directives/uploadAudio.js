@@ -2,7 +2,7 @@ module.exports = function() {
   console.log('upload directive');
   return {
     restrict: 'A',
-    templateUrl: 'partials/uploadAudio',
+    templateUrl: 'partials/audio/upload',
     controller: function($scope, $upload, $timeout) {
       
       function remove(file) {

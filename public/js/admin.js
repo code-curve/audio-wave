@@ -72,6 +72,8 @@ directive({
   'uploadAudio': require('./directives/uploadAudio'),
   // Interface for editing collections
   'editor': require('./directives/editor'),
+  // Playing audio
+  'playback': require('./directives/playback'),
   // Interface for creating items for collections
   'creator': require('./directives/creator'),
   // Console for server communication

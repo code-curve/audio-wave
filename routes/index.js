@@ -15,8 +15,15 @@ module.exports = {
   
   // partials
   partial: function(req, res) {
-    var name = req.params.name;
-    res.render('partials/' + name);
+    var name, component;
+    name = req.params.name;
+    console.log('RENDER partials/' + name);
+    component = req.params.component;
+    if(!component) {
+      res.render('partials/' + name);
+    } else {
+      res.render('partials/' + component + '/' + name);
+    }
   }
 };
 
