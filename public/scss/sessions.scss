@@ -16,7 +16,7 @@
 }
 
 .progress {
-  background-color:$theme-dark;
+  background-color:$theme-primary;
   height:6px;
   width:100%;
 }
@@ -24,7 +24,7 @@
 .current {
   width:40%;
   height:100%;
-  background-color:$theme-primary;
+  background-color:$theme-light;
 }
 
 .track button {

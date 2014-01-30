@@ -35,6 +35,14 @@ config(function($routeProvider) {
   });
 }).
 
+// Filters
+// -------
+
+filter({
+  // Converts seconds to minutes
+  'minutes': require('./filters/minutes')
+}).
+
 // Services
 // --------
 
