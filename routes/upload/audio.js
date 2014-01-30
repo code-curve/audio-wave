@@ -14,11 +14,17 @@ module.exports = function(req, res) {
     // Moves the temporary file to a dedicated directory
     function move() {
       var filePath;
-      filePath = path.resolve(__dirname + '../../audio/' + file.name); 
+      filePath = path.resolve(__dirname + '../../../audio/' + file.name); 
       console.log('resolution', filePath);
       console.log(file.path, 'to', filePath);
-      fs.rename(file.path, filePath, function(err) {
-        probeFile(filePath);
+     
+      fs.readFile(file.path, function(err, data) {
+        if(err) throw err;
+        fs.writeFile(filePath, data, function(err) {
+          if(err) throw err;
+          file.path = filePath;
+          probeFile(filePath);
+        });
       });
     }
    
@@ -26,6 +32,7 @@ module.exports = function(req, res) {
     // Gets the metadata from the song file
     // and saves it in the database.
     function probeFile(filePath) {
+      console.log('probe', filePath);
       probe(filePath, function(err, song) {
         if(err) throw err;
 
@@ -42,16 +49,16 @@ module.exports = function(req, res) {
     
     function saveInDb(song) {
       var model;
-
+      console.log(song);
       model = {
         name: file.name,
-        duration: song.duration,
-        path: file.path 
+        duration: song.format.duration,
+        path: file.path
       };
        
       db.audio.create(model).then(function(docs) {
         console.log('created');
-        console.log('docs');
+        console.log(docs);
       });
 
       res.json(api.success({
