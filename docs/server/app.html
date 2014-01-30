@@ -44,8 +44,13 @@
               </a>
             
               
-              <a class="source" href="collections.html">
-                collections.js
+              <a class="source" href="index.html">
+                index.js
+              </a>
+            
+              
+              <a class="source" href="setup.html">
+                setup.js
               </a>
             
               
@@ -71,6 +76,16 @@
               
               <a class="source" href="index.html">
                 index.js
+              </a>
+            
+              
+              <a class="source" href="index.html">
+                index.js
+              </a>
+            
+              
+              <a class="source" href="audio.html">
+                audio.js
               </a>
             
               
@@ -144,6 +159,7 @@
             <div class="content"><div class='highlight'><pre>
 <span class="hljs-keyword">var</span> Hub = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./routes/hub'</span>)
   , auth = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./routes/auth'</span>)
+  , upload = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./routes/upload'</span>)
   , collections = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./routes/collections'</span>);</pre></div></div>
             
         </li>
@@ -195,6 +211,7 @@ app.use(cookieParser);
 app.use(express.session({
   store: sessionStore
 }));
+
 app.use(app.router);
 server.listen(app.get(<span class="hljs-string">'port'</span>));
 
@@ -343,6 +360,41 @@ app.configure(<span class="hljs-string">'development'</span>, <span class="hljs-
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-14">&#182;</a>
               </div>
+              <ul>
+<li>Upload files</li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> type;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <p>Create a route for each type of upload</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">for</span>(type <span class="hljs-keyword">in</span> upload) {
+  console.log(<span class="hljs-string">'[UPLOAD]'</span>, type);
+  app.post(<span class="hljs-string">'/upload/'</span> + type, upload[type]);
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-16">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
               <h2 id="sockets">Sockets</h2>
 
             </div>
@@ -354,11 +406,11 @@ admins.on(<span class="hljs-string">'connection'</span>, <span class="hljs-funct
         </li>
         
         
-        <li id="section-15">
+        <li id="section-17">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-15">&#182;</a>
+                <a class="pilcrow" href="#section-17">&#182;</a>
               </div>
               <p>Sockets that connect to <code>/admin</code> must authenticate  </p>
 
@@ -369,11 +421,11 @@ admins.on(<span class="hljs-string">'connection'</span>, <span class="hljs-funct
         </li>
         
         
-        <li id="section-16">
+        <li id="section-18">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-16">&#182;</a>
+                <a class="pilcrow" href="#section-18">&#182;</a>
               </div>
               <p>Log no auth
 TODO  </p>
@@ -388,11 +440,11 @@ TODO  </p>
         </li>
         
         
-        <li id="section-17">
+        <li id="section-19">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-17">&#182;</a>
+                <a class="pilcrow" href="#section-19">&#182;</a>
               </div>
               <p>Log success
 TODO</p>
@@ -402,11 +454,11 @@ TODO</p>
         </li>
         
         
-        <li id="section-18">
+        <li id="section-20">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-18">&#182;</a>
+                <a class="pilcrow" href="#section-20">&#182;</a>
               </div>
               <p>Pass socket to collections api</p>
 
@@ -417,11 +469,11 @@ TODO</p>
         </li>
         
         
-        <li id="section-19">
+        <li id="section-21">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-19">&#182;</a>
+                <a class="pilcrow" href="#section-21">&#182;</a>
               </div>
               <p>Temporary code to handle messages</p>
 
@@ -437,11 +489,11 @@ TODO</p>
         </li>
         
         
-        <li id="section-20">
+        <li id="section-22">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-20">&#182;</a>
+                <a class="pilcrow" href="#section-22">&#182;</a>
               </div>
               <p>When the user disconnects, broadcast
 the event.</p>
@@ -459,11 +511,11 @@ the event.</p>
         </li>
         
         
-        <li id="section-21">
+        <li id="section-23">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-21">&#182;</a>
+                <a class="pilcrow" href="#section-23">&#182;</a>
               </div>
               <p>Finally, broadcast a connection
 message from this socket.</p>
@@ -487,11 +539,11 @@ users.on(<span class="hljs-string">'connection'</span>, <span class="hljs-functi
         </li>
         
         
-        <li id="section-22">
+        <li id="section-24">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-22">&#182;</a>
+                <a class="pilcrow" href="#section-24">&#182;</a>
               </div>
               <p>Pass socket straight through to Hub
 TODO</p>

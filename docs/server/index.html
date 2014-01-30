@@ -44,8 +44,13 @@
               </a>
             
               
-              <a class="source" href="collections.html">
-                collections.js
+              <a class="source" href="index.html">
+                index.js
+              </a>
+            
+              
+              <a class="source" href="setup.html">
+                setup.js
               </a>
             
               
@@ -71,6 +76,16 @@
               
               <a class="source" href="index.html">
                 index.js
+              </a>
+            
+              
+              <a class="source" href="index.html">
+                index.js
+              </a>
+            
+              
+              <a class="source" href="audio.html">
+                audio.js
               </a>
             
               
@@ -203,6 +218,15 @@ any of the above forms.</p>
     <span class="hljs-keyword">return</span> variables.reduce(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(state, variable)</span> {</span>
       <span class="hljs-keyword">return</span> state &amp;&amp; _.type(variable, <span class="hljs-string">'undefined'</span>);
     }, <span class="hljs-literal">true</span>);
+  },
+  
+  copy: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(object)</span> {</span>
+    <span class="hljs-keyword">var</span> key, duplicate;
+    duplicate = {};
+    <span class="hljs-keyword">for</span>(key <span class="hljs-keyword">in</span> object) {
+      duplicate[key] = object[key];
+    }
+    <span class="hljs-keyword">return</span> duplicate;
   },</pre></div></div>
             
         </li>
@@ -224,7 +248,7 @@ checking. Returns resulting array.</p>
             
             <div class="content"><div class='highlight'><pre>  union: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
     <span class="hljs-keyword">var</span> results = [];
-    
+     
     <span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-built_in">arguments</span>.length; i++) {
       <span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> j = <span class="hljs-number">0</span>; j &lt; <span class="hljs-built_in">arguments</span>[i].length; j++) {
         <span class="hljs-keyword">if</span>(results.indexOf(<span class="hljs-built_in">arguments</span>[i][j] === -<span class="hljs-number">1</span>)) {

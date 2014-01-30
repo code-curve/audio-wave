@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>editor.js</title>
+  <title>uploadAudio.js</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="docco.css" />
@@ -136,7 +136,7 @@
         
           <li id="title">
               <div class="annotation">
-                  <h1>editor.js</h1>
+                  <h1>uploadAudio.js</h1>
               </div>
           </li>
         
@@ -151,6 +151,34 @@
               
             </div>
             
+            <div class="content"><div class='highlight'><pre>module.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+  console.log(<span class="hljs-string">'upload directive'</span>);
+  <span class="hljs-keyword">return</span> {
+    restrict: <span class="hljs-string">'A'</span>,
+    templateUrl: <span class="hljs-string">'partials/uploadAudio'</span>,
+    controller: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">($scope, $upload, $timeout)</span> {</span>
+      
+      <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">remove</span><span class="hljs-params">(file)</span> {</span>
+        <span class="hljs-keyword">var</span> i;
+        <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; $scope.files.length; i++) {
+          <span class="hljs-keyword">if</span>($scope.files[i] === file) {
+            $scope.files.splice(i, <span class="hljs-number">1</span>);
+          }
+        }
+      }
+
+      <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">upload</span><span class="hljs-params">(file)</span> {</span>
+        file.uploaded = <span class="hljs-literal">false</span>;
+
+        $upload.upload({
+          url: <span class="hljs-string">'/upload/audio'</span>,
+          file: file
+        }).progress(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(e)</span> {</span>
+          file.progress = <span class="hljs-number">100</span> * (e.loaded / e.total); 
+        }).success(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(res)</span> {</span>
+          <span class="hljs-keyword">if</span>(res.status === <span class="hljs-string">'success'</span>) {
+            file.uploaded = <span class="hljs-literal">true</span>;</pre></div></div>
+            
         </li>
         
         
@@ -160,104 +188,40 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
-              <h2 id="editor">Editor</h2>
+              <p>Get rid of the success notification</p>
 
             </div>
             
-        </li>
-        
-        
-        <li id="section-3">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-3">&#182;</a>
-              </div>
-              
-            </div>
-            
-        </li>
-        
-        
-        <li id="section-4">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-4">&#182;</a>
-              </div>
-              <p>Provides an interface for updating and 
-modifying items from a collection service.</p>
+            <div class="content"><div class='highlight'><pre>            $timeout(remove.bind(<span class="hljs-keyword">this</span>, file), <span class="hljs-number">5000</span>);
+          } <span class="hljs-keyword">else</span> {
+            file.error = res.data.message;
+          }
+        }).error(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(data, status)</span> {</span>
+          file.error = <span class="hljs-string">'There was a problem uploading.'</span>;
+        });
 
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>
-module.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
-  <span class="hljs-keyword">return</span> {
-    restrict: <span class="hljs-string">'A'</span>,
-    templateUrl: <span class="hljs-string">'partials/editor'</span>,
-    link: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(scope, element, attrs)</span> {</span>
-      console.log(<span class="hljs-string">'Editor'</span>);
-    },
-    controller: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">($scope, $element, collection)</span> {</span></pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-5">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-5">&#182;</a>
-              </div>
-              <p>Get the name of the collection for this editor</p>
+      }
 
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>      $scope.name = $element.attr(<span class="hljs-string">'collection-name'</span>);</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-6">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-6">&#182;</a>
-              </div>
-              <p>Get the collection for this name from
-the collection factory and bind it to
-the scope. </p>
+      $scope.files = [];
 
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>      $scope.collection = collection($scope.name);
-      
-      $scope.model = {};
-   
-      $scope.saving = <span class="hljs-literal">false</span>;
-      
-      $scope.remove = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
-        $scope.collection.remove($scope.model);
+      $scope.upload = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; $scope.files.length; i++) {
+          upload($scope.files[i]);         
+        }
       };
 
-      $scope.save = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
-        <span class="hljs-keyword">var</span> model = $scope.model;
-        console.log(<span class="hljs-string">'edited'</span>, $scope.model);
-        $scope.collection.update(model, model);
-        $scope.saving = <span class="hljs-literal">true</span>; 
+      $scope.select = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">($files)</span> {</span>
+        $scope.files = $files;
+        $scope.files.map(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(file)</span> {</span>
+          file.progress = <span class="hljs-number">0</span>;
+          file.uploaded = <span class="hljs-literal">false</span>;
+          file.error = <span class="hljs-literal">null</span>;
+        });
       };
-      
-      $scope.collection.on(<span class="hljs-string">'update'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
-        $scope.saving = <span class="hljs-literal">false</span>;
-      });
-  
-      $scope.collection.on(<span class="hljs-string">'focus'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(model)</span> {</span>
-        $scope.model = model;
-      });
 
     }
-  }  
-};</pre></div></div>
+  }
+}</pre></div></div>
             
         </li>
         

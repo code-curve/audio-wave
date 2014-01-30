@@ -28,20 +28,22 @@ var collections = {
 // Attach collection apis to the socket
 // that is passed in. Probably an adminSocket.
 module.exports = function(socket) {
-  var name; 
+  var name, external; 
   
-  // If we don't have a socket return the
-  // collections
+  external = {};
+
+  // If there is no socket return the collections
   if(_.undef(socket)) {
     return collections;
   }
   
+  // Copy the collections for external use
   for(name in collections) {
-    collections[name](socket);
+    external[name] = collections[name](socket);
   }
   
   socket.emit('ready');
   
   // Return collections for use at the server
-  return collections;
+  return external;
 };

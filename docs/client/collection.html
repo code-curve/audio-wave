@@ -74,8 +74,18 @@
               </a>
             
               
+              <a class="source" href="creator.html">
+                creator.js
+              </a>
+            
+              
               <a class="source" href="editor.html">
                 editor.js
+              </a>
+            
+              
+              <a class="source" href="uploadAudio.html">
+                uploadAudio.js
               </a>
             
               
@@ -113,6 +123,11 @@
                 uiState.js
               </a>
             
+              
+              <a class="source" href="util.html">
+                util.js
+              </a>
+            
           </div>
         </li>
       </ul>
@@ -135,6 +150,8 @@
               </div>
               
             </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> _ = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../util'</span>);</pre></div></div>
             
         </li>
         
@@ -234,7 +251,8 @@ the database)_</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">find</span><span class="hljs-params">(collection, query)</span> {</span>
-    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; collection[i].length; i++) {
+    <span class="hljs-keyword">var</span> i;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; collection.length; i++) {
       <span class="hljs-keyword">if</span>(collection[i]._id === query._id) {
         <span class="hljs-keyword">return</span> collection[i];
       }
@@ -250,6 +268,35 @@ the database)_</p>
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <h2 id="remove">remove</h2>
+<p><code>(collection, query)</code>
+Removes any items from <code>collection</code> that
+match the <code>_id</code> supplied from <code>query</code>.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">remove</span><span class="hljs-params">(collection, query)</span> {</span>
+    <span class="hljs-keyword">var</span> i, index;
+    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; collection.length; i++) {
+      <span class="hljs-keyword">if</span>(collection[i]._id === query._id) {
+        index = i;
+      }
+    }
+
+    <span class="hljs-keyword">if</span>(<span class="hljs-keyword">typeof</span> index !== <span class="hljs-string">'undefined'</span>) {
+      collection.splice(index, <span class="hljs-number">1</span>);
+    }
+  }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
               <p>Helper method to provide clean looking
 names for socket events</p>
@@ -268,36 +315,28 @@ names for socket events</p>
         </li>
         
         
-        <li id="section-9">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-9">&#182;</a>
-              </div>
-              <p>Creates interface for collection with this name
-and returns dynamic collection array along
-with collection manipulation methods. See
-module doc comment for more details. </p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">model</span><span class="hljs-params">(name)</span> {</span>
-    <span class="hljs-keyword">var</span> collection, socket, event;</pre></div></div>
-            
-        </li>
-        
-        
         <li id="section-10">
             <div class="annotation">
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-10">&#182;</a>
               </div>
-              <p>if we have already loaded this collection</p>
+              <p>Removes all angular properties from
+an object, so that it may be used for
+querying at mongo</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span>(collections[name]) {</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">sanitize</span><span class="hljs-params">(object)</span> {</span>
+    <span class="hljs-keyword">var</span> key, sanitized;
+    sanitized = {};
+    <span class="hljs-keyword">for</span>(key <span class="hljs-keyword">in</span> object) {
+      <span class="hljs-keyword">if</span>(key[<span class="hljs-number">0</span>] !== <span class="hljs-string">'$'</span>) {
+        sanitized[key] = object[key];
+      }
+    }
+    <span class="hljs-keyword">return</span> sanitized;
+  }</pre></div></div>
             
         </li>
         
@@ -308,15 +347,17 @@ module doc comment for more details. </p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-11">&#182;</a>
               </div>
-              <p>return it straight away</p>
+              <h1 id="model">model</h1>
+<p><code>(name)</code>
+Creates interface for collection with this name
+and returns dynamic collection array along
+with collection manipulation methods. See
+module doc comment for more details. </p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>      console.log(<span class="hljs-string">'load'</span>, name);
-      <span class="hljs-keyword">return</span> collections[name];
-    }
-
-    console.log(<span class="hljs-string">'create'</span>, name, <span class="hljs-string">'collection factory'</span>);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">model</span><span class="hljs-params">(name)</span> {</span>
+    <span class="hljs-keyword">var</span> collection, socket, event, listeners;</pre></div></div>
             
         </li>
         
@@ -326,6 +367,53 @@ module doc comment for more details. </p>
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>if we have already loaded this collection</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span>(collections[name]) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p>return it straight away</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      console.log(<span class="hljs-string">'load'</span>, name);
+      <span class="hljs-keyword">return</span> collections[name];
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <p>event listeners</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    listeners = {};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
               </div>
               <p>aliasing</p>
 
@@ -346,88 +434,15 @@ module doc comment for more details. </p>
         </li>
         
         
-        <li id="section-13">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-13">&#182;</a>
-              </div>
-              <h2 id="socket-events">Socket Events</h2>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>
-    socket.on(event.get, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(models)</span> {</span>
-      console.log(<span class="hljs-string">'GET collection data'</span>);
-      collection.length = <span class="hljs-number">0</span>;</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-14">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-14">&#182;</a>
-              </div>
-              <p>I believe there’s some explaining to do here.</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>      collection.push.apply(collection, models.data);
-    });
-
-    socket.on(event.create, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(model)</span> {</span>
-      collection.push(model);
-    });
-
-    socket.on(event.remove, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(model)</span> {</span>
-      <span class="hljs-keyword">delete</span> find(collection, model);
-    });
-
-    socket.on(event.update, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(model, updated)</span> {</span></pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-15">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-15">&#182;</a>
-              </div>
-              <p>Create safeguard with model for find -&gt; null</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>      (find(collection, model) || model) = updated;
-    });</pre></div></div>
-            
-        </li>
-        
-        
         <li id="section-16">
             <div class="annotation">
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-16">&#182;</a>
               </div>
-              <h2 id="exposed-methods">Exposed methods</h2>
+              <h2 id="socket-events">Socket Events</h2>
 
             </div>
-            
-            <div class="content"><div class='highlight'><pre>  
-    collection.create = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(model)</span> {</span>
-      socket.emit(event.create, model);
-    };
-    
-    collection.remove = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(model)</span> {</span>
-      socket.emit(event.remove, model);
-    };
-
-    collection.update = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(model, updated)</span> {</span>
-      socket.emit(event.update, model, updated);
-    };</pre></div></div>
             
         </li>
         
@@ -437,6 +452,425 @@ module doc comment for more details. </p>
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <h1 id="get">get</h1>
+<p><code>(models)</code>
+When the socket receives a get event,
+reset the collection and populate it with
+the new models. Finally trigger a get event
+for any listeners.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    socket.on(event.get, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(models)</span> {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <p>Remove all items (but don’t overwrite the reference)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      collection.length = <span class="hljs-number">0</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-20">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <p>Hacky way not that won’t reset reference</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      collection.push.apply(collection, models.data);
+      collection.focus(collection[<span class="hljs-number">0</span>]._id);
+      collection.trigger(<span class="hljs-string">'get'</span>, models);
+    });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-21">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-21">&#182;</a>
+              </div>
+              <h1 id="create">create</h1>
+<p><code>(models)</code>
+Is called whenever the socket receives
+a create event (a new model is created).
+Add to the collection and trigger create.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    socket.on(event.create, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(model)</span> {</span>
+      collection.push(model.data);
+      collection.trigger(<span class="hljs-string">'create'</span>, model);
+    });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-22">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-22">&#182;</a>
+              </div>
+              <h1 id="remove">remove</h1>
+<p><code>(model)</code>
+Is called whenever the socket receives
+a remove event. Removes the model from
+the collection and triggers remove.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    socket.on(event.remove, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(model)</span> {</span>
+      model = model.data;
+      remove(collection, model);  
+      collection.trigger(<span class="hljs-string">'remove'</span>, model);
+    });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-23">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-23">&#182;</a>
+              </div>
+              <h1 id="update">update</h1>
+<p><code>(updated)</code>
+Is called whenever the socket receives
+an update event, passing the updated model
+as an argument. Updates the model in the 
+collection and then triggers an update event. </p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    socket.on(event.update, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(updated)</span> {</span>
+      <span class="hljs-keyword">var</span> key, model;
+      updated = updated.data;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-24">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-24">&#182;</a>
+              </div>
+              <p><strong>Important</strong> to read!
+We need to update the values of the model
+the collection, we can access it using find</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      model = find(collection, updated);
+      <span class="hljs-keyword">if</span>(model) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-25">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-25">&#182;</a>
+              </div>
+              <p>We can’t set the value of model to 
+updated as that will overwrite the reference.
+We need to loop through and update the
+properties of the object one by one.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">for</span>(key <span class="hljs-keyword">in</span> updated) {
+          model[key] = updated[key];
+        }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-26">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-26">&#182;</a>
+              </div>
+              <p>And we’re done!</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        collection.trigger(<span class="hljs-string">'update'</span>, model);
+      }
+    });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-27">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-27">&#182;</a>
+              </div>
+              <h2 id="exposed-methods">Exposed methods</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-28">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-28">&#182;</a>
+              </div>
+              <p>These methods are available on the collection
+object, for other methods to use the collection
+functionality to update the collections at the 
+server side.</p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-29">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-29">&#182;</a>
+              </div>
+              <h1 id="create">create</h1>
+<p><code>(model)</code>
+Adds a model to the collection</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    collection.create = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(model)</span> {</span>
+      socket.emit(event.create, model);
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-30">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-30">&#182;</a>
+              </div>
+              <h1 id="remove">remove</h1>
+<p><code>(model)</code>
+Removes <code>model</code> from the collection</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    collection.remove = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(model)</span> {</span>
+      model = sanitize(model);
+      socket.emit(event.remove, model);
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-31">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-31">&#182;</a>
+              </div>
+              <h1 id="update">update</h1>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    collection.update = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(model, updated)</span> {</span>
+      <span class="hljs-keyword">var</span> key, values;
+      values = {}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-32">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-32">&#182;</a>
+              </div>
+              <p>if the same object was passed twice</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">if</span>(model === updated) {
+        model = _.copy(updated);
+      }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-33">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-33">&#182;</a>
+              </div>
+              <p>only need the id to make the update</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      model = {
+        _id: model._id
+      }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-34">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-34">&#182;</a>
+              </div>
+              <p>strip mongo/angular properties</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">for</span>(key <span class="hljs-keyword">in</span> updated) {
+        <span class="hljs-keyword">if</span>(!(key[<span class="hljs-number">0</span>] === <span class="hljs-string">'$'</span> || key[<span class="hljs-number">0</span>] === <span class="hljs-string">'_'</span>)) {
+          values[key] = updated[key];
+        }
+      }
+      socket.emit(event.update, model, values);
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-35">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-35">&#182;</a>
+              </div>
+              <h1 id="on">on</h1>
+<p><code>(eventName, fn)</code>
+Registers a callback function to be triggered
+on the event specified by <code>eventName</code>.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    collection.on = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(eventName, fn)</span> {</span>
+      <span class="hljs-keyword">if</span>(!(listeners[eventName] <span class="hljs-keyword">instanceof</span> <span class="hljs-built_in">Array</span>)) {
+        listeners[eventName] = [];
+      }
+      listeners[eventName].push(fn);
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-36">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-36">&#182;</a>
+              </div>
+              <h1 id="trigger">trigger</h1>
+<p><code>(eventName, data...)</code>
+Triggers all events with the name specified
+and passes all the other arguments to those
+event listeners.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    collection.trigger = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(eventName, data)</span> {</span>
+      data = [].slice.call(<span class="hljs-built_in">arguments</span>, <span class="hljs-number">1</span>);
+      <span class="hljs-keyword">if</span>(listeners[eventName] <span class="hljs-keyword">instanceof</span> <span class="hljs-built_in">Array</span>) {
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; listeners[eventName].length; i++) {
+          listeners[eventName][i].apply(<span class="hljs-keyword">this</span>, data);
+        }
+      }
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-37">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-37">&#182;</a>
+              </div>
+              <h1 id="focus">focus</h1>
+<p><code>(_id)</code>
+Multi purpose focus method which applies a focus
+to the model with this id. Creates a copy of the 
+focused model (that can be updated) and triggers
+a focus event.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    collection.focus = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(_id)</span> {</span>
+      console.log(<span class="hljs-string">'focus on'</span>, _id);
+      <span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; collection.length; i++) {
+        <span class="hljs-keyword">if</span>(collection[i]._id === _id) {
+          collection.focused = _.copy(collection[i]);
+        }
+      }
+      collection.trigger(<span class="hljs-string">'focus'</span>, collection.focused);
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-38">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-38">&#182;</a>
+              </div>
+              <p>the item that currently has focus</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    collection.focused = {};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-39">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-39">&#182;</a>
               </div>
               <p>Reveal the name of this collection</p>
 

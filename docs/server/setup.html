@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>api.js</title>
+  <title>setup.js</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="docco.css" />
@@ -106,7 +106,7 @@
         
           <li id="title">
               <div class="annotation">
-                  <h1>api.js</h1>
+                  <h1>setup.js</h1>
               </div>
           </li>
         
@@ -118,7 +118,7 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-1">&#182;</a>
               </div>
-              <h2 id="websocket-api-generator">Websocket API Generator</h2>
+              <h2 id="collections">Collections</h2>
 
             </div>
             
@@ -143,22 +143,16 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
-              <p>Creates a websocket api on this socket, which
-provides interfaces for each action in actions
-and prefixes it with name.</p>
+              <p>Add collections to this file.</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>
-<span class="hljs-keyword">var</span> api = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../api'</span>);
+<span class="hljs-keyword">var</span> collection = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../collection'</span>)
+  , _ = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../util'</span>)
+  , bcrypt = <span class="hljs-built_in">require</span>(<span class="hljs-string">'bcrypt'</span>);
 
-module.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name, actions, socket)</span> {</span>
-  <span class="hljs-keyword">var</span> action, bind, bindToAll;
-  
-  bind = _bind(<span class="hljs-literal">false</span>);
-  bindToAll = _bind(<span class="hljs-literal">true</span>);
-
-  <span class="hljs-keyword">for</span>(action <span class="hljs-keyword">in</span> actions) {</pre></div></div>
+<span class="hljs-keyword">var</span> collections = {</pre></div></div>
             
         </li>
         
@@ -169,25 +163,13 @@ module.exports = <span class="hljs-function"><span class="hljs-keyword">function
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
-              <p><code>get</code> should only propagate to
-the initiator, whereas the
-the other options should</p>
+              <h1 id="admin">Admin</h1>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span>(action === <span class="hljs-string">'get'</span>) {
-      bind(action);
-    } <span class="hljs-keyword">else</span> {
-      bindToAll(action);
-    }
-  }
-
-  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_bind</span><span class="hljs-params">(all)</span> {</span>
-    <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(action)</span> {</span>
-      <span class="hljs-keyword">var</span> eventName, args;
-      eventName = name + <span class="hljs-string">'/'</span> + action;
-      
-      socket.on(eventName, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>  admins: collection({
+    name: <span class="hljs-string">'admins'</span>
+  }),</pre></div></div>
             
         </li>
         
@@ -198,11 +180,13 @@ the other options should</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
-              <p>The first two arguments are socket io things, wait…</p>
+              <h1 id="audio">Audio</h1>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        args = <span class="hljs-built_in">Array</span>.prototype.slice.call(<span class="hljs-built_in">arguments</span>, <span class="hljs-number">0</span>);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  audio: collection({
+    name: <span class="hljs-string">'audio'</span>
+  }),</pre></div></div>
             
         </li>
         
@@ -213,38 +197,70 @@ the other options should</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
-              <p>Pass on arguments from socket event</p>
+              <h1 id="tracks">Tracks</h1>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        actions[action].apply(<span class="hljs-keyword">this</span>, args).then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(docs)</span> {</span>
-          <span class="hljs-keyword">var</span> data = api.success(docs);
-          <span class="hljs-keyword">if</span>(all) {
-            emitToAll(eventName, data);
-          } <span class="hljs-keyword">else</span> {
-            emit(eventName, data);
-          }
-        }).fail(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err)</span> {</span>
-          emit(eventName, api.error(err));
-        });
+            <div class="content"><div class='highlight'><pre>  tracks: collection({
+    name: <span class="hljs-string">'tracks'</span> 
+  })
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>Attach collection apis to the socket
+that is passed in. Probably an adminSocket.</p>
 
-      });
-    };
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>module.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(socket)</span> {</span>
+  <span class="hljs-keyword">var</span> name;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>If we don’t have a socket return the
+collections</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">if</span>(_.undef(socket)) {
+    <span class="hljs-keyword">return</span> collections;
   }
   
-  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">emit</span><span class="hljs-params">(eventName, data)</span> {</span>
-    socket.emit(eventName, data);
+  <span class="hljs-keyword">for</span>(name <span class="hljs-keyword">in</span> collections) {
+    collections[name](socket);
   }
+  
+  socket.emit(<span class="hljs-string">'ready'</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>Return collections for use at the server</p>
 
-  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">emitToAll</span><span class="hljs-params">(eventName, data)</span> {</span>
-    <span class="hljs-keyword">var</span> id, sockets;
-    sockets = socket.namespace.sockets;
-    <span class="hljs-keyword">for</span>(id <span class="hljs-keyword">in</span> sockets) {
-      sockets[id].emit(eventName, data);
-    } 
-  }
-
-  <span class="hljs-keyword">return</span> actions;
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">return</span> collections;
 };</pre></div></div>
             
         </li>
