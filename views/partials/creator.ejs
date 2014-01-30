@@ -1,7 +1,7 @@
 <div class='editor'>
   <h2>Create {{collection.name}}</h2>
   <div class='document'>
-    <div ng-repeat='(key, value) in schema'>
+    <div ng-repeat='(key, value) in initial'>
       <label>{{key}}</label>
       <textarea ng-model='instance[key]'></textarea>
     </div>
