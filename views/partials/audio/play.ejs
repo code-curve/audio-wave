@@ -1,0 +1,22 @@
+<div class='editor playback track'>
+  <div class='controls'>
+    <button class='play' ng-click='play()' ng-hide='playing'>
+      <i class='fa fa-play'></i>
+    </button>
+    <button class='pause' ng-click='pause()' ng-show='playing'>
+      <i class='fa fa-pause'></i>
+    </button>
+    <button class='stop' ng-click='stop()'>
+      <i class='fa fa-stop'></i>
+    </button>
+  </div>
+  <div class='meta'>
+    <div class='text'>
+      <strong>{{name}}</strong>
+      <span>{{audio.currentTime | minutes}}/{{audio.duration | minutes}}</span>
+    </div>
+    <div class='audio progress'>
+      <div class='current progress' style='width:{{progress}}%'></div>
+    </div>
+  </div>
+</div>

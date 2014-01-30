@@ -14,6 +14,7 @@ results
 
 audio
 !routes/audio
+!views/partials/audio
 .sass-cache
 public/components
 npm-debug.log
