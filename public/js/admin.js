@@ -87,7 +87,9 @@ directive({
   // Console for server communication
   'console': require('./directives/console'),
   // Searchable collection interface 
-  'collection': require('./directives/collection')
+  'collection': require('./directives/collection'),
+  // Searchable sample listing
+  'samples': require('./directives/samples')
 });
 
 

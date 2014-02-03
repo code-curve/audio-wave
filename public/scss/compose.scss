@@ -1,3 +1,44 @@
 @import 'reset';
 @import 'theme';
 @import 'message';
+
+
+.actions.bar {
+  padding:0;
+  background-color:#f1f1f1;
+  box-shadow:0 3px 5px rgba(0,0,0,0.1);
+}
+
+.song.title {
+  font-size:15pt;
+  color:#444;
+}
+
+.tracks.composer {
+  width:auto;
+  height:auto;
+}
+
+.track {
+  height:90px;
+  background-color:#fff;
+  border-bottom:solid 1px #eee;
+}
+
+.sample.library {
+  position:relative;
+  padding-top:30px;
+
+  .sample {
+    cursor:pointer;
+    display:inline-block;
+    padding:4px;
+    background-color:$theme-primary;
+    color:#fff;
+    margin:2px;
+  }
+
+  .sample:hover {
+    background-color:$theme-highlight;
+  }
+}

@@ -1,6 +1,29 @@
 <div class='small'>
   <div collection collection-name='tracks' schema='name'></div>
-  <div class='actions'>
+  <div class='actions bar'>
+  
+    <div class='controls'>
+      <button class='play' ng-click='play()' ng-hide='playing'>
+        <i class='fa fa-play'></i>
+      </button>
+      <button class='pause' ng-click='pause()' ng-show='playing'>
+        <i class='fa fa-pause'></i>
+      </button>
+      <button class='stop' ng-click='stop()'>
+        <i class='fa fa-stop'></i>
+      </button>
+      <input type='text' class='song title' placeholder='Song Title...'></input>
+    </div>
+
+    <div class='composer tracks'>
+     <div class='track'></div> 
+     <div class='track'></div> 
+     <div class='track'></div> 
+     <div class='track'></div> 
+     <div class='track'></div> 
+    </div>
     
+
+    <div samples></div>
   </div>
 </div>

@@ -27,7 +27,7 @@
   background-color:$theme-highlight;
 }
 
-.track button {
+.controls button {
   $button-depress:6px;
   border:none;
   margin:0;
@@ -47,12 +47,12 @@
  
   &:active {
     border:none;
-    top:$button-depress;
+    border-top:solid $button-depress transparent;
   }
   
 }
 
-.track .controls {
+.controls {
   width:100%;
   overflow:hidden;
 }

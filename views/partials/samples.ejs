@@ -1,0 +1,20 @@
+<div class='sample library'>
+
+  <div class='search'>
+    <input type='text' placeholder='Search...' 
+      ng-model='search'></input>
+    <i class='fa fa-search'></i>
+  </div>
+ 
+  <div class='samples'> 
+    <div class='sample' ng-repeat='sample in samples | filter:search'
+      ng-click='models.focus(model._id)'>
+      {{sample.name}} {{sample.duration | minutes}}
+    </div>
+  </div>
+
+  <div class='message' ng-hide='models.length > 0'>
+    <p>No samples available</p>
+  </div>
+
+</div>

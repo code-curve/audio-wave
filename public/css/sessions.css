@@ -98,7 +98,7 @@ button.danger {
   height: 100%;
   background-color: #4ec1dd; }
 
-.track button {
+.controls button {
   border: none;
   margin: 0;
   font-size: 18pt;
@@ -109,13 +109,13 @@ button.danger {
   outline: none;
   cursor: pointer;
   position: relative; }
-  .track button:hover {
+  .controls button:hover {
     color: #888; }
-  .track button:active {
+  .controls button:active {
     border: none;
-    top: 6px; }
+    border-top: solid 6px transparent; }
 
-.track .controls {
+.controls {
   width: 100%;
   overflow: hidden; }
 
