@@ -1,9 +1,12 @@
 module.exports = {
   // home page
-  index: function(req, res){
+  index: function(req, res) {
     res.render('index');
   },
-  
+  // session connect page
+  user: function(req, res) {
+    res.render('client');
+  },  
   // admin page
   admin: function(req, res) {
     res.render('admin');

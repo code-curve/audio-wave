@@ -7,7 +7,8 @@ var express = require('express')
   , path = require('path')
   , connect = require('connect')
   , MongoStore = require('connect-mongo')(express)
-  , io = require('socket.io');
+  , io = require('socket.io')
+  , colors = require('colors');
 
 
 // ## Route dependencies
@@ -51,6 +52,8 @@ app.configure('development', function() {
   app.use(express.errorHandler());
 });
 
+io.set('log level', 1);
+
 
 // ## Routes
 
@@ -61,7 +64,7 @@ app.get('/partials/:name', routes.partial);
 app.get('/partials/:component/:name', routes.partial);
 
 // - Join session at id
-app.get('/s/:id');
+app.get('/s', routes.user);
 
 // - Get admin app
 app.get('/admin', auth.check, routes.admin);
@@ -83,6 +86,19 @@ for(type in upload) {
   app.post('/upload/' + type, upload[type]);
 }
 
+var users = sockets.of('/client');
+var hub = Hub(function(socket, settings) {
+  return {
+    socket: socket,
+    settings: settings
+  }
+});
+
+users.on('connection', function(err, socket) {
+  if(err) throw err;
+  hub.connect(socket);    
+});
+
 // ## Sockets
 var admins = sockets.of('/admin');
 admins.on('connection', function(err, socket, session) {
@@ -101,7 +117,24 @@ admins.on('connection', function(err, socket, session) {
     
     // Pass socket to collections api
     collections(socket);
-    
+  
+    // Request of all clients form some sesison
+    socket.on('clients', function() {
+      socket.get('session', function() {
+        var users = hub.select('session', '==',session);
+        socket.emit('clients', users);
+      });
+    });
+
+    hub.on('registration', function(user) {
+      console.log('Registered'.red, user);
+      /*socket.get('session', function(session) {
+        if(user.settings.session === session) {
+          socket.emit('client', user); 
+        }
+      })*/
+    });
+
     // Temporary code to handle messages
     socket.on('message', function(message) {
       socket.emit('message', {
@@ -109,7 +142,7 @@ admins.on('connection', function(err, socket, session) {
         type: 'warning'
       });      
     });
-    
+
     // When the user disconnects, broadcast
     // the event.
     socket.on('disconnect', function() {
@@ -129,14 +162,5 @@ admins.on('connection', function(err, socket, session) {
     });
 
   }
-});
-
-var users = sockets.of('/users');
-users.on('connection', function(err, socket, session) {
-  if(err) throw err;
-  console.log('Socket connected');
-    
-  // Pass socket straight through to Hub
-  // TODO
 });
 

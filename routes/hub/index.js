@@ -44,12 +44,15 @@ module.exports = function(userProxy) {
   // upon registration, builds a proxy from the user proxy
   // and adds it to users.
   function connect(socket) {
+    socket.emit('welcome');  
+    console.log('[User Connected]'.cyan);
     
     socket.on('register', function(settings) {
       var proxy, index;
       
+      console.log('[User Registed]'.cyan, settings.session);
       // Add the user to the users list
-      proxy = userProxy(user, settings);
+      proxy = userProxy(socket, settings);
       index = users.push(proxy) - 1;
       
       // Fire a registration event
@@ -57,8 +60,8 @@ module.exports = function(userProxy) {
       
       // Remove this user when they disconnect
       socket.on('disconnect', function() {
-        var users = users.splice(index, 1);
-        events.say('disconnect', users[0]);
+        user = users.splice(index, 1);
+        events.say('disconnect', user[0]);
       });
 
     });    
@@ -132,7 +135,7 @@ module.exports = function(userProxy) {
       // Filter out users based on some metric, 
       // comparing it against the threshold with 
       // our comparator funtion.
-      return comparator(user[metric], threshold);
+      return comparator(user.settings[metric], threshold);
     });
     
     // Provide iterator method for result set
