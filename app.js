@@ -27,140 +27,136 @@ var app = express()
 
 // ## Session Setup
 
-var sessionStore = new MongoStore({ db: 'audio-drop' })
-  , cookieParser = express.cookieParser('waytoblue')
-  , SessionSockets = require('session.socket.io')
-  , sockets = new SessionSockets(io, sessionStore, cookieParser);
+var sessionStore = new MongoStore({ db: 'audio-drop' }, function() {
+  var cookieParser = express.cookieParser('waytoblue')
+    , SessionSockets = require('session.socket.io')
+    , sockets = new SessionSockets(io, sessionStore, cookieParser);
 
-app.set('port', process.env.PORT || 3000);
-app.set('views', __dirname + '/views');
-app.set('view engine', 'ejs');
-app.use(express.favicon());
-app.use(express.logger('dev'));
-app.use(express.bodyParser());
-app.use(express.methodOverride());
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(cookieParser);
-app.use(express.session({
-  store: sessionStore
-}));
+  app.set('port', process.env.PORT || 3000);
+  app.set('views', __dirname + '/views');
+  app.set('view engine', 'ejs');
+  app.use(express.favicon());
+  app.use(express.bodyParser());
+  app.use(express.methodOverride());
+  app.use(express.static(path.join(__dirname, 'public')));
+  app.use(express.logger('dev'));
+  app.use(cookieParser);
+  app.use(express.session({
+    store: sessionStore
+  }));
 
-app.use(app.router);
-server.listen(app.get('port'));
+  app.use(app.router);
+  server.listen(app.get('port'));
 
-app.configure('development', function() {
-  app.use(express.errorHandler());
-});
+  app.configure('development', function() {
+    app.use(express.errorHandler());
+  });
 
-io.set('log level', 1);
+  io.set('log level', 1);
 
 
-// ## Routes
+  // ## Routes
 
-// - Audio wave home page
-app.get('/', routes.index);
-// - Partials
-app.get('/partials/:name', routes.partial);
-app.get('/partials/:component/:name', routes.partial);
+  // - Audio wave home page
+  app.get('/', routes.index);
+  // - Partials
+  app.get('/partials/:name', routes.partial);
+  app.get('/partials/:component/:name', routes.partial);
 
-// - Join session at id
-app.get('/s', routes.user);
+  // - Join session at id
+  app.get('/s', routes.user);
 
-// - Get admin app
-app.get('/admin', auth.check, routes.admin);
-// - Get login screen
-app.get('/admin/login', routes.login);
-// - Sign in
-app.post('/auth/login', auth.login);
-// - Sign out
-app.get('/auth/logout', auth.logout);
+  // - Get admin app
+  app.get('/admin', auth.check, routes.admin);
+  // - Get login screen
+  app.get('/admin/login', routes.login);
+  // - Sign in
+  app.post('/auth/login', auth.login);
+  // - Sign out
+  app.get('/auth/logout', auth.logout);
 
-// - Play audio
-app.get('/audio/play/:id', audio.play);
+  // - Play audio
+  app.get('/audio/play/:id', audio.play);
 
-// - Upload files
-var type;
-// Create a route for each type of upload
-for(type in upload) {
-  console.log('[UPLOAD]', type);
-  app.post('/upload/' + type, upload[type]);
-}
-
-var users = sockets.of('/client');
-var hub = Hub(function(socket, settings) {
-  return {
-    socket: socket,
-    settings: settings
+  // - Upload files
+  var type;
+  // Create a route for each type of upload
+  for(type in upload) {
+    console.log('[UPLOAD]', type);
+    app.post('/upload/' + type, upload[type]);
   }
-});
 
-users.on('connection', function(err, socket) {
-  if(err) throw err;
-  hub.connect(socket);    
-});
+  var users = sockets.of('/client');
+  var hub = Hub(function(socket, settings) {
+    return {
+      socket: socket,
+      settings: settings
+    }
+  });
 
-// ## Sockets
-var admins = sockets.of('/admin');
-admins.on('connection', function(err, socket, session) {
-  if(err) throw err;
-  
-  // Sockets that connect to `/admin` must authenticate  
-  if(!session.name) {
-    // Log no auth
-    // TODO  
+  users.on('connection', function(err, socket) {
+    if(err) throw err;
+    hub.connect(socket);    
+  });
+
+  // ## Sockets
+  var admins = sockets.of('/admin');
+  admins.on('connection', function(err, socket, session) {
+    if(err) throw err;
     
-    socket.emit('Not authenticated. Closing connection');
-    delete socket;
-  } else {
-    // Log success
-    // TODO
+    // Sockets that connect to `/admin` must authenticate  
+    if(!session.name) {
+      // TODO Log no auth 
+      
+      socket.emit('Not authenticated. Closing connection');
+      delete socket;
+    } else {
+      // TODO Log success
+      
+      // Pass socket to collections api
+      // which will attach methods to it
+      collections(socket);
     
-    // Pass socket to collections api
-    collections(socket);
-  
-    // Request of all clients form some sesison
-    socket.on('clients', function() {
-      socket.get('session', function() {
-        var users = hub.select('session', '==',session);
-        socket.emit('clients', users);
+      // Request of all clients from some sesison
+      socket.on('clients', function() {
+        socket.get('session', function() {
+          var users = hub.select('session', '==',session);
+          socket.emit('clients', users);
+        });
       });
-    });
+    
+      hub.events.on('registration', function(user) {
+        console.log('Registered'.red, user.settings);
+        socket.emit('client', user.settings);
+      });
 
-    hub.on('registration', function(user) {
-      console.log('Registered'.red, user);
-      /*socket.get('session', function(session) {
-        if(user.settings.session === session) {
-          socket.emit('client', user); 
-        }
-      })*/
-    });
+      // Temporary code to handle messages
+      socket.on('message', function(message) {
+        socket.emit('message', {
+          name:'Command not recognized',
+          type: 'warning'
+        });      
+      });
 
-    // Temporary code to handle messages
-    socket.on('message', function(message) {
-      socket.emit('message', {
-        name:'Command not recognized',
-        type: 'warning'
-      });      
-    });
+      // When the user disconnects, broadcast
+      // the event.
+      socket.on('disconnect', function() {
+        socket.broadcast.emit('message', {
+          name: session.name,
+          body: 'has disconnected',
+          type: 'info' 
+        }); 
+      });
 
-    // When the user disconnects, broadcast
-    // the event.
-    socket.on('disconnect', function() {
+      // Finally, broadcast a connection
+      // message from this socket.
       socket.broadcast.emit('message', {
         name: session.name,
-        body: 'has disconnected',
+        body: 'has connected',
         type: 'info' 
-      }); 
-    });
+      });
 
-    // Finally, broadcast a connection
-    // message from this socket.
-    socket.broadcast.emit('message', {
-      name: session.name,
-      body: 'has connected',
-      type: 'info' 
-    });
+    }
+  });
 
-  }
 });
-

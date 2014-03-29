@@ -28,15 +28,15 @@
 // ###on
 // Listen to user events. See Whispers.
 
-var Whispers = require('whispers')
+var EventEmitter = require('events').EventEmitter
   , _ = require('../util')
   , comparisons = require('./comparisons');
 
 module.exports = function(userProxy) {
   
   var users = [];
-  var events = new Whispers();
-    
+  var events = new EventEmitter();
+  
   // # connect
   // `(socket)`
   // Accepts a socket (designed to be used with socket.io)
@@ -55,13 +55,12 @@ module.exports = function(userProxy) {
       proxy = userProxy(socket, settings);
       index = users.push(proxy) - 1;
       
-      // Fire a registration event
-      events.say('registration', proxy); 
-      
+      console.log('Emit'.green);
+      events.emit('registration', proxy); 
       // Remove this user when they disconnect
       socket.on('disconnect', function() {
         user = users.splice(index, 1);
-        events.say('disconnect', user[0]);
+        events.emit('disconnect', user[0]);
       });
 
     });    
@@ -169,11 +168,10 @@ module.exports = function(userProxy) {
     
     return result;
   };
-
   return {
     connect: connect,
     select: select,
     all: select,
-    on: events.on
+    events: events
   };
 };

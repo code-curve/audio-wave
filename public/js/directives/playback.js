@@ -34,6 +34,7 @@ module.exports = function() {
       $scope.play = function() {
         $scope.playing = true;
         $scope.audio.play();
+        document.title = $scope.name;
       };
 
       $scope.pause = function() {
@@ -49,6 +50,7 @@ module.exports = function() {
         src = $scope.audio.src;
         delete $scope.audio;
         $scope.audio = new Audio(src);
+        document.title = 'Audiodrop - Admin';
       };
 
       $scope.progression = function() {
