@@ -1,6 +1,8 @@
 <div>
-  <div ng-repeat='client in clients'>
-    <div ng-bind='client.session'></div>
+  <div class='bar'>
+    <select ng-model='session' ng-change='switchSession()'>
+      <option ng-repeat='session in sessions'></option>
+    </select>
   </div>
 </div>
 

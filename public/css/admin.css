@@ -206,6 +206,11 @@ ul.items {
     ul.items li:active {
       border: none; }
 
+/* Top Control Bar */
+.bar {
+  background-color: #2aa4c2;
+  width: auto; }
+
 /* Search Controls */
 .search {
   position: absolute;

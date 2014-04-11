@@ -54,6 +54,7 @@ module.exports = function(uiState) {
        
       $scope.send = function() {
         $scope.addMessage({
+          type: 'history',
           body: $scope.input
         });
         adminSocket.emit('message', $scope.input);

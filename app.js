@@ -17,7 +17,8 @@ var Hub = require('./routes/hub')
   , auth = require('./routes/auth')
   , upload = require('./routes/upload')
   , audio = require('./routes/audio')
-  , collections = require('./routes/collections');
+  , collections = require('./routes/collections')
+  , command = require('./routes/command');
 
 // ## Server Setup
 
@@ -102,6 +103,7 @@ var sessionStore = new MongoStore({ db: 'audio-drop' }, function() {
   // ## Sockets
   var admins = sockets.of('/admin');
   admins.on('connection', function(err, socket, session) {
+
     if(err) throw err;
     
     // Sockets that connect to `/admin` must authenticate  
@@ -130,13 +132,11 @@ var sessionStore = new MongoStore({ db: 'audio-drop' }, function() {
         socket.emit('client', user.settings);
       });
 
-      // Temporary code to handle messages
-      socket.on('message', function(message) {
-        socket.emit('message', {
-          name:'Command not recognized',
-          type: 'warning'
-        });      
-      });
+      hub.events.on('sessions', socket.emit.bind('sessions'));
+      hub.events.on('session', socket.emit.bind('session'));
+      
+      // Handle all command messages
+      command(session, socket);
 
       // When the user disconnects, broadcast
       // the event.

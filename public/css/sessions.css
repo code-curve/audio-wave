@@ -155,6 +155,10 @@ button.danger {
   color: #E0A21C; }
 .messages .info strong {
   color: #00CE84; }
+.messages .chat strong {
+  color: #60C0AD; }
+.messages .history {
+  color: #4094D6; }
 
 .visible {
   display: block; }

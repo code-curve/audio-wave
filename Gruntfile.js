@@ -43,6 +43,19 @@ module.exports = function (grunt) {
         debug: true
       }
     },
+    
+    sass: {
+      dist: {
+        files: [{
+          expand: true,
+          cwd: 'public/scss',
+          src: ['*.scss'],
+          dest: 'public/css',
+          ext: '.css'
+        }]
+      }
+    },
+
     watch: {
       options: {
         nospawn: true,
@@ -64,6 +77,10 @@ module.exports = function (grunt) {
         options: {
           livereload: reloadPort
         }
+      },
+      scss: {
+        files: ['public/scss/**/*.scss'],
+        tasks: ['sass']
       },
       css: {
         files: ['public/css/*.css'],
@@ -103,6 +120,6 @@ module.exports = function (grunt) {
     }, 500);
   });
 
-  grunt.registerTask('default', ['develop', 'watch']);
+  grunt.registerTask('default', ['develop', 'watch', 'sass']);
   grunt.registerTask('doc', ['docco']);
 };

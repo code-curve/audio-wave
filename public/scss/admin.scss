@@ -68,6 +68,12 @@ ul.items {
 
 }
 
+/* Top Control Bar */
+.bar {
+  background-color:$theme-primary;
+  width:auto;
+}
+
 /* Search Controls */
 .search {
   position:absolute;

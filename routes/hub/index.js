@@ -34,8 +34,14 @@ var EventEmitter = require('events').EventEmitter
 
 module.exports = function(userProxy) {
   
-  var users = [];
-  var events = new EventEmitter();
+  var users = [],
+    events = new EventEmitter();
+    sessions = {};
+
+  // Process external requests for sessions
+  events.on('sessions', function() {
+    events.emit('sessions', Object.keys(sessions));
+  });
   
   // # connect
   // `(socket)`
@@ -49,18 +55,32 @@ module.exports = function(userProxy) {
     
     socket.on('register', function(settings) {
       var proxy, index;
-      
+       
       console.log('[User Registed]'.cyan, settings.session);
+       
       // Add the user to the users list
       proxy = userProxy(socket, settings);
       index = users.push(proxy) - 1;
       
+      if(!_.type(sessions[settings.session], 'object')) {
+        session[settings.session] = [];
+        // emit new session
+        events.emit('session', settings.session);
+      }
+
+      // add this client to its session
+      sessions[settings.session].push(proxy);
+      // emit client join session
+      events.emit('client', settings.session);
+
       console.log('Emit'.green);
-      events.emit('registration', proxy); 
+      events.emit('registration', proxy);
+
       // Remove this user when they disconnect
       socket.on('disconnect', function() {
         user = users.splice(index, 1);
         events.emit('disconnect', user[0]);
+        delete proxy;
       });
 
     });    

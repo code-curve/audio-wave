@@ -1,7 +1,11 @@
 <ul class='messages'>
   <li ng-repeat='message in messages'>
     <div class='{{message.type}}'>
-      <strong>{{message.name}}</strong>
+      <strong>
+        <i class='fa fa-comment' ng-if='message.type === "chat"'></i>
+        <i class='fa fa-exclamation-circle' ng-if='message.type === "warning"'></i>
+        {{message.name}}
+      </strong>
       {{message.body}}
     </div>
   </li>
