@@ -48,6 +48,15 @@ module.exports = _ = {
     return duplicate;
   },
   
+  // # property
+  // `(name)`
+  // Extracts some property name from an object
+  property: function(name) {
+    return function(object) {
+      return object[name];
+    }
+  },
+
   // # union
   // `(arr1, arr2, ...)`
   // Performs a union on all of the arrays that

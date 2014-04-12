@@ -118,26 +118,35 @@ var sessionStore = new MongoStore({ db: 'audio-drop' }, function() {
       // Pass socket to collections api
       // which will attach methods to it
       collections(socket);
-    
-      // Request of all clients from some sesison
-      socket.on('clients', function() {
-        socket.get('session', function() {
-          var users = hub.select('session', '==',session);
-          socket.emit('clients', users);
-        });
-      });
-    
-      hub.events.on('registration', function(user) {
-        console.log('Registered'.red, user.settings);
-        socket.emit('client', user.settings);
-      });
-
-      hub.events.on('sessions', socket.emit.bind('sessions'));
-      hub.events.on('session', socket.emit.bind('session'));
       
       // Handle all command messages
       command(session, socket);
+     
+      // Message 
+      hub.events.on('registration', function(user) {
+        socket.get('session', function(err, session) {
+          if(user.settings.session === session) {
+            socket.emit('client', user.settings);
+          }
+        });
+      });
+      
+      // Whenever a new session is created
+      hub.events.on('session', function(session) {
+        console.log('Session created'.yellow, session);
+        socket.emit('session', session);
+      });
+      
+      socket.on('sessions', function() {
+        console.log('REQUEST SESSIONS'.rainbow, hub.sessions);
+        socket.emit('sessions', Object.keys(hub.sessions));
+      });
 
+      // Request of all clients from some sesison
+      socket.on('clients', function(session) {
+        socket.emit('clients', hub.sessions[session].map(_.property('settings'));
+      });
+      
       // When the user disconnects, broadcast
       // the event.
       socket.on('disconnect', function() {

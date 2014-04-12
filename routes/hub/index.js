@@ -37,12 +37,7 @@ module.exports = function(userProxy) {
   var users = [],
     events = new EventEmitter();
     sessions = {};
-
-  // Process external requests for sessions
-  events.on('sessions', function() {
-    events.emit('sessions', Object.keys(sessions));
-  });
-  
+ 
   // # connect
   // `(socket)`
   // Accepts a socket (designed to be used with socket.io)
@@ -63,7 +58,7 @@ module.exports = function(userProxy) {
       index = users.push(proxy) - 1;
       
       if(!_.type(sessions[settings.session], 'object')) {
-        session[settings.session] = [];
+        sessions[settings.session] = [];
         // emit new session
         events.emit('session', settings.session);
       }
@@ -192,6 +187,7 @@ module.exports = function(userProxy) {
     connect: connect,
     select: select,
     all: select,
-    events: events
+    events: events,
+    sessions: sessions
   };
 };

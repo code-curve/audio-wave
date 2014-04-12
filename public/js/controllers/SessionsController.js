@@ -13,6 +13,7 @@ module.exports = function($scope, adminSocket) {
 
   adminSocket.on('sessions', function(sessions) {
     $scope.sessions = sessions;
+    console.warn($scope.sessions);
   });
 
   adminSocket.on('session', function(session) {
