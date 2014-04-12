@@ -56,7 +56,9 @@ factory({
   // Socket connect to admin channel
   'adminSocket': require('./services/adminSocket'),
   // Collection maintainer
-  'collection': require('./services/collection')
+  'collection': require('./services/collection'),
+  // Notification center
+  'notificationCenter': require('./services/notificationCenter')
 }).
 
 // Controllers
@@ -89,7 +91,11 @@ directive({
   // Searchable collection interface 
   'collection': require('./directives/collection'),
   // Searchable sample listing
-  'samples': require('./directives/samples')
+  'samples': require('./directives/samples'),
+  // Confirmation dialogue
+  'confirm': require('./directives/confirm'),
+  // Notification dialogue
+  'notify': require('./directives/notify')
 });
 
 

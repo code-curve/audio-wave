@@ -65,6 +65,7 @@ module.exports = function(userProxy) {
 
       // add this client to its session
       sessions[settings.session].push(proxy);
+      
       // emit client join session
       events.emit('client', settings.session);
 
@@ -73,9 +74,14 @@ module.exports = function(userProxy) {
 
       // Remove this user when they disconnect
       socket.on('disconnect', function() {
+        var i;
         user = users.splice(index, 1);
+        for(i = 0; i < sessions[settings.session].length; i++) {
+          if(sessions[settings.session][i] === proxy) {
+            sessions[settings.session].splice(i, 0);
+          }
+        }
         events.emit('disconnect', user[0]);
-        delete proxy;
       });
 
     });    

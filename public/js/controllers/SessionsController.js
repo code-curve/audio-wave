@@ -1,8 +1,18 @@
-module.exports = function($scope, adminSocket) {
+module.exports = function($scope, adminSocket, notificationCenter) {
   $scope.clients = [];
   $scope.sessions = [];
   $scope.sessionId;
- 
+  
+  notificationCenter.confirm({
+    name: 'YOLO',
+    ok: function() {
+      alert('win');
+    },
+    cancel: function() {
+      alert('lose');
+    }
+  });
+
   adminSocket.on('client', function(client) {
     $scope.clients.push(client);
   });
@@ -18,12 +28,17 @@ module.exports = function($scope, adminSocket) {
 
   adminSocket.on('session', function(session) {
     $scope.sessions.push(session);
+    notificationCenter.notify({
+      icon: 'sitemap', 
+      name: 'New Session',
+      message: 'Session ' + session + ' created' 
+    });
   });
 
   $scope.switchSession = function() {
     adminSocket.emit('clients', $scope.sessionId);
   };
-
+  
   $scope.deleteSession = function() {
     //todo VERIFICATION POPUP NEEDED
     adminSocket.emit('deleteSession', $scope.sessionId);

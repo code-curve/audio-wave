@@ -18,4 +18,8 @@ factory({
 
 controller({
   'ClientController': require('./controllers/ClientController.js')
+}).
+
+directive({
+  'visualisation': require('./directives/visualisation')
 });

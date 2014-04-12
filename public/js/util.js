@@ -38,5 +38,7 @@ module.exports = _ = {
       duplicate[key] = object[key]
     }
     return duplicate;
-  }
+  },
+
+
 }

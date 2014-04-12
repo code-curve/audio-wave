@@ -34,6 +34,11 @@ aside.admin.menu {
   margin-left:$sidebar-width; 
 }
 
+.hidden {
+  transition-duration:0.3s;
+  opacity:0;
+}
+
 /* Menu Items */
 ul.items {
   @include reset;
@@ -205,6 +210,11 @@ ul.items {
   background-color:#f5f5f5;
   z-index:100;
   box-shadow:0 0 3px rgba(0,0,0,0.2);
+  -webkit-transition-duration:0.3s;
+  
+  i, strong {
+    color: $theme-primary;
+  }
 }
 
 .prompt {
@@ -219,6 +229,7 @@ ul.items {
   z-index:100;
   padding:10px;
   box-shadow:0 0 3px rgba(0,0,0,0.2);
+  -webkit-transition-duration:0.3s;
   
   button {
     margin:10px 0px;

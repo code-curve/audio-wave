@@ -189,6 +189,10 @@ aside.admin.menu {
   width: auto;
   margin-left: 200px; }
 
+.hidden {
+  transition-duration: 0.3s;
+  opacity: 0; }
+
 /* Menu Items */
 ul.items {
   padding: 0;
@@ -316,7 +320,10 @@ ul.items {
   padding: 10px;
   background-color: #f5f5f5;
   z-index: 100;
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.2); }
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+  -webkit-transition-duration: 0.3s; }
+  .notification i, .notification strong {
+    color: #2aa4c2; }
 
 .prompt {
   background-color: #f5f5f5;
@@ -328,7 +335,8 @@ ul.items {
   text-align: center;
   z-index: 100;
   padding: 10px;
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.2); }
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+  -webkit-transition-duration: 0.3s; }
   .prompt button {
     margin: 10px 0px;
     font-size: 12pt;

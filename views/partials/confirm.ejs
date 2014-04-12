@@ -1,12 +1,10 @@
-<div class='overlay' ng-class='{ hidden: showing }'>
-  <div class='modal'>
-    <div class='header'>
-      <h2>{{title}}</h2>
-    </div>
-    <p>{{description}}</p>
-    <div>
-      <button>Ok</button>
-      <button class='danger'>Cancel</button>
-    </div> 
+
+<div class='prompt' ng-class='{ hidden: !showConfirmation }'>
+  <div>Are you sure you want to do this?</div>
+  <div>
+    <button class='button radius' 
+      ng-click='$scope.ok()'>Yes</button>
+    <button class='button danger radius' 
+      ng-click='$scope.cancel()'>No</button>
   </div>
 </div>

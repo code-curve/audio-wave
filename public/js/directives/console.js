@@ -48,8 +48,16 @@ module.exports = function(uiState) {
       };
 
       $scope.addMessage = function(message) {
-        $element[0].scrollTop = $element[0].scrollHeight
+        var date = new Date();
+        
+        message.date = {
+          hours: date.getHours(),
+          minutes: date.getMinutes()
+        };
+
         $scope.messages.push(message);
+        
+        $element[0].scrollTop = $element[0].scrollHeight
       };
        
       $scope.send = function() {

@@ -1,12 +1,21 @@
 module.exports = function() {
   return {
     restrict: 'A',
-    templateUrl: 'partials/console',
+    templateUrl: 'partials/confirm',
     link: function(scope, element, attrs) { 
       
     },
     controller: function($scope, notificationCenter) {
-      $scope.showing = false;
+      $scope.showConfirmation = false;
+      
+      // Takes a function, returns a function that
+      // calls the fn arg and then closes the confirm.
+      function andClose(fn) {
+        return function() {
+          fn();
+          $scope.showConfirmation = false;
+        }
+      }
 
       $scope.ok = function() {
         console.warning('Default OK');
@@ -19,9 +28,9 @@ module.exports = function() {
       notificationCenter.on('confirmation', function(settings) {
         $scope.title = settings.title;
         $scope.description = settings.description;
-        $scope.ok = settings.ok;
-        $scope.cancel = settings.cancel;
-        $scope.showing = true;
+        $scope.ok = andClose(settings.ok);
+        $scope.cancel = andClose(settings.cancel);
+        $scope.showConfirmation = true;
       });
 
     }

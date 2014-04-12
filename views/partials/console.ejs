@@ -1,6 +1,7 @@
 <ul class='messages'>
   <li ng-repeat='message in messages'>
     <div class='{{message.type}}'>
+      [{{message.date.hours}}:{{message.date.minutes}}]
       <strong>
         <i class='fa fa-comment' ng-if='message.type === "chat"'></i>
         <i class='fa fa-exclamation-circle' ng-if='message.type === "warning"'></i>
