@@ -137,6 +137,7 @@ var sessionStore = new MongoStore({ db: 'audio-drop' }, function() {
         socket.emit('session', session);
       });
       
+      // Whenever sessions are requested
       socket.on('sessions', function() {
         console.log('REQUEST SESSIONS'.rainbow, hub.sessions);
         socket.emit('sessions', Object.keys(hub.sessions));
@@ -144,7 +145,8 @@ var sessionStore = new MongoStore({ db: 'audio-drop' }, function() {
 
       // Request of all clients from some sesison
       socket.on('clients', function(session) {
-        socket.emit('clients', hub.sessions[session].map(_.property('settings'));
+        console.log('Request clients', session);
+        socket.emit('clients', hub.sessions[session].map(_.property('settings')));
       });
       
       // When the user disconnects, broadcast

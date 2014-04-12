@@ -1,7 +1,7 @@
 module.exports = function($scope, adminSocket) {
   $scope.clients = [];
   $scope.sessions = [];
-  $scope.sessionId = 0;
+  $scope.sessionId;
  
   adminSocket.on('client', function(client) {
     $scope.clients.push(client);

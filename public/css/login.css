@@ -23,6 +23,9 @@ code {
   border-radius: 4px;
   border: solid 1px #aaa; }
 
+button.radius {
+  border-radius: 5px; }
+
 button.danger {
   background-color: #C22A2A; }
 
@@ -50,6 +53,9 @@ code {
   background-color: #eee;
   border-radius: 4px;
   border: solid 1px #aaa; }
+
+button.radius {
+  border-radius: 5px; }
 
 button.danger {
   background-color: #C22A2A; }
