@@ -14,6 +14,11 @@ module.exports = function($scope, adminSocket, notificationCenter) {
   });
 
   adminSocket.on('client', function(client) {
+    notificationCenter.notify({
+      icon: 'user', 
+      name: 'New Client',
+      message: 'Client connected' 
+    });
     $scope.clients.push(client);
   });
 
@@ -36,7 +41,10 @@ module.exports = function($scope, adminSocket, notificationCenter) {
   });
 
   $scope.switchSession = function() {
-    adminSocket.emit('clients', $scope.sessionId);
+    adminSocket.set('session', $scope.sessionId, function(err) {
+      if(err) throw err;
+      adminSocket.emit('clients', $scope.sessionId);
+    });
   };
   
   $scope.deleteSession = function() {

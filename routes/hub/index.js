@@ -32,10 +32,11 @@ var EventEmitter = require('events').EventEmitter
   , _ = require('../util')
   , comparisons = require('./comparisons');
 
+
 module.exports = function(userProxy) {
   
   var users = [],
-    events = new EventEmitter();
+    events = new EventEmitter(),
     sessions = {};
  
   // # connect
@@ -55,8 +56,11 @@ module.exports = function(userProxy) {
        
       // Add the user to the users list
       proxy = userProxy(socket, settings);
+
+      // (push returns the new length)
       index = users.push(proxy) - 1;
-      
+      proxy.settings.id = index;
+
       if(!_.type(sessions[settings.session], 'object')) {
         sessions[settings.session] = [];
         // emit new session

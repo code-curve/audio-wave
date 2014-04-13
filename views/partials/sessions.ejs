@@ -4,7 +4,25 @@
     <select ng-model='sessionId' ng-change='switchSession()'>
       <option ng-repeat='session in sessions'>{{session}}</option>
     </select>
+    
+    <span><strong ng-bind='clients.length || 0'></strong> clients connected</span>
+  
   </div>
+</div>
+
+<div class=''>
+  <table ng-show='clients.length > 0'>
+    <thead>
+      <tr>
+        <th ng-repeat='(key, value) in clients[0]' ng-bind='key'></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat='client in clients'>
+        <td ng-repeat='property in client' ng-bind='property'></td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 
 <div class='bottom'>

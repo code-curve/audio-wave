@@ -103,7 +103,6 @@ var sessionStore = new MongoStore({ db: 'audio-drop' }, function() {
   // ## Sockets
   var admins = sockets.of('/admin');
   admins.on('connection', function(err, socket, session) {
-
     if(err) throw err;
     
     // Sockets that connect to `/admin` must authenticate  
@@ -125,6 +124,8 @@ var sessionStore = new MongoStore({ db: 'audio-drop' }, function() {
       // Message 
       hub.events.on('registration', function(user) {
         socket.get('session', function(err, session) {
+          if(err) throw err;
+          console.log(user.settings.session, '===', session);
           if(user.settings.session === session) {
             socket.emit('client', user.settings);
           }
