@@ -121,19 +121,35 @@ button.danger {
     border: none;
     border-top: solid 6px transparent; }
 
+.controlwrap {
+  overflow: visible;
+  position: relative;
+  padding-left: 66px;
+  height: 36px; }
+  .controlwrap .progress {
+    position: absolute;
+    bottom: 0;
+    margin-left: -1px; }
+
+.song-name {
+  display: inline;
+  position: absolute;
+  top: 3px; }
+
 .controls {
-  width: 100%;
-  overflow: hidden; }
+  width: 66px;
+  position: absolute;
+  left: 1px; }
 
 .console {
-  height: 200px;
+  -webkit-transition-duration: 0.3s;
+  height: 0px;
   width: 100%;
   font-family: 'monospace';
   background-color: #206fa3;
-  padding: 8px;
+  padding: 0px;
   color: #FFF;
-  overflow-y: scroll;
-  display: none; }
+  overflow-y: scroll; }
 
 .console .input {
   width: 100%;
@@ -166,5 +182,7 @@ button.danger {
 .messages .history {
   color: #4094D6; }
 
-.visible {
-  display: block; }
+.console.visible {
+  -webkit-transition-duration: 0.3s;
+  height: 300px;
+  padding: 8px; }

@@ -52,20 +52,40 @@
   
 }
 
+.controlwrap {
+  overflow:visible;
+  position:relative;
+  padding-left:66px;
+  height:36px;
+
+  .progress {
+    position:absolute;
+    bottom:0;
+    margin-left:-1px;
+  }
+}
+
+.song-name {
+  display:inline;
+  position:absolute;
+  top:3px;
+}
+
 .controls {
-  width:100%;
-  overflow:hidden;
+  width:66px;
+  position:absolute;
+  left:1px;
 }
 
 .console {
-  height:200px;
+  -webkit-transition-duration:0.3s;
+  height:0px;
   width:100%;
   font-family:'monospace';
   background-color:$theme-dark;
-  padding:8px;
+  padding:0px;
   color:#FFF;
   overflow-y:scroll;
-  display:none;
 }
 
 .console .input {
@@ -112,6 +132,8 @@
   }
 }
 
-.visible {
-  display:block;
+.console.visible {
+  -webkit-transition-duration:0.3s;
+  height:300px;
+  padding:8px;
 }

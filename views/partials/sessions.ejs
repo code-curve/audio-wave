@@ -1,5 +1,6 @@
 <div>
   <div class='bar'>
+    Session:
     <select ng-model='sessionId' ng-change='switchSession()'>
       <option ng-repeat='session in sessions'>{{session}}</option>
     </select>
@@ -7,7 +8,7 @@
 </div>
 
 <div class='bottom'>
-  <div>
+  <div class='controlwrap'>
     <div class='controls'>
       <button>
         <i class='fa fa-play'></i>
