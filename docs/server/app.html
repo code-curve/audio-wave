@@ -34,6 +34,26 @@
               </a>
             
               
+              <a class="source" href="index.html">
+                index.js
+              </a>
+            
+              
+              <a class="source" href="play.html">
+                play.js
+              </a>
+            
+              
+              <a class="source" href="save.html">
+                save.js
+              </a>
+            
+              
+              <a class="source" href="index.html">
+                index.js
+              </a>
+            
+              
               <a class="source" href="api.html">
                 api.js
               </a>
@@ -51,6 +71,11 @@
               
               <a class="source" href="setup.html">
                 setup.js
+              </a>
+            
+              
+              <a class="source" href="index.html">
+                index.js
               </a>
             
               
@@ -141,7 +166,8 @@
   , path = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>)
   , connect = <span class="hljs-built_in">require</span>(<span class="hljs-string">'connect'</span>)
   , MongoStore = <span class="hljs-built_in">require</span>(<span class="hljs-string">'connect-mongo'</span>)(express)
-  , io = <span class="hljs-built_in">require</span>(<span class="hljs-string">'socket.io'</span>);</pre></div></div>
+  , io = <span class="hljs-built_in">require</span>(<span class="hljs-string">'socket.io'</span>)
+  , colors = <span class="hljs-built_in">require</span>(<span class="hljs-string">'colors'</span>);</pre></div></div>
             
         </li>
         
@@ -160,7 +186,10 @@
 <span class="hljs-keyword">var</span> Hub = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./routes/hub'</span>)
   , auth = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./routes/auth'</span>)
   , upload = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./routes/upload'</span>)
-  , collections = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./routes/collections'</span>);</pre></div></div>
+  , audio = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./routes/audio'</span>)
+  , collections = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./routes/collections'</span>)
+  , command = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./routes/command'</span>)
+  , admin = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./routes/admin'</span>);</pre></div></div>
             
         </li>
         
@@ -190,34 +219,36 @@
                 <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
               <h2 id="session-setup">Session Setup</h2>
+<p>(Don’t judge me, this fixes TTL problems)</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>
-<span class="hljs-keyword">var</span> sessionStore = <span class="hljs-keyword">new</span> MongoStore({ db: <span class="hljs-string">'audio-drop'</span> })
-  , cookieParser = express.cookieParser(<span class="hljs-string">'waytoblue'</span>)
-  , SessionSockets = <span class="hljs-built_in">require</span>(<span class="hljs-string">'session.socket.io'</span>)
-  , sockets = <span class="hljs-keyword">new</span> SessionSockets(io, sessionStore, cookieParser);
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> sessionStore = <span class="hljs-keyword">new</span> MongoStore({ db: <span class="hljs-string">'audio-drop'</span> }, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+  <span class="hljs-keyword">var</span> cookieParser = express.cookieParser(<span class="hljs-string">'waytoblue'</span>)
+    , SessionSockets = <span class="hljs-built_in">require</span>(<span class="hljs-string">'session.socket.io'</span>)
+    , sockets = <span class="hljs-keyword">new</span> SessionSockets(io, sessionStore, cookieParser);
 
-app.set(<span class="hljs-string">'port'</span>, process.env.PORT || <span class="hljs-number">3000</span>);
-app.set(<span class="hljs-string">'views'</span>, __dirname + <span class="hljs-string">'/views'</span>);
-app.set(<span class="hljs-string">'view engine'</span>, <span class="hljs-string">'ejs'</span>);
-app.use(express.favicon());
-app.use(express.logger(<span class="hljs-string">'dev'</span>));
-app.use(express.bodyParser());
-app.use(express.methodOverride());
-app.use(express.static(path.join(__dirname, <span class="hljs-string">'public'</span>)));
-app.use(cookieParser);
-app.use(express.session({
-  store: sessionStore
-}));
+  app.set(<span class="hljs-string">'port'</span>, process.env.PORT || <span class="hljs-number">3000</span>);
+  app.set(<span class="hljs-string">'views'</span>, __dirname + <span class="hljs-string">'/views'</span>);
+  app.set(<span class="hljs-string">'view engine'</span>, <span class="hljs-string">'ejs'</span>);
+  app.use(express.favicon());
+  app.use(express.bodyParser());
+  app.use(express.methodOverride());
+  app.use(express.static(path.join(__dirname, <span class="hljs-string">'public'</span>)));
+  app.use(express.logger(<span class="hljs-string">'dev'</span>));
+  app.use(cookieParser);
+  app.use(express.session({
+    store: sessionStore
+  }));
 
-app.use(app.router);
-server.listen(app.get(<span class="hljs-string">'port'</span>));
+  app.use(app.router);
+  server.listen(app.get(<span class="hljs-string">'port'</span>));
 
-app.configure(<span class="hljs-string">'development'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
-  app.use(express.errorHandler());
-});</pre></div></div>
+  app.configure(<span class="hljs-string">'development'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+    app.use(express.errorHandler());
+  });
+
+  io.set(<span class="hljs-string">'log level'</span>, <span class="hljs-number">1</span>);</pre></div></div>
             
         </li>
         
@@ -247,7 +278,7 @@ app.configure(<span class="hljs-string">'development'</span>, <span class="hljs-
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>app.get(<span class="hljs-string">'/'</span>, routes.index);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  app.get(<span class="hljs-string">'/'</span>, routes.index);</pre></div></div>
             
         </li>
         
@@ -264,7 +295,8 @@ app.configure(<span class="hljs-string">'development'</span>, <span class="hljs-
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>app.get(<span class="hljs-string">'/partials/:name'</span>, routes.partial);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  app.get(<span class="hljs-string">'/partials/:name'</span>, routes.partial);
+  app.get(<span class="hljs-string">'/partials/:component/:name'</span>, routes.partial);</pre></div></div>
             
         </li>
         
@@ -281,7 +313,7 @@ app.configure(<span class="hljs-string">'development'</span>, <span class="hljs-
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>app.get(<span class="hljs-string">'/s/:id'</span>);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  app.get(<span class="hljs-string">'/s'</span>, routes.user);</pre></div></div>
             
         </li>
         
@@ -298,7 +330,7 @@ app.configure(<span class="hljs-string">'development'</span>, <span class="hljs-
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>app.get(<span class="hljs-string">'/admin'</span>, auth.check, routes.admin);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  app.get(<span class="hljs-string">'/admin'</span>, auth.check, routes.admin);</pre></div></div>
             
         </li>
         
@@ -315,7 +347,7 @@ app.configure(<span class="hljs-string">'development'</span>, <span class="hljs-
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>app.get(<span class="hljs-string">'/admin/login'</span>, routes.login);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  app.get(<span class="hljs-string">'/admin/login'</span>, routes.login);</pre></div></div>
             
         </li>
         
@@ -332,7 +364,7 @@ app.configure(<span class="hljs-string">'development'</span>, <span class="hljs-
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>app.post(<span class="hljs-string">'/auth/login'</span>, auth.login);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  app.post(<span class="hljs-string">'/auth/login'</span>, auth.login);</pre></div></div>
             
         </li>
         
@@ -349,7 +381,7 @@ app.configure(<span class="hljs-string">'development'</span>, <span class="hljs-
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>app.get(<span class="hljs-string">'/auth/logout'</span>, auth.logout);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  app.get(<span class="hljs-string">'/auth/logout'</span>, auth.logout);</pre></div></div>
             
         </li>
         
@@ -361,12 +393,12 @@ app.configure(<span class="hljs-string">'development'</span>, <span class="hljs-
                 <a class="pilcrow" href="#section-14">&#182;</a>
               </div>
               <ul>
-<li>Upload files</li>
+<li>Play audio</li>
 </ul>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> type;</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  app.get(<span class="hljs-string">'/audio/play/:id'</span>, audio.play);</pre></div></div>
             
         </li>
         
@@ -377,14 +409,13 @@ app.configure(<span class="hljs-string">'development'</span>, <span class="hljs-
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-15">&#182;</a>
               </div>
-              <p>Create a route for each type of upload</p>
+              <ul>
+<li>Upload files</li>
+</ul>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">for</span>(type <span class="hljs-keyword">in</span> upload) {
-  console.log(<span class="hljs-string">'[UPLOAD]'</span>, type);
-  app.post(<span class="hljs-string">'/upload/'</span> + type, upload[type]);
-}</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">var</span> type;</pre></div></div>
             
         </li>
         
@@ -395,13 +426,27 @@ app.configure(<span class="hljs-string">'development'</span>, <span class="hljs-
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-16">&#182;</a>
               </div>
-              <h2 id="sockets">Sockets</h2>
+              <p>Create a route for each type of upload</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> admins = sockets.of(<span class="hljs-string">'/admin'</span>);
-admins.on(<span class="hljs-string">'connection'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, socket, session)</span> {</span>
-  <span class="hljs-keyword">if</span>(err) <span class="hljs-keyword">throw</span> err;</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">for</span>(type <span class="hljs-keyword">in</span> upload) {
+    console.log(<span class="hljs-string">'[UPLOAD]'</span>, type);
+    app.post(<span class="hljs-string">'/upload/'</span> + type, upload[type]);
+  }
+
+  <span class="hljs-keyword">var</span> users = sockets.of(<span class="hljs-string">'/client'</span>);
+  <span class="hljs-keyword">var</span> hub = Hub(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(socket, settings)</span> {</span>
+    <span class="hljs-keyword">return</span> {
+      socket: socket,
+      settings: settings
+    }
+  });
+
+  users.on(<span class="hljs-string">'connection'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, socket)</span> {</span>
+    <span class="hljs-keyword">if</span>(err) <span class="hljs-keyword">throw</span> err;
+    hub.connect(socket);    
+  });</pre></div></div>
             
         </li>
         
@@ -412,11 +457,13 @@ admins.on(<span class="hljs-string">'connection'</span>, <span class="hljs-funct
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-17">&#182;</a>
               </div>
-              <p>Sockets that connect to <code>/admin</code> must authenticate  </p>
+              <h2 id="sockets">Sockets</h2>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">if</span>(!session.name) {</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">var</span> admins = sockets.of(<span class="hljs-string">'/admin'</span>);
+  admins.on(<span class="hljs-string">'connection'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, socket, session)</span> {</span>
+    <span class="hljs-keyword">if</span>(err) <span class="hljs-keyword">throw</span> err;</pre></div></div>
             
         </li>
         
@@ -427,15 +474,11 @@ admins.on(<span class="hljs-string">'connection'</span>, <span class="hljs-funct
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-18">&#182;</a>
               </div>
-              <p>Log no auth
-TODO  </p>
+              <p>Sockets that connect to <code>/admin</code> must authenticate  </p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    
-    socket.emit(<span class="hljs-string">'Not authenticated. Closing connection'</span>);
-    <span class="hljs-keyword">delete</span> socket;
-  } <span class="hljs-keyword">else</span> {</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span>(!session.name) {</pre></div></div>
             
         </li>
         
@@ -446,10 +489,14 @@ TODO  </p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-19">&#182;</a>
               </div>
-              <p>Log success
-TODO</p>
+              <p>TODO Log no auth </p>
 
             </div>
+            
+            <div class="content"><div class='highlight'><pre>      
+      socket.emit(<span class="hljs-string">'Not authenticated. Closing connection'</span>);
+      <span class="hljs-keyword">delete</span> socket;
+    } <span class="hljs-keyword">else</span> {</pre></div></div>
             
         </li>
         
@@ -460,11 +507,9 @@ TODO</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-20">&#182;</a>
               </div>
-              <p>Pass socket to collections api</p>
+              <p>TODO Log success</p>
 
             </div>
-            
-            <div class="content"><div class='highlight'><pre>    collections(socket);</pre></div></div>
             
         </li>
         
@@ -475,16 +520,12 @@ TODO</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-21">&#182;</a>
               </div>
-              <p>Temporary code to handle messages</p>
+              <p>Pass socket to collections api
+which will attach methods to it</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    socket.on(<span class="hljs-string">'message'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(message)</span> {</span>
-      socket.emit(<span class="hljs-string">'message'</span>, {
-        name:<span class="hljs-string">'Command not recognized'</span>,
-        type: <span class="hljs-string">'warning'</span>
-      });      
-    });</pre></div></div>
+            <div class="content"><div class='highlight'><pre>      collections(socket);</pre></div></div>
             
         </li>
         
@@ -495,18 +536,11 @@ TODO</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-22">&#182;</a>
               </div>
-              <p>When the user disconnects, broadcast
-the event.</p>
+              <p>Handle all command messages</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    socket.on(<span class="hljs-string">'disconnect'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
-      socket.broadcast.emit(<span class="hljs-string">'message'</span>, {
-        name: session.name,
-        body: <span class="hljs-string">'has disconnected'</span>,
-        type: <span class="hljs-string">'info'</span> 
-      }); 
-    });</pre></div></div>
+            <div class="content"><div class='highlight'><pre>      command(socket, session);</pre></div></div>
             
         </li>
         
@@ -517,40 +551,16 @@ the event.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-23">&#182;</a>
               </div>
-              <p>Finally, broadcast a connection
-message from this socket.</p>
+              <p>Handle all communication between
+admins and clients</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    socket.broadcast.emit(<span class="hljs-string">'message'</span>, {
-      name: session.name,
-      body: <span class="hljs-string">'has connected'</span>,
-      type: <span class="hljs-string">'info'</span> 
-    });
+            <div class="content"><div class='highlight'><pre>      admin(socket, hub);
+    }
+  });
 
-  }
-});
-
-<span class="hljs-keyword">var</span> users = sockets.of(<span class="hljs-string">'/users'</span>);
-users.on(<span class="hljs-string">'connection'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, socket, session)</span> {</span>
-  <span class="hljs-keyword">if</span>(err) <span class="hljs-keyword">throw</span> err;
-  console.log(<span class="hljs-string">'Socket connected'</span>);</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-24">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-24">&#182;</a>
-              </div>
-              <p>Pass socket straight through to Hub
-TODO</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>});</pre></div></div>
+});</pre></div></div>
             
         </li>
         

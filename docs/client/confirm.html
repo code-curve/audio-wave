@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>creator.js</title>
+  <title>confirm.js</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="docco.css" />
@@ -181,7 +181,7 @@
         
           <li id="title">
               <div class="annotation">
-                  <h1>creator.js</h1>
+                  <h1>confirm.js</h1>
               </div>
           </li>
         
@@ -196,6 +196,16 @@
               
             </div>
             
+            <div class="content"><div class='highlight'><pre>module.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+  <span class="hljs-keyword">return</span> {
+    restrict: <span class="hljs-string">'A'</span>,
+    templateUrl: <span class="hljs-string">'partials/confirm'</span>,
+    link: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(scope, element, attrs)</span> {</span> 
+      
+    },
+    controller: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">($scope, notificationCenter)</span> {</span>
+      $scope.showConfirmation = <span class="hljs-literal">false</span>;</pre></div></div>
+            
         </li>
         
         
@@ -205,164 +215,36 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
-              <h2 id="creator">Creator</h2>
+              <p>Takes a function, returns a function that
+calls the fn arg and then closes the confirm.</p>
 
             </div>
             
-        </li>
-        
-        
-        <li id="section-3">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-3">&#182;</a>
-              </div>
-              
-            </div>
-            
-        </li>
-        
-        
-        <li id="section-4">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-4">&#182;</a>
-              </div>
-              <p>Provides an interface for creating items 
-from a collection service.</p>
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">andClose</span><span class="hljs-params">(fn)</span> {</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+          fn();
+          $scope.showConfirmation = <span class="hljs-literal">false</span>;
+        }
+      }
 
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>
-<span class="hljs-keyword">var</span> _ = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../util'</span>);
+      $scope.ok = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+        console.warning(<span class="hljs-string">'Default OK'</span>);
+      };
 
-module.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
-  <span class="hljs-keyword">return</span> {
-    restrict: <span class="hljs-string">'A'</span>,
-    templateUrl: <span class="hljs-string">'partials/creator'</span>,
-    link: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(scope, element, attrs)</span> {</span>
-      
-    },
-    controller: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">($scope, $element, collection)</span> {</span>
-      <span class="hljs-keyword">var</span> collection;</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-5">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-5">&#182;</a>
-              </div>
-              <p>Get the name of the collection for this editor</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>      $scope.name = $element.attr(<span class="hljs-string">'collection-name'</span>);</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-6">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-6">&#182;</a>
-              </div>
-              <p>Get the collection for this name from
-the collection factory and bind it to
-the scope. </p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>      $scope.collection = collection($scope.name);</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-7">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-7">&#182;</a>
-              </div>
-              <p>Initial schema for creation</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>      $scope.initial = {};</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-8">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-8">&#182;</a>
-              </div>
-              <p>Actual model bound to input</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>      $scope.instance = {};</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-9">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-9">&#182;</a>
-              </div>
-              <p>Saving state</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>      $scope.creating = <span class="hljs-literal">false</span>;
-
-      $scope.create = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>    
-        $scope.creating = <span class="hljs-literal">true</span>;
-        $scope.collection.create($scope.instance);
+      $scope.cancel = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+        console.warning(<span class="hljs-string">'Default cancel'</span>);
       };
       
-      $scope.collection.on(<span class="hljs-string">'get'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
-        <span class="hljs-keyword">var</span> key;
-        <span class="hljs-keyword">if</span>($scope.collection.length &gt; <span class="hljs-number">0</span>) {
-          $scope.initial = _.copy($scope.collection[<span class="hljs-number">0</span>]);</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-10">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-10">&#182;</a>
-              </div>
-              <p>No need for mongo ids here</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>          <span class="hljs-keyword">delete</span> $scope.initial._id;
-        }
-
-        $scope.instance = $scope.initial;
-        <span class="hljs-keyword">for</span>(key <span class="hljs-keyword">in</span> $scope.instance) {
-          $scope.instance[key] = <span class="hljs-string">''</span>;
-        }
+      notificationCenter.on(<span class="hljs-string">'confirmation'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(settings)</span> {</span>
+        $scope.title = settings.title;
+        $scope.description = settings.description;
+        $scope.ok = andClose(settings.ok);
+        $scope.cancel = andClose(settings.cancel);
+        $scope.showConfirmation = <span class="hljs-literal">true</span>;
       });
 
-      $scope.collection.on(<span class="hljs-string">'create'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
-        $scope.creating = <span class="hljs-literal">false</span>;
-      });
- 
     }
-  }  
+  };
 };</pre></div></div>
             
         </li>

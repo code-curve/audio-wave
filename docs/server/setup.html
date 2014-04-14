@@ -34,6 +34,26 @@
               </a>
             
               
+              <a class="source" href="index.html">
+                index.js
+              </a>
+            
+              
+              <a class="source" href="play.html">
+                play.js
+              </a>
+            
+              
+              <a class="source" href="save.html">
+                save.js
+              </a>
+            
+              
+              <a class="source" href="index.html">
+                index.js
+              </a>
+            
+              
               <a class="source" href="api.html">
                 api.js
               </a>
@@ -51,6 +71,11 @@
               
               <a class="source" href="setup.html">
                 setup.js
+              </a>
+            
+              
+              <a class="source" href="index.html">
+                index.js
               </a>
             
               
@@ -221,7 +246,9 @@ that is passed in. Probably an adminSocket.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>module.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(socket)</span> {</span>
-  <span class="hljs-keyword">var</span> name;</pre></div></div>
+  <span class="hljs-keyword">var</span> name, external; 
+  
+  external = {};</pre></div></div>
             
         </li>
         
@@ -232,20 +259,13 @@ that is passed in. Probably an adminSocket.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
-              <p>If we don’t have a socket return the
-collections</p>
+              <p>If there is no socket return the collections</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">if</span>(_.undef(socket)) {
     <span class="hljs-keyword">return</span> collections;
-  }
-  
-  <span class="hljs-keyword">for</span>(name <span class="hljs-keyword">in</span> collections) {
-    collections[name](socket);
-  }
-  
-  socket.emit(<span class="hljs-string">'ready'</span>);</pre></div></div>
+  }</pre></div></div>
             
         </li>
         
@@ -256,11 +276,30 @@ collections</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
+              <p>Copy the collections for external use</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">for</span>(name <span class="hljs-keyword">in</span> collections) {
+    external[name] = collections[name](socket);
+  }
+  
+  socket.emit(<span class="hljs-string">'ready'</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
               <p>Return collections for use at the server</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">return</span> collections;
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">return</span> external;
 };</pre></div></div>
             
         </li>

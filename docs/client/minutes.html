@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>adminSocket.js</title>
+  <title>minutes.js</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="docco.css" />
@@ -181,7 +181,7 @@
         
           <li id="title">
               <div class="annotation">
-                  <h1>adminSocket.js</h1>
+                  <h1>minutes.js</h1>
               </div>
           </li>
         
@@ -196,56 +196,24 @@
               
             </div>
             
-        </li>
-        
-        
-        <li id="section-2">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-2">&#182;</a>
-              </div>
-              <h2 id="adminsocket-factory">adminSocket Factory</h2>
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> _ = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../util'</span>);
 
-            </div>
-            
-        </li>
-        
-        
-        <li id="section-3">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-3">&#182;</a>
-              </div>
-              
-            </div>
-            
-        </li>
-        
-        
-        <li id="section-4">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-4">&#182;</a>
-              </div>
-              <p>Provides a socket that’s connected
-to the admin channel.</p>
+module.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(_seconds)</span> {</span>    
+    <span class="hljs-keyword">var</span> minutes, seconds;
+    
+    <span class="hljs-keyword">if</span>(_.undef(_seconds) || <span class="hljs-built_in">isNaN</span>(_seconds)) {
+      <span class="hljs-keyword">return</span> <span class="hljs-string">'00:00'</span>;
+    }
 
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>
-module.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(socket)</span> {</span>
-  <span class="hljs-keyword">var</span> adminSocket = socket(<span class="hljs-string">'admin'</span>);
-  adminSocket.ready = <span class="hljs-literal">false</span>;
-  
-  adminSocket.on(<span class="hljs-string">'ready'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
-    adminSocket.ready = <span class="hljs-literal">true</span>;
-  });
-  
-  <span class="hljs-keyword">return</span> adminSocket;
-};</pre></div></div>
+    minutes = <span class="hljs-built_in">Math</span>.floor(_seconds / <span class="hljs-number">60</span>);
+    seconds = <span class="hljs-built_in">Math</span>.floor(((_seconds / <span class="hljs-number">60</span>) - minutes) * <span class="hljs-number">60</span>);
+
+    seconds = seconds &gt; <span class="hljs-number">9</span> ? seconds : <span class="hljs-string">'0'</span> + seconds;
+
+    <span class="hljs-keyword">return</span> minutes + <span class="hljs-string">':'</span> + seconds;
+  }
+}</pre></div></div>
             
         </li>
         

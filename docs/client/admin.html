@@ -34,6 +34,11 @@
               </a>
             
               
+              <a class="source" href="ClientController.html">
+                ClientController.js
+              </a>
+            
+              
               <a class="source" href="ComposeController.html">
                 ComposeController.js
               </a>
@@ -69,6 +74,11 @@
               </a>
             
               
+              <a class="source" href="confirm.html">
+                confirm.js
+              </a>
+            
+              
               <a class="source" href="console.html">
                 console.js
               </a>
@@ -84,8 +94,33 @@
               </a>
             
               
+              <a class="source" href="notify.html">
+                notify.js
+              </a>
+            
+              
+              <a class="source" href="playback.html">
+                playback.js
+              </a>
+            
+              
+              <a class="source" href="samples.html">
+                samples.js
+              </a>
+            
+              
               <a class="source" href="uploadAudio.html">
                 uploadAudio.js
+              </a>
+            
+              
+              <a class="source" href="visualisation.html">
+                visualisation.js
+              </a>
+            
+              
+              <a class="source" href="minutes.html">
+                minutes.js
               </a>
             
               
@@ -99,6 +134,11 @@
               </a>
             
               
+              <a class="source" href="clientSocket.html">
+                clientSocket.js
+              </a>
+            
+              
               <a class="source" href="collection.html">
                 collection.js
               </a>
@@ -106,6 +146,11 @@
               
               <a class="source" href="controls.html">
                 controls.js
+              </a>
+            
+              
+              <a class="source" href="notificationCenter.html">
+                notificationCenter.js
               </a>
             
               
@@ -217,7 +262,7 @@ config(<span class="hljs-function"><span class="hljs-keyword">function</span><sp
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
-              <h2 id="services">Services</h2>
+              <h2 id="filters">Filters</h2>
 
             </div>
             
@@ -234,7 +279,7 @@ config(<span class="hljs-function"><span class="hljs-keyword">function</span><sp
             </div>
             
             <div class="content"><div class='highlight'><pre>
-factory({</pre></div></div>
+filter({</pre></div></div>
             
         </li>
         
@@ -245,11 +290,12 @@ factory({</pre></div></div>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
-              <p>Localstorage + cookie shim</p>
+              <p>Converts seconds to minutes</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  <span class="hljs-string">'storage'</span>: <span class="hljs-built_in">require</span>(<span class="hljs-string">'./services/storage'</span>),</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-string">'minutes'</span>: <span class="hljs-built_in">require</span>(<span class="hljs-string">'./filters/minutes'</span>)
+}).</pre></div></div>
             
         </li>
         
@@ -260,11 +306,9 @@ factory({</pre></div></div>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-7">&#182;</a>
               </div>
-              <p>Maintain state of ui</p>
+              <h2 id="services">Services</h2>
 
             </div>
-            
-            <div class="content"><div class='highlight'><pre>  <span class="hljs-string">'uiState'</span>: <span class="hljs-built_in">require</span>(<span class="hljs-string">'./services/uiState'</span>),</pre></div></div>
             
         </li>
         
@@ -275,11 +319,11 @@ factory({</pre></div></div>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
-              <p>Web socket wrapper</p>
-
+              
             </div>
             
-            <div class="content"><div class='highlight'><pre>  <span class="hljs-string">'socket'</span>: <span class="hljs-built_in">require</span>(<span class="hljs-string">'./services/socket'</span>),</pre></div></div>
+            <div class="content"><div class='highlight'><pre>
+factory({</pre></div></div>
             
         </li>
         
@@ -290,11 +334,11 @@ factory({</pre></div></div>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
-              <p>Socket connect to admin channel</p>
+              <p>Localstorage + cookie shim</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  <span class="hljs-string">'adminSocket'</span>: <span class="hljs-built_in">require</span>(<span class="hljs-string">'./services/adminSocket'</span>),</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-string">'storage'</span>: <span class="hljs-built_in">require</span>(<span class="hljs-string">'./services/storage'</span>),</pre></div></div>
             
         </li>
         
@@ -305,12 +349,11 @@ factory({</pre></div></div>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-10">&#182;</a>
               </div>
-              <p>Collection maintainer</p>
+              <p>Maintain state of ui</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  <span class="hljs-string">'collection'</span>: <span class="hljs-built_in">require</span>(<span class="hljs-string">'./services/collection'</span>)
-}).</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-string">'uiState'</span>: <span class="hljs-built_in">require</span>(<span class="hljs-string">'./services/uiState'</span>),</pre></div></div>
             
         </li>
         
@@ -321,9 +364,11 @@ factory({</pre></div></div>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-11">&#182;</a>
               </div>
-              <h2 id="controllers">Controllers</h2>
+              <p>Web socket wrapper</p>
 
             </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-string">'socket'</span>: <span class="hljs-built_in">require</span>(<span class="hljs-string">'./services/socket'</span>),</pre></div></div>
             
         </li>
         
@@ -334,11 +379,11 @@ factory({</pre></div></div>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-12">&#182;</a>
               </div>
-              
+              <p>Socket connect to admin channel</p>
+
             </div>
             
-            <div class="content"><div class='highlight'><pre>
-controller({</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-string">'adminSocket'</span>: <span class="hljs-built_in">require</span>(<span class="hljs-string">'./services/adminSocket'</span>),</pre></div></div>
             
         </li>
         
@@ -349,11 +394,11 @@ controller({</pre></div></div>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-13">&#182;</a>
               </div>
-              <p>Manage devices in sessions</p>
+              <p>Collection maintainer</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  <span class="hljs-string">'SessionsController'</span>: <span class="hljs-built_in">require</span>(<span class="hljs-string">'./controllers/SessionsController'</span>),</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-string">'collection'</span>: <span class="hljs-built_in">require</span>(<span class="hljs-string">'./services/collection'</span>),</pre></div></div>
             
         </li>
         
@@ -364,11 +409,12 @@ controller({</pre></div></div>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-14">&#182;</a>
               </div>
-              <p>Composition of song files</p>
+              <p>Notification center</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  <span class="hljs-string">'ComposeController'</span>: <span class="hljs-built_in">require</span>(<span class="hljs-string">'./controllers/ComposeController'</span>),</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-string">'notificationCenter'</span>: <span class="hljs-built_in">require</span>(<span class="hljs-string">'./services/notificationCenter'</span>)
+}).</pre></div></div>
             
         </li>
         
@@ -379,11 +425,9 @@ controller({</pre></div></div>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-15">&#182;</a>
               </div>
-              <p>Manage administrators and registered users</p>
+              <h2 id="controllers">Controllers</h2>
 
             </div>
-            
-            <div class="content"><div class='highlight'><pre>  <span class="hljs-string">'UsersController'</span>: <span class="hljs-built_in">require</span>(<span class="hljs-string">'./controllers/UsersController'</span>),</pre></div></div>
             
         </li>
         
@@ -393,6 +437,66 @@ controller({</pre></div></div>
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+controller({</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-17">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <p>Manage devices in sessions</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-string">'SessionsController'</span>: <span class="hljs-built_in">require</span>(<span class="hljs-string">'./controllers/SessionsController'</span>),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <p>Composition of song files</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-string">'ComposeController'</span>: <span class="hljs-built_in">require</span>(<span class="hljs-string">'./controllers/ComposeController'</span>),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <p>Manage administrators and registered users</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-string">'UsersController'</span>: <span class="hljs-built_in">require</span>(<span class="hljs-string">'./controllers/UsersController'</span>),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-20">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-20">&#182;</a>
               </div>
               <p>Manage uploaded audio tracks</p>
 
@@ -404,11 +508,11 @@ controller({</pre></div></div>
         </li>
         
         
-        <li id="section-17">
+        <li id="section-21">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-17">&#182;</a>
+                <a class="pilcrow" href="#section-21">&#182;</a>
               </div>
               <h2 id="directives">Directives</h2>
 
@@ -417,11 +521,11 @@ controller({</pre></div></div>
         </li>
         
         
-        <li id="section-18">
+        <li id="section-22">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-18">&#182;</a>
+                <a class="pilcrow" href="#section-22">&#182;</a>
               </div>
               
             </div>
@@ -433,11 +537,11 @@ directive({
         </li>
         
         
-        <li id="section-19">
+        <li id="section-23">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-19">&#182;</a>
+                <a class="pilcrow" href="#section-23">&#182;</a>
               </div>
               <p>Interface for editing collections</p>
 
@@ -448,11 +552,26 @@ directive({
         </li>
         
         
-        <li id="section-20">
+        <li id="section-24">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-20">&#182;</a>
+                <a class="pilcrow" href="#section-24">&#182;</a>
+              </div>
+              <p>Playing audio</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-string">'playback'</span>: <span class="hljs-built_in">require</span>(<span class="hljs-string">'./directives/playback'</span>),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-25">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-25">&#182;</a>
               </div>
               <p>Interface for creating items for collections</p>
 
@@ -463,11 +582,11 @@ directive({
         </li>
         
         
-        <li id="section-21">
+        <li id="section-26">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-21">&#182;</a>
+                <a class="pilcrow" href="#section-26">&#182;</a>
               </div>
               <p>Console for server communication</p>
 
@@ -478,17 +597,62 @@ directive({
         </li>
         
         
-        <li id="section-22">
+        <li id="section-27">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-22">&#182;</a>
+                <a class="pilcrow" href="#section-27">&#182;</a>
               </div>
               <p>Searchable collection interface </p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  <span class="hljs-string">'collection'</span>: <span class="hljs-built_in">require</span>(<span class="hljs-string">'./directives/collection'</span>)
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-string">'collection'</span>: <span class="hljs-built_in">require</span>(<span class="hljs-string">'./directives/collection'</span>),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-28">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-28">&#182;</a>
+              </div>
+              <p>Searchable sample listing</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-string">'samples'</span>: <span class="hljs-built_in">require</span>(<span class="hljs-string">'./directives/samples'</span>),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-29">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-29">&#182;</a>
+              </div>
+              <p>Confirmation dialogue</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-string">'confirm'</span>: <span class="hljs-built_in">require</span>(<span class="hljs-string">'./directives/confirm'</span>),</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-30">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-30">&#182;</a>
+              </div>
+              <p>Notification dialogue</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-string">'notify'</span>: <span class="hljs-built_in">require</span>(<span class="hljs-string">'./directives/notify'</span>)
 });</pre></div></div>
             
         </li>

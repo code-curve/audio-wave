@@ -191,7 +191,8 @@ aside.admin.menu {
 
 .hidden {
   transition-duration: 0.3s;
-  opacity: 0; }
+  opacity: 0;
+  display: none; }
 
 /* Menu Items */
 ul.items {

@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>adminSocket.js</title>
+  <title>playback.js</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="docco.css" />
@@ -181,7 +181,7 @@
         
           <li id="title">
               <div class="annotation">
-                  <h1>adminSocket.js</h1>
+                  <h1>playback.js</h1>
               </div>
           </li>
         
@@ -196,6 +196,23 @@
               
             </div>
             
+            <div class="content"><div class='highlight'><pre>module.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+  <span class="hljs-keyword">return</span> {
+    restrict:<span class="hljs-string">'A'</span>,
+    templateUrl: <span class="hljs-string">'partials/audio/play'</span>,
+    controller: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">($scope, $interval, collection)</span> {</span>
+      <span class="hljs-keyword">var</span> audioCollection, update;
+      
+      audioCollection = collection(<span class="hljs-string">'audio'</span>);
+      
+      $scope.audio = <span class="hljs-literal">null</span>;
+      $scope.playing = <span class="hljs-literal">false</span>;
+      $scope.progress = <span class="hljs-number">0</span>;
+      $scope.name = <span class="hljs-string">''</span>;
+      $scope.duration = <span class="hljs-string">''</span>;
+
+      audioCollection.on(<span class="hljs-string">'focus'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(audio)</span> {</span></pre></div></div>
+            
         </li>
         
         
@@ -205,47 +222,59 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
-              <h2 id="adminsocket-factory">adminSocket Factory</h2>
+              <p>Totally reset the current audio</p>
 
             </div>
             
-        </li>
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span>($scope.playing) {
+          $scope.playing = <span class="hljs-literal">false</span>;
+          $scope.audio.pause();
+          $scope.progress = <span class="hljs-number">0</span>;
+          <span class="hljs-keyword">delete</span> $scope.audio;
+          $interval.cancel(update);
+        }
         
+        $scope.name = audio.name;
+        $scope.duration = audio.duration;
+        $scope.audio = <span class="hljs-keyword">new</span> Audio(<span class="hljs-string">'audio/play/'</span> + audio._id);
+        $scope.audio.addEventListener(<span class="hljs-string">'ended'</span>, $scope.stop);
+        $scope.refreshProgress();
+      });
         
-        <li id="section-3">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-3">&#182;</a>
-              </div>
-              
-            </div>
-            
-        </li>
-        
-        
-        <li id="section-4">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-4">&#182;</a>
-              </div>
-              <p>Provides a socket that’s connected
-to the admin channel.</p>
+      $scope.play = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+        $scope.playing = <span class="hljs-literal">true</span>;
+        $scope.audio.play();
+        document.title = $scope.name;
+      };
 
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>
-module.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(socket)</span> {</span>
-  <span class="hljs-keyword">var</span> adminSocket = socket(<span class="hljs-string">'admin'</span>);
-  adminSocket.ready = <span class="hljs-literal">false</span>;
-  
-  adminSocket.on(<span class="hljs-string">'ready'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
-    adminSocket.ready = <span class="hljs-literal">true</span>;
-  });
-  
-  <span class="hljs-keyword">return</span> adminSocket;
-};</pre></div></div>
+      $scope.pause = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+        $scope.playing = <span class="hljs-literal">false</span>;
+        $scope.audio.pause();
+      };
+
+      $scope.stop = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+        <span class="hljs-keyword">var</span> src;
+        $scope.playing = <span class="hljs-literal">false</span>;
+        $scope.progress = <span class="hljs-number">0</span>;
+        $scope.audio.pause();
+        src = $scope.audio.src;
+        <span class="hljs-keyword">delete</span> $scope.audio;
+        $scope.audio = <span class="hljs-keyword">new</span> Audio(src);
+        document.title = <span class="hljs-string">'Audiodrop - Admin'</span>;
+      };
+
+      $scope.progression = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+        <span class="hljs-keyword">var</span> progress;
+        progress = $scope.audio.currentTime / $scope.audio.duration;
+        $scope.progress = progress * <span class="hljs-number">100</span>;
+      };
+      
+      $scope.refreshProgress = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+        update = $interval($scope.progression, <span class="hljs-number">500</span>);
+      };
+    }
+  }
+}</pre></div></div>
             
         </li>
         

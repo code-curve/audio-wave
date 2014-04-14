@@ -34,6 +34,11 @@
               </a>
             
               
+              <a class="source" href="ClientController.html">
+                ClientController.js
+              </a>
+            
+              
               <a class="source" href="ComposeController.html">
                 ComposeController.js
               </a>
@@ -69,6 +74,11 @@
               </a>
             
               
+              <a class="source" href="confirm.html">
+                confirm.js
+              </a>
+            
+              
               <a class="source" href="console.html">
                 console.js
               </a>
@@ -84,8 +94,33 @@
               </a>
             
               
+              <a class="source" href="notify.html">
+                notify.js
+              </a>
+            
+              
+              <a class="source" href="playback.html">
+                playback.js
+              </a>
+            
+              
+              <a class="source" href="samples.html">
+                samples.js
+              </a>
+            
+              
               <a class="source" href="uploadAudio.html">
                 uploadAudio.js
+              </a>
+            
+              
+              <a class="source" href="visualisation.html">
+                visualisation.js
+              </a>
+            
+              
+              <a class="source" href="minutes.html">
+                minutes.js
               </a>
             
               
@@ -99,6 +134,11 @@
               </a>
             
               
+              <a class="source" href="clientSocket.html">
+                clientSocket.js
+              </a>
+            
+              
               <a class="source" href="collection.html">
                 collection.js
               </a>
@@ -106,6 +146,11 @@
               
               <a class="source" href="controls.html">
                 controls.js
+              </a>
+            
+              
+              <a class="source" href="notificationCenter.html">
+                notificationCenter.js
               </a>
             
               
@@ -151,8 +196,78 @@
               
             </div>
             
-            <div class="content"><div class='highlight'><pre>module.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">($scope)</span> {</span>
+            <div class="content"><div class='highlight'><pre>module.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">($scope, adminSocket, notificationCenter)</span> {</span>
+  $scope.clients = [];
+  $scope.sessions = [];
+  $scope.sessionId;
+  
+  notificationCenter.confirm({
+    name: <span class="hljs-string">'YOLO'</span>,
+    ok: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+      alert(<span class="hljs-string">'win'</span>);
+    },
+    cancel: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+      alert(<span class="hljs-string">'lose'</span>);
+    }
+  });
 
+  adminSocket.on(<span class="hljs-string">'client'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(client)</span> {</span>
+    notificationCenter.notify({
+      icon: <span class="hljs-string">'user'</span>, 
+      name: <span class="hljs-string">'New Client'</span>,
+      message: <span class="hljs-string">'Client connected'</span> 
+    });
+    $scope.clients.push(client);
+  });
+
+  adminSocket.on(<span class="hljs-string">'clients'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(clients)</span> {</span>
+    $scope.clients = clients;
+  });
+
+  adminSocket.on(<span class="hljs-string">'sessions'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(sessions)</span> {</span>
+    $scope.sessions = sessions;
+    console.warn($scope.sessions);
+  });
+
+  adminSocket.on(<span class="hljs-string">'session'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(session)</span> {</span>
+    $scope.sessions.push(session);
+    notificationCenter.notify({
+      icon: <span class="hljs-string">'sitemap'</span>, 
+      name: <span class="hljs-string">'New Session'</span>,
+      message: <span class="hljs-string">'Session '</span> + session + <span class="hljs-string">' created'</span> 
+    });
+  });
+
+  $scope.switchSession = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+    adminSocket.set(<span class="hljs-string">'session'</span>, $scope.sessionId, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err)</span> {</span>
+      <span class="hljs-keyword">if</span>(err) <span class="hljs-keyword">throw</span> err;
+      adminSocket.emit(<span class="hljs-string">'clients'</span>, $scope.sessionId);
+    });
+  };
+  
+  $scope.deleteSession = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>todo VERIFICATION POPUP NEEDED</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    adminSocket.emit(<span class="hljs-string">'deleteSession'</span>, $scope.sessionId);
+  };
+
+  $scope.init = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+    adminSocket.emit(<span class="hljs-string">'sessions'</span>);
+  };
+
+  $scope.init();
 };</pre></div></div>
             
         </li>

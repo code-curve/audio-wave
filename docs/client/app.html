@@ -34,6 +34,11 @@
               </a>
             
               
+              <a class="source" href="ClientController.html">
+                ClientController.js
+              </a>
+            
+              
               <a class="source" href="ComposeController.html">
                 ComposeController.js
               </a>
@@ -69,6 +74,11 @@
               </a>
             
               
+              <a class="source" href="confirm.html">
+                confirm.js
+              </a>
+            
+              
               <a class="source" href="console.html">
                 console.js
               </a>
@@ -84,8 +94,33 @@
               </a>
             
               
+              <a class="source" href="notify.html">
+                notify.js
+              </a>
+            
+              
+              <a class="source" href="playback.html">
+                playback.js
+              </a>
+            
+              
+              <a class="source" href="samples.html">
+                samples.js
+              </a>
+            
+              
               <a class="source" href="uploadAudio.html">
                 uploadAudio.js
+              </a>
+            
+              
+              <a class="source" href="visualisation.html">
+                visualisation.js
+              </a>
+            
+              
+              <a class="source" href="minutes.html">
+                minutes.js
               </a>
             
               
@@ -99,6 +134,11 @@
               </a>
             
               
+              <a class="source" href="clientSocket.html">
+                clientSocket.js
+              </a>
+            
+              
               <a class="source" href="collection.html">
                 collection.js
               </a>
@@ -106,6 +146,11 @@
               
               <a class="source" href="controls.html">
                 controls.js
+              </a>
+            
+              
+              <a class="source" href="notificationCenter.html">
+                notificationCenter.js
               </a>
             
               
@@ -150,6 +195,32 @@
               </div>
               
             </div>
+            
+            <div class="content"><div class='highlight'><pre>angular.module(<span class="hljs-string">'app'</span>, [<span class="hljs-string">'ngRoute'</span>, <span class="hljs-string">'btford.socket-io'</span>]).
+
+config(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">($routeProvider)</span> {</span>
+  $routeProvider.
+  when(<span class="hljs-string">'/:id'</span>, {
+    templateUrl: <span class="hljs-string">'/partials/client'</span>,
+    controller: <span class="hljs-string">'ClientController'</span>
+  }).
+  otherwise({
+    redirectTo: <span class="hljs-string">'/0'</span>
+  });
+}).
+
+factory({
+  <span class="hljs-string">'socket'</span>: <span class="hljs-built_in">require</span>(<span class="hljs-string">'./services/socket'</span>),
+  <span class="hljs-string">'clientSocket'</span>: <span class="hljs-built_in">require</span>(<span class="hljs-string">'./services/clientSocket.js'</span>)  
+}).
+
+controller({
+  <span class="hljs-string">'ClientController'</span>: <span class="hljs-built_in">require</span>(<span class="hljs-string">'./controllers/ClientController.js'</span>)
+}).
+
+directive({
+  <span class="hljs-string">'visualisation'</span>: <span class="hljs-built_in">require</span>(<span class="hljs-string">'./directives/visualisation'</span>)
+});</pre></div></div>
             
         </li>
         

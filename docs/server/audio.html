@@ -34,6 +34,26 @@
               </a>
             
               
+              <a class="source" href="index.html">
+                index.js
+              </a>
+            
+              
+              <a class="source" href="play.html">
+                play.js
+              </a>
+            
+              
+              <a class="source" href="save.html">
+                save.js
+              </a>
+            
+              
+              <a class="source" href="index.html">
+                index.js
+              </a>
+            
+              
               <a class="source" href="api.html">
                 api.js
               </a>
@@ -51,6 +71,11 @@
               
               <a class="source" href="setup.html">
                 setup.js
+              </a>
+            
+              
+              <a class="source" href="index.html">
+                index.js
               </a>
             
               
@@ -123,7 +148,7 @@
             
             <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> api = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../api'</span>)
   , db = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../collections'</span>)
-  , mv = <span class="hljs-built_in">require</span>(<span class="hljs-string">'mv'</span>)
+  , fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>)
   , path = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>)
   , probe = <span class="hljs-built_in">require</span>(<span class="hljs-string">'node-ffprobe'</span>);
 
@@ -149,12 +174,17 @@ module.exports = <span class="hljs-function"><span class="hljs-keyword">function
             
             <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">move</span><span class="hljs-params">()</span> {</span>
       <span class="hljs-keyword">var</span> filePath;
-      filePath = path.resolve(__dirname + <span class="hljs-string">'../../audio/'</span>); 
-      console.log(<span class="hljs-string">'Move audio to '</span>, filePath);
-
-      mv(file.path, filePath, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err)</span> {</span>
+      filePath = path.resolve(__dirname + <span class="hljs-string">'../../../audio/'</span> + file.name); 
+      console.log(<span class="hljs-string">'resolution'</span>, filePath);
+      console.log(file.path, <span class="hljs-string">'to'</span>, filePath);
+     
+      fs.readFile(file.path, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, data)</span> {</span>
         <span class="hljs-keyword">if</span>(err) <span class="hljs-keyword">throw</span> err;
-        probeFile(filePath);
+        fs.writeFile(filePath, data, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err)</span> {</span>
+          <span class="hljs-keyword">if</span>(err) <span class="hljs-keyword">throw</span> err;
+          file.path = filePath;
+          probeFile(filePath);
+        });
       });
     }</pre></div></div>
             
@@ -174,9 +204,10 @@ and saves it in the database.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">probeFile</span><span class="hljs-params">(filePath)</span> {</span>
+      console.log(<span class="hljs-string">'probe'</span>, filePath);
       probe(filePath, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, song)</span> {</span>
         <span class="hljs-keyword">if</span>(err) <span class="hljs-keyword">throw</span> err;
-        console.log(<span class="hljs-string">'[EXTENSION]'</span>, song);
+
         <span class="hljs-keyword">if</span>(song.format.format_name === <span class="hljs-string">'mp3'</span>) {
           saveInDb(song);
         } <span class="hljs-keyword">else</span> {
@@ -184,10 +215,28 @@ and saves it in the database.</p>
             message: <span class="hljs-string">'File must be mp3'</span>
           }));
         }
+
       });
     }
     
-    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">saveInDb</span><span class="hljs-params">(song)</span> {</span></pre></div></div>
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">saveInDb</span><span class="hljs-params">(song)</span> {</span>
+      <span class="hljs-keyword">var</span> model;
+      console.log(song);
+      model = {
+        name: file.name,
+        duration: song.format.duration,
+        path: file.path
+      };
+       
+      db.audio.create(model).then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(docs)</span> {</span>
+        console.log(<span class="hljs-string">'created'</span>);
+        console.log(docs);
+      });
+
+      res.json(api.success({
+        message: <span class="hljs-string">'File uploaded'</span>
+      }));
+    }</pre></div></div>
             
         </li>
         
@@ -197,26 +246,6 @@ and saves it in the database.</p>
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-4">&#182;</a>
-              </div>
-              <p>Create a new audio item in the collection
-db.audio.create(song);</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>      console.log(db);
-      res.json(api.success({
-        message: <span class="hljs-string">'File uploaded'</span>
-      }));
-    }</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-5">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
               <p>That should fire off a <code>collection/create</code>
 event and the views should change for all

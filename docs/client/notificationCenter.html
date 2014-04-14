@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>adminSocket.js</title>
+  <title>notificationCenter.js</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="docco.css" />
@@ -181,7 +181,7 @@
         
           <li id="title">
               <div class="annotation">
-                  <h1>adminSocket.js</h1>
+                  <h1>notificationCenter.js</h1>
               </div>
           </li>
         
@@ -196,6 +196,36 @@
               
             </div>
             
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> _ = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../util'</span>);
+
+<span class="hljs-keyword">var</span> events = {};
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">isRegistered</span><span class="hljs-params">(event)</span> {</span>
+  <span class="hljs-keyword">return</span> _.type(events[event], <span class="hljs-string">'object'</span>);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">on</span><span class="hljs-params">(event, then)</span> {</span>
+  <span class="hljs-keyword">if</span>(!isRegistered(event)) {
+    events[event] = [];
+  }
+  events[event].push(then);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">emit</span><span class="hljs-params">(event, rest)</span> {</span>
+  <span class="hljs-keyword">var</span> args;
+  console.warn(<span class="hljs-string">'Emit'</span>, event, isRegistered(event));
+  <span class="hljs-keyword">if</span>(isRegistered(event)) {
+    args = _.args(<span class="hljs-built_in">arguments</span>).slice(<span class="hljs-number">1</span>);
+    events[event].forEach(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(then)</span> {</span>
+      then.apply(<span class="hljs-keyword">this</span>, args);
+    });
+  }
+}
+
+module.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+  <span class="hljs-keyword">return</span> {
+    on: on,</pre></div></div>
+            
         </li>
         
         
@@ -205,46 +235,13 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
-              <h2 id="adminsocket-factory">adminSocket Factory</h2>
+              <p>Only expose required methods</p>
 
             </div>
             
-        </li>
-        
-        
-        <li id="section-3">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-3">&#182;</a>
-              </div>
-              
-            </div>
-            
-        </li>
-        
-        
-        <li id="section-4">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-4">&#182;</a>
-              </div>
-              <p>Provides a socket that’s connected
-to the admin channel.</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>
-module.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(socket)</span> {</span>
-  <span class="hljs-keyword">var</span> adminSocket = socket(<span class="hljs-string">'admin'</span>);
-  adminSocket.ready = <span class="hljs-literal">false</span>;
-  
-  adminSocket.on(<span class="hljs-string">'ready'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
-    adminSocket.ready = <span class="hljs-literal">true</span>;
-  });
-  
-  <span class="hljs-keyword">return</span> adminSocket;
+            <div class="content"><div class='highlight'><pre>    notify: emit.bind(<span class="hljs-keyword">this</span>, <span class="hljs-string">'notify'</span>),
+    confirm: emit.bind(<span class="hljs-keyword">this</span>, <span class="hljs-string">'confirm'</span>)
+  }
 };</pre></div></div>
             
         </li>

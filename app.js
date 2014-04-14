@@ -18,7 +18,8 @@ var Hub = require('./routes/hub')
   , upload = require('./routes/upload')
   , audio = require('./routes/audio')
   , collections = require('./routes/collections')
-  , command = require('./routes/command');
+  , command = require('./routes/command')
+  , admin = require('./routes/admin');
 
 // ## Server Setup
 
@@ -27,7 +28,7 @@ var app = express()
   , io = io.listen(server);
 
 // ## Session Setup
-
+// (Don't judge me, this fixes TTL problems)
 var sessionStore = new MongoStore({ db: 'audio-drop' }, function() {
   var cookieParser = express.cookieParser('waytoblue')
     , SessionSockets = require('session.socket.io')
@@ -102,11 +103,11 @@ var sessionStore = new MongoStore({ db: 'audio-drop' }, function() {
 
   // ## Sockets
   var admins = sockets.of('/admin');
-  admins.on('connection', function(err, socket, session) {
+  admins.on('connection', function(err, socket, auth) {
     if(err) throw err;
     
     // Sockets that connect to `/admin` must authenticate  
-    if(!session.name) {
+    if(!auth.name) {
       // TODO Log no auth 
       
       socket.emit('Not authenticated. Closing connection');
@@ -119,56 +120,11 @@ var sessionStore = new MongoStore({ db: 'audio-drop' }, function() {
       collections(socket);
       
       // Handle all command messages
-      command(session, socket);
-     
-      // Message 
-      hub.events.on('registration', function(user) {
-        socket.get('session', function(err, session) {
-          if(err) throw err;
-          console.log(user.settings.session, '===', session);
-          if(user.settings.session === session) {
-            socket.emit('client', user.settings);
-          }
-        });
-      });
-      
-      // Whenever a new session is created
-      hub.events.on('session', function(session) {
-        console.log('Session created'.yellow, session);
-        socket.emit('session', session);
-      });
-      
-      // Whenever sessions are requested
-      socket.on('sessions', function() {
-        console.log('REQUEST SESSIONS'.rainbow, hub.sessions);
-        socket.emit('sessions', Object.keys(hub.sessions));
-      });
+      command(socket, auth.name);
 
-      // Request of all clients from some sesison
-      socket.on('clients', function(session) {
-        console.log('Request clients', session);
-        socket.emit('clients', hub.sessions[session].map(_.property('settings')));
-      });
-      
-      // When the user disconnects, broadcast
-      // the event.
-      socket.on('disconnect', function() {
-        socket.broadcast.emit('message', {
-          name: session.name,
-          body: 'has disconnected',
-          type: 'info' 
-        }); 
-      });
-
-      // Finally, broadcast a connection
-      // message from this socket.
-      socket.broadcast.emit('message', {
-        name: session.name,
-        body: 'has connected',
-        type: 'info' 
-      });
-
+      // Handle all communication between
+      // admins and clients
+      admin(socket, hub, auth.name);
     }
   });
-
 });

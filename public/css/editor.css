@@ -115,8 +115,14 @@ p, h1, h2, h3, h4, h5, h6, ul, ol {
     opacity: 1;
     color: #2aa4c2; }
 
+.editor.playback {
+  position: relative; }
+
 span.success, strong.success, i.success {
   color: #2AC242; }
 
 span.danger, strong.danger, i.danger {
   color: #C22A2A; }
+
+.document {
+  margin-top: 15px; }

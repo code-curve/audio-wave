@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>creator.js</title>
+  <title>samples.js</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="docco.css" />
@@ -181,7 +181,7 @@
         
           <li id="title">
               <div class="annotation">
-                  <h1>creator.js</h1>
+                  <h1>samples.js</h1>
               </div>
           </li>
         
@@ -205,7 +205,7 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
-              <h2 id="creator">Creator</h2>
+              <h2 id="samples-directive">Samples directive</h2>
 
             </div>
             
@@ -218,8 +218,23 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
-              
+              <p>Displays samples for audio tracks
+in a grid like manner.</p>
+
             </div>
+            
+            <div class="content"><div class='highlight'><pre>
+
+module.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+  <span class="hljs-keyword">return</span> {
+    restrict: <span class="hljs-string">'A'</span>,
+    templateUrl: <span class="hljs-string">'partials/samples'</span>,
+    controller: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">($scope, $element, collection)</span> {</span> 
+
+      $scope.samples = collection(<span class="hljs-string">'audio'</span>);
+      $scope.search = <span class="hljs-string">''</span>;
+ 
+      $scope.focus = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(id)</span> {</span></pre></div></div>
             
         </li>
         
@@ -230,137 +245,12 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
-              <p>Provides an interface for creating items 
-from a collection service.</p>
+              <p>Insert the sample into the track</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>
-<span class="hljs-keyword">var</span> _ = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../util'</span>);
+            <div class="content"><div class='highlight'><pre>      };
 
-module.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
-  <span class="hljs-keyword">return</span> {
-    restrict: <span class="hljs-string">'A'</span>,
-    templateUrl: <span class="hljs-string">'partials/creator'</span>,
-    link: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(scope, element, attrs)</span> {</span>
-      
-    },
-    controller: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">($scope, $element, collection)</span> {</span>
-      <span class="hljs-keyword">var</span> collection;</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-5">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-5">&#182;</a>
-              </div>
-              <p>Get the name of the collection for this editor</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>      $scope.name = $element.attr(<span class="hljs-string">'collection-name'</span>);</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-6">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-6">&#182;</a>
-              </div>
-              <p>Get the collection for this name from
-the collection factory and bind it to
-the scope. </p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>      $scope.collection = collection($scope.name);</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-7">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-7">&#182;</a>
-              </div>
-              <p>Initial schema for creation</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>      $scope.initial = {};</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-8">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-8">&#182;</a>
-              </div>
-              <p>Actual model bound to input</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>      $scope.instance = {};</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-9">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-9">&#182;</a>
-              </div>
-              <p>Saving state</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>      $scope.creating = <span class="hljs-literal">false</span>;
-
-      $scope.create = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>    
-        $scope.creating = <span class="hljs-literal">true</span>;
-        $scope.collection.create($scope.instance);
-      };
-      
-      $scope.collection.on(<span class="hljs-string">'get'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
-        <span class="hljs-keyword">var</span> key;
-        <span class="hljs-keyword">if</span>($scope.collection.length &gt; <span class="hljs-number">0</span>) {
-          $scope.initial = _.copy($scope.collection[<span class="hljs-number">0</span>]);</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-10">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-10">&#182;</a>
-              </div>
-              <p>No need for mongo ids here</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>          <span class="hljs-keyword">delete</span> $scope.initial._id;
-        }
-
-        $scope.instance = $scope.initial;
-        <span class="hljs-keyword">for</span>(key <span class="hljs-keyword">in</span> $scope.instance) {
-          $scope.instance[key] = <span class="hljs-string">''</span>;
-        }
-      });
-
-      $scope.collection.on(<span class="hljs-string">'create'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
-        $scope.creating = <span class="hljs-literal">false</span>;
-      });
- 
     }
   }  
 };</pre></div></div>

@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>comparisons.js</title>
+  <title>play.js</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="docco.css" />
@@ -131,7 +131,7 @@
         
           <li id="title">
               <div class="annotation">
-                  <h1>comparisons.js</h1>
+                  <h1>play.js</h1>
               </div>
           </li>
         
@@ -143,58 +143,60 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-1">&#182;</a>
               </div>
-              <h2 id="comparisons">Comparisons</h2>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> util = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../util'</span>)
+  , api = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../api'</span>)
+  , fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>)
+  , mongo = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../mongo'</span>)
+  , db = mongo(<span class="hljs-string">'audio'</span>);
 
-            </div>
-            
-        </li>
-        
-        
-        <li id="section-2">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-2">&#182;</a>
-              </div>
-              
-            </div>
-            
-        </li>
-        
-        
-        <li id="section-3">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-3">&#182;</a>
-              </div>
-              <p>A smalll set of helper comparators
-for use with hub’s querying. Very
-self explanatory, look at the code.</p>
+module.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(req, res)</span> {</span>
+  <span class="hljs-keyword">var</span> id;
 
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>
-module.exports = {
-  <span class="hljs-string">'&lt;'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(a, b)</span> {</span>
-    <span class="hljs-keyword">return</span> a &lt; b;
-  },
-  <span class="hljs-string">'&lt;='</span>: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(a, b)</span> {</span>
-    <span class="hljs-keyword">return</span> a &lt;= b;
-  },
-  <span class="hljs-string">'&gt;'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(a, b)</span> {</span>
-    <span class="hljs-keyword">return</span> a &gt; b;
-  },
-  <span class="hljs-string">'&gt;='</span>: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(a, b)</span> {</span>
-    <span class="hljs-keyword">return</span> a &gt;= b;
-  },
-  <span class="hljs-string">'=='</span>: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(a, b)</span> {</span>
-    <span class="hljs-keyword">return</span> a == b;
-  },
-  <span class="hljs-string">'==='</span>: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(a, b)</span> {</span>
-    <span class="hljs-keyword">return</span> a === b;
+  id = req.params.id;
+
+  <span class="hljs-keyword">if</span>(_.undef(id)) {
+    res.setHeader(<span class="hljs-string">'Status'</span>, <span class="hljs-number">404</span>);
+    res.json(api.error({
+      message: <span class="hljs-string">'No id supplied'</span>
+    }))
+  } <span class="hljs-keyword">else</span> {
+    find(id, res);  
   }
-};</pre></div></div>
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">find</span><span class="hljs-params">(id, res)</span> {</span>
+  db.find(mongo.idify({
+    _id: id
+  }), <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(err, docs)</span> {</span>
+    <span class="hljs-keyword">if</span>(err) <span class="hljs-keyword">throw</span> err;
+
+    <span class="hljs-keyword">if</span>(docs.length &gt; <span class="hljs-number">0</span>) {
+      play(docs[<span class="hljs-number">0</span>], res);
+    } <span class="hljs-keyword">else</span> {
+      res.setHeader(<span class="hljs-string">'Status'</span>, <span class="hljs-number">404</span>);
+      res.json(api.error({
+        message: <span class="hljs-string">'No file found with id:'</span> + id  
+      }));
+    }
+  });
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">play</span><span class="hljs-params">(audio, res)</span> {</span>
+  <span class="hljs-keyword">var</span> stat, readStream;
+
+  stat = fs.statSync(audio.path);
+
+  res.writeHead(<span class="hljs-number">200</span>, {
+    <span class="hljs-string">'Content-Type'</span>: <span class="hljs-string">'audio/mpeg'</span>,
+    <span class="hljs-string">'Content-Length'</span>: stat.size
+  });
+                          
+  readStream = fs.createReadStream(audio.path);
+  readStream.pipe(res);
+}</pre></div></div>
             
         </li>
         

@@ -48,6 +48,11 @@
     opacity:1;
     color:$theme-primary;
   }
+
+}
+
+.editor.playback {
+  position:relative;
 }
 
 span.success, strong.success, i.success {
@@ -56,4 +61,8 @@ span.success, strong.success, i.success {
 
 span.danger, strong.danger, i.danger {
   color:#C22A2A;
+}
+
+.document {
+  margin-top: 15px;
 }

@@ -61,30 +61,20 @@ module.exports = function(userProxy) {
       index = users.push(proxy) - 1;
       proxy.settings.id = index;
 
-      if(!_.type(sessions[settings.session], 'object')) {
-        sessions[settings.session] = [];
+      if(!settings.session in sessions) {
+        sessions[settings.session] = true;
         // emit new session
-        events.emit('session', settings.session);
+        events.emit('session', null, settings.session);
       }
-
-      // add this client to its session
-      sessions[settings.session].push(proxy);
-      
+ 
       // emit client join session
-      events.emit('client', settings.session);
+      events.emit('client', null, settings.session);
 
       console.log('Emit'.green);
-      events.emit('registration', proxy);
+      events.emit('registration', null, proxy);
 
       // Remove this user when they disconnect
       socket.on('disconnect', function() {
-        var i;
-        user = users.splice(index, 1);
-        for(i = 0; i < sessions[settings.session].length; i++) {
-          if(sessions[settings.session][i] === proxy) {
-            sessions[settings.session].splice(i, 0);
-          }
-        }
         events.emit('disconnect', user[0]);
       });
 

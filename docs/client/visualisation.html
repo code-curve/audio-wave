@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>adminSocket.js</title>
+  <title>visualisation.js</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="docco.css" />
@@ -181,7 +181,7 @@
         
           <li id="title">
               <div class="annotation">
-                  <h1>adminSocket.js</h1>
+                  <h1>visualisation.js</h1>
               </div>
           </li>
         
@@ -196,55 +196,60 @@
               
             </div>
             
-        </li>
-        
-        
-        <li id="section-2">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-2">&#182;</a>
-              </div>
-              <h2 id="adminsocket-factory">adminSocket Factory</h2>
+            <div class="content"><div class='highlight'><pre>module.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+  <span class="hljs-keyword">return</span> {
+    restrict: <span class="hljs-string">'A'</span>,
+    templateUrl: <span class="hljs-string">'/partials/visualisation'</span>,
+    compile: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(scope, element, attrs)</span> {</span> 
+      
+    },
+    controller: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">($scope, $element)</span> {</span>
+      <span class="hljs-keyword">var</span> canvas, context, balls;
+      canvas = $element[<span class="hljs-number">0</span>].children[<span class="hljs-number">0</span>];
+      context = canvas.getContext(<span class="hljs-string">'2d'</span>);
 
-            </div>
-            
-        </li>
-        
-        
-        <li id="section-3">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-3">&#182;</a>
-              </div>
-              
-            </div>
-            
-        </li>
-        
-        
-        <li id="section-4">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-4">&#182;</a>
-              </div>
-              <p>Provides a socket that’s connected
-to the admin channel.</p>
+      canvas.width = document.body.clientWidth;
+      canvas.height = document.body.clientHeight;
+      
+      balls = [];
+ 
+      <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">createBall</span><span class="hljs-params">()</span> {</span>
+        <span class="hljs-keyword">return</span> {
+          x: <span class="hljs-built_in">Math</span>.random() * canvas.width,
+          y: <span class="hljs-built_in">Math</span>.random() * canvas.height,
+          r: <span class="hljs-built_in">Math</span>.random() * <span class="hljs-number">300</span>,
+          i: <span class="hljs-built_in">Math</span>.random() * <span class="hljs-number">5</span> - <span class="hljs-number">2.5</span>,
+          j: <span class="hljs-built_in">Math</span>.random() * <span class="hljs-number">5</span> - <span class="hljs-number">2.5</span>,
+          s: <span class="hljs-built_in">Math</span>.random() * <span class="hljs-number">70</span> + <span class="hljs-number">30</span>
+        }
+      }
 
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>
-module.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(socket)</span> {</span>
-  <span class="hljs-keyword">var</span> adminSocket = socket(<span class="hljs-string">'admin'</span>);
-  adminSocket.ready = <span class="hljs-literal">false</span>;
-  
-  adminSocket.on(<span class="hljs-string">'ready'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
-    adminSocket.ready = <span class="hljs-literal">true</span>;
-  });
-  
-  <span class="hljs-keyword">return</span> adminSocket;
+      <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">update</span><span class="hljs-params">()</span> {</span>
+        setTimeout(update, <span class="hljs-number">20</span>);
+        context.fillStyle = <span class="hljs-string">'#222'</span>;
+        context.fillRect(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, canvas.width, canvas.height);
+
+        <span class="hljs-keyword">if</span>(<span class="hljs-built_in">Math</span>.random() &gt; <span class="hljs-number">0.95</span>) {
+          balls.push(createBall());
+        }
+
+        balls.map(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(ball)</span> {</span>
+          context.beginPath();
+          ball.x += ball.i;
+          ball.y += ball.j;
+          context.arc(ball.x, ball.y, ball.r ,<span class="hljs-number">0</span>, <span class="hljs-number">2</span> * <span class="hljs-built_in">Math</span>.PI);
+          context.fillStyle = <span class="hljs-string">'hsla(120, '</span> + ball.s  + <span class="hljs-string">'%, 70%, 0.3)'</span>;
+          context.fill();
+          <span class="hljs-keyword">return</span> ball;
+        });
+      }
+
+      balls.push(createBall());
+      balls.push(createBall());
+      balls.push(createBall());
+      update();
+    }
+  };
 };</pre></div></div>
             
         </li>

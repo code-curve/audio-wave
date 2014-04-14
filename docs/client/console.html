@@ -34,6 +34,11 @@
               </a>
             
               
+              <a class="source" href="ClientController.html">
+                ClientController.js
+              </a>
+            
+              
               <a class="source" href="ComposeController.html">
                 ComposeController.js
               </a>
@@ -69,6 +74,11 @@
               </a>
             
               
+              <a class="source" href="confirm.html">
+                confirm.js
+              </a>
+            
+              
               <a class="source" href="console.html">
                 console.js
               </a>
@@ -84,8 +94,33 @@
               </a>
             
               
+              <a class="source" href="notify.html">
+                notify.js
+              </a>
+            
+              
+              <a class="source" href="playback.html">
+                playback.js
+              </a>
+            
+              
+              <a class="source" href="samples.html">
+                samples.js
+              </a>
+            
+              
               <a class="source" href="uploadAudio.html">
                 uploadAudio.js
+              </a>
+            
+              
+              <a class="source" href="visualisation.html">
+                visualisation.js
+              </a>
+            
+              
+              <a class="source" href="minutes.html">
+                minutes.js
               </a>
             
               
@@ -99,6 +134,11 @@
               </a>
             
               
+              <a class="source" href="clientSocket.html">
+                clientSocket.js
+              </a>
+            
+              
               <a class="source" href="collection.html">
                 collection.js
               </a>
@@ -106,6 +146,11 @@
               
               <a class="source" href="controls.html">
                 controls.js
+              </a>
+            
+              
+              <a class="source" href="notificationCenter.html">
+                notificationCenter.js
               </a>
             
               
@@ -240,12 +285,21 @@
       };
 
       $scope.addMessage = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(message)</span> {</span>
-        $element[<span class="hljs-number">0</span>].scrollTop = $element[<span class="hljs-number">0</span>].scrollHeight
+        <span class="hljs-keyword">var</span> date = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>();
+        
+        message.date = {
+          hours: date.getHours(),
+          minutes: date.getMinutes()
+        };
+
         $scope.messages.push(message);
+        
+        $element[<span class="hljs-number">0</span>].scrollTop = $element[<span class="hljs-number">0</span>].scrollHeight
       };
        
       $scope.send = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
         $scope.addMessage({
+          type: <span class="hljs-string">'history'</span>,
           body: $scope.input
         });
         adminSocket.emit(<span class="hljs-string">'message'</span>, $scope.input);

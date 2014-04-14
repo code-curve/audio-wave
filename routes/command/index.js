@@ -1,4 +1,4 @@
-module.exports = function(session, socket) {
+module.exports = function(socket, name) {
   
   // Process an incoming message
   function handle(message) {
@@ -20,7 +20,7 @@ module.exports = function(session, socket) {
         var message = args.join(' ');
 
         message = {
-          name: session.name,
+          name: name,
           body: message,
           type: 'chat'
         };
