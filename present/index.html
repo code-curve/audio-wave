@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Distributed Audio Within A Localized Device Network</title>
+  <link rel='stylesheet' href='lib/flume.css'>
+  <link rel='stylesheet' href='lib/font-awesome/css/font-awesome.min.css'>
+</head>
+<body>
+  
+  <script type='text/md'>
+Distributed Audio Over A Localised Device Network
+=====
+<center>
+[<i class='fa fa-github'></i>danprince](http://github.com/danprince)
+</center>
+  </script> 
+
+  <script type='text/md'>
+#Localisation
+<center>
+How do we create a map of devices within a room?
+![](http://upload.wikimedia.org/wikipedia/commons/5/5b/Qrcode_wikipedia.jpg)
+<br/>
+Light maps?
+</center>
+
+  </script>
+
+  <script type='text/md'>
+<center>
+Or maybe?
+<br/>
+![](http://ileriseviye.org/Makale/pics/sonar/sonar_generic.png)
+</center>
+  </script>
+
+  <script type='text/md'>
+<center>
+We start with some devices.
+![](img/local-1.png)
+</center>
+  </script>  
+
+  <script type='text/md'>
+<center>
+__A__ emits a ping and __B__ records the time at which it arrives.
+![](img/local-2.png)</center>
+  </script>  
+  
+  <script type='text/md'>
+<center>
+__C__ emits a ping and both __A__ and __B__ both record the time at which it arrives.
+![](img/local-3.png)</center>
+  </script>  
+  
+  <script type='text/md'>
+<center>
+With __C__ positioned we can transliterate the remaining devices perfectly.
+![](img/local-4.png)</center>
+  </script>  
+
+  <script type='text/md'>
+<center>
+#Example
+![](img/timeline.png)
+</center>
+
+Device 1 now knows that it took __300ns__ for the ping to arrive and that it took __400ns__ seconds to hear the ping from Device 2. To eliminate inconsistencies here, it is safest to take the average and assume that the ping took __350ns__ to travel from one to the other. 
+
+The distance can be calculated by multiplying the speed by the time it took. Based on the density of air at room temperature, for this example the speed of sound is taken to be __340.29 m/s__.
+
+<center>
+  ```
+  distance = speed * time
+   = 340.29 * 0.0035
+   = 1.191015
+  ```
+</center>
+  </script>
+  
+  <script type='text/md'>
+<center>
+#Preparing the Audio
+![](img/dmap-1.png)
+</center>
+  </script>
+
+  <script type='text/md'>
+<center>
+![](img/dmap-2.png)
+
+After creating the localised map of devices, we can effectively overlay 
+the delivery map.
+</script>
+  </script>
+  
+  <script type='text/md'>
+<center>
+![](img/dmap-3.png)
+
+Then we can use the euclidean distances from each device to the center of
+each circle to calculate whether the device is within the circle.
+</center>
+  </script>
+  
+  <script type='text/md'>
+<center>
+![](img/dmap-3.png)
+
+Now we know which devices need which streams of audio. 
+</center>
+  </script>
+  
+  <script type='text/md'>
+#Delivering the Audio
+<center>
+![](img/stream.png)
+</center>
+The next step is to deliver audio to the devices from a __server__.
+
+_Alternatively, the audio could be downloaded to the devices beforehand, but that makes the platform less flexible._
+  </script>
+
+  <script type='text/md'>
+<center>
+![](img/node.png)
+
+_Node.js is a platform built on Chrome's JavaScript runtime for easily building fast, scalable network applications. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient, perfect for data-intensive real-time applications that run across distributed devices._
+</center>
+
+* Event-driven
+* Non-blocking I/O
+* Real-time
+</script>
+
+<script type='text/md'>
+<center>
+![](img/expressjs.png)
+
+_Express is a minimal and flexible node.js web application framework, providing a robust set of features for building single and multi-page, and hybrid web applications._
+
+</center>
+
+Below is an example of writing an express application which can stream
+audio files over HTTP connections.
+
+```
+var app = express();
+
+app.get('/audio/:name', function(req, res) {
+  var name, stream;
+
+  name = req.params.name;
+  stream = fs.readStream('./audio' + name);
+  stream.pipe(res);
+});
+
+```
+Express enables us to serve both static files as well as communicate over
+sockets and handle HTTP requests and responses in a fluid way.
+  </script>
+
+  <script type='text/md'>
+#Streaming width Node
+Node provides a first class streaming interface within its standard 
+library. Node Streams can be manipulated in a variety of contexts, such as 
+piping and throttling.
+
+![](img/pipe.png)
+Above is the streaming pipeline designed for streaming audio synchronously
+to all clients connected to the platform.
+</script>
+
+  <script type='text/md'>
+![](img/pipe.png)
+Node then allows the above pipeline to be translated into elegant and
+concise code, closely resembling the structure.
+```
+ffprobe(file)
+.then(function(err, data) {
+  var throttle = new Throttle(data.bit_rate);
+  fs.createReadStream(file)
+  .pipe(throttle)
+  .pipe(response);
+})
+```
+
+</script>
+
+  <script type='text/md'>
+<center>
+![](img/stack.png)
+</center>
+  </script>
+
+  <script type='text/md'>
+<center>
+![](img/stack2.png)
+</center>
+  </script>
+
+  <script type='text/md'>
+#Implementation
+<center>
+[http://audiodrop.org](http://audiodrop.org)
+</center>
+  </script>
+
+  <script type='text/md'>
+<center>
+#And that's that!
+Ask me some questions!
+</center>
+  </script>
+  
+  <script src='lib/showdown.js'></script>
+  <script src='lib/flume.min.js'></script>
+</body>
+</html>
